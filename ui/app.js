@@ -66,16 +66,26 @@
     return cursorCache.get(key);
   }
   function bindCursor(el, getDesign, role) {
-    let timer = null, on = false;
-    const stop = () => { on = false; clearTimeout(timer); };
-    el.addEventListener('mouseenter', async () => {
-      on = true; const d = getDesign(); if (!d) return;
-      const c = await cursorCss(d, typeof role === 'function' ? role() : role); if (!on) return;
-      let i = 0; const step = () => { if (!on) return; el.style.cursor = c.list[i]; if (c.list.length > 1) { timer = setTimeout(step, Math.max(30, c.delays[i] || 40)); i = (i + 1) % c.list.length; } };
+    // one binding per element: re-binding just swaps the source (persistent containers get re-bound on every render)
+    if (el._cur) { el._cur.getDesign = getDesign; el._cur.role = role; el._cur.refresh(); return el._cur; }
+    const b = el._cur = { getDesign, role, on: false, timer: null, gen: 0 };
+    b.stop = () => { b.on = false; b.gen++; clearTimeout(b.timer); };
+    b.start = async () => {
+      b.stop(); b.on = true; const gen = b.gen; const d = b.getDesign(); if (!d) return;
+      let c; try { c = await cursorCss(d, typeof b.role === 'function' ? b.role() : b.role); } catch { return; }
+      if (gen !== b.gen) return;
+      let i = 0; const step = () => {
+        if (gen !== b.gen) return;
+        if (!el.isConnected) return b.stop();
+        el.style.cursor = c.list[i];
+        if (c.list.length > 1) { b.timer = setTimeout(step, Math.max(30, c.delays[i] || 40)); i = (i + 1) % c.list.length; }
+      };
       step();
-    });
-    el.addEventListener('mouseleave', stop);
-    return { refresh: async () => { if (!on) return; stop(); el.dispatchEvent(new Event('mouseenter')); }, stop };
+    };
+    b.refresh = () => { if (b.on) b.start(); };
+    el.addEventListener('mouseenter', b.start);
+    el.addEventListener('mouseleave', b.stop);
+    return b;
   }
 
   /* ---------------- toasts, modal, confetti ---------------- */
@@ -149,7 +159,7 @@
     if (S.filter === 'rounded') return (p.tags || []).some(x => ['rounded'].includes(x)) || ['volantes', 'oreo', 'bibata-modern', 'fuchsia'].includes(p.id);
     return (p.tags || []).includes(S.filter);
   }
-  const appliedKey = () => { const a = S.settings.applied; return a && a.design ? a.design.pack + '/' + a.design.variant : null; };
+  const appliedKey = () => { const a = S.settings.applied; const d = a && a.design; if (!d) return null; const plain = !Object.keys(d.roles || {}).length && !Object.keys(d.global || {}).filter(k => k !== 'size').length; return plain ? d.pack + '/' + d.variant : null; };
 
   function sw(v, on, click) {
     const [a, b] = v.swatch || ((v.colors && [v.colors.fill, v.colors.edge]) || ['#000', '#fff']);
@@ -202,7 +212,7 @@
     renderPack(); go('pack'); $('#view-pack').scrollTop = 0;
   }
   function renderPack() {
-    const p = S.packs.find(x => x.id === S.pack) || E.getPackSync?.(S.pack); if (!p) return;
+    const p = S.packs.find(x => x.id === S.pack); if (!p) return;
     const vid = () => S.variant[p.id] || p.variants[0].id;
     const design = () => E.newDesign(p.id, vid());
     const root = $('#view-pack');
@@ -260,9 +270,9 @@
       setTimeout(() => { box._busy = false; busyBtn.classList.remove('busy'); pgBind.refresh(); }, 2600);
     });
     // pen pad
-    const fit = c => { const r = c.getBoundingClientRect(); if (r.width) { c.width = r.width * DPR(); c.height = r.height * DPR(); } };
+    const fit = c => { const r = c.getBoundingClientRect(); if (r.width) { c.width = Math.round(r.width * DPR()); c.height = Math.round(r.height * DPR()); } };
     let drawing = false, last = null;
-    pad.addEventListener('pointerdown', e => { fit(pad.width ? pad : pad); drawing = true; last = [e.offsetX, e.offsetY]; pad.setPointerCapture(e.pointerId); padWrap.querySelector('span').style.opacity = 0; });
+    pad.addEventListener('pointerdown', e => { if (pad.width !== Math.round(pad.clientWidth * DPR())) fit(pad); drawing = true; last = [e.offsetX, e.offsetY]; pad.setPointerCapture(e.pointerId); padWrap.querySelector('span').style.opacity = 0; });
     pad.addEventListener('pointermove', e => { if (!drawing) return; const x = pad.getContext('2d'); const k = pad.width / pad.clientWidth; x.strokeStyle = getComputedStyle(document.body).getPropertyValue('--accent'); x.lineWidth = 2.5 * k; x.lineCap = 'round'; x.beginPath(); x.moveTo(last[0] * k, last[1] * k); x.lineTo(e.offsetX * k, e.offsetY * k); x.stroke(); last = [e.offsetX, e.offsetY]; });
     pad.addEventListener('pointerup', () => { drawing = false; });
     requestAnimationFrame(() => { fit(pad); fit(cross); });
@@ -284,6 +294,7 @@
     const cv = $('#applyCanvas');
     try {
       const d = E.clone(design); d.name = name || d.name || 'CURSORA';
+      if (!d.global || d.global.size == null) d.global = { ...(d.global || {}), size: S.sysSize || 32 };
       const files = await E.buildFiles(d, async (pct, role) => {
         bar.style.strokeDashoffset = 327 * (1 - pct * 0.9); $('#applyS').textContent = t('building', { r: roleName(role) });
         try { show(cv, await E.renderRole(d, role, 96)); } catch {}
@@ -318,6 +329,7 @@
   /* ---------------- studio ---------------- */
   function startStudio(design, mineId) {
     S.design = E.clone(design); S.mineId = mineId || null;
+    if (!mineId && S.sysSize && (!S.design.global || S.design.global.size == null)) S.design.global = { ...(S.design.global || {}), size: S.sysSize };
     if (!S.design.name) { const p = S.packs.find(x => x.id === design.pack); S.design.name = p ? p.name + ' ✦' : 'CURSORA'; }
     S.base = { pack: design.pack, variant: design.variant };
     S.hist = []; S.fut = []; S.scope = 'all'; S.role = 'Arrow';
@@ -590,6 +602,7 @@
   async function boot() {
     [S.settings, S.mine, S.info] = await Promise.all([B.settings.get(), B.mine.get(), B.info()]);
     S.lang = S.settings.lang || 'ar';
+    B.current().then(c => { const n = +(c && c.CursorBaseSize); if (n >= 32 && n <= 256) S.sysSize = n; }).catch(() => {});
     applyTheme();
     S.packs = await E.loadIndex('../packs/');
     $$('[data-win]').forEach(b => b.addEventListener('click', () => B.win(b.dataset.win)));
@@ -604,7 +617,7 @@
     document.addEventListener('keydown', e => {
       if (e.ctrlKey && e.key.toLowerCase() === 'k') { e.preventDefault(); go('library'); $('#search').focus(); }
       else if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'r') { e.preventDefault(); B.restore('windows').then(async () => { S.settings = await B.settings.get(); renderNow(); renderLibrary(); toast(t('restored_ok')); }); }
-      else if (S.view === 'studio' && e.ctrlKey && e.key.toLowerCase() === 'z' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); e.shiftKey ? redo() : undo(); }
+      else if (S.view === 'studio' && e.ctrlKey && e.key.toLowerCase() === 'z' && !(document.activeElement.tagName === 'INPUT' && /^(text|search|)$/.test(document.activeElement.type))) { e.preventDefault(); e.shiftKey ? redo() : undo(); }
       else if (S.view === 'studio' && e.ctrlKey && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); }
       else if (S.view === 'studio' && e.ctrlKey && e.key.toLowerCase() === 's') { e.preventDefault(); saveMine(); }
       else if (e.key === 'Escape' && S.view === 'pack') go('library');

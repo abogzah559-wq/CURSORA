@@ -338,7 +338,7 @@ for (const p of packs) {
   for (const role of ROLES) if (!p.roles[role]) {
     if (role === 'Pin' || role === 'Person' || role === 'Help') p.roles[role] = { compose: 'Arrow', badge: role.toLowerCase() };
     else if (role === 'AppStarting' && p.roles.Wait) p.roles[role] = { compose: 'Arrow', badge: 'busy' };
-    else if (role === 'UpArrow') p.roles[role] = { ref: 'Arrow', rotate: 'up' };
+    else if (role === 'UpArrow') p.roles[role] = { ref: 'Arrow' };
     else if (p.roles.Arrow) p.roles[role] = { ref: 'Arrow' };
   }
 }

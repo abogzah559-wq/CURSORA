@@ -26,7 +26,6 @@
   };
   const ANIMATED = new Set(['AppStarting', 'Wait']);
   const BASE_SIZE = 32;        // all pixel-based params are expressed at 32 px and scaled
-  const TARGET = 0.62;         // arrow visual height as a fraction of the canvas
   const MAX_FRAMES = 36;
 
   const DEFAULTS = {
@@ -167,7 +166,7 @@
     if (!spec || depth > 3) return null;
     if (spec.ref) {
       const r = await resolveSource(pack, variant, spec.ref, p, size, depth + 1);
-      return r && { ...r, rotateUp: spec.rotate === 'up', bbox: pack.bbox && pack.bbox[spec.ref] };
+      return r && { ...r, bbox: pack.bbox && pack.bbox[spec.ref] };
     }
     if (spec.compose) {
       const r = await resolveSource(pack, variant, spec.compose, p, size, depth + 1);
@@ -243,7 +242,6 @@
     const base = mkCanvas(S), bx = base.getContext('2d');
     bx.imageSmoothingQuality = 'high';
     bx.translate(hpx, hpy); bx.scale(scale, scale); bx.translate(-hpx, -hpy);
-    if (src.rotateUp) { bx.translate(S / 2, S / 2); bx.rotate(Math.PI / 4 * 0.6); bx.translate(-S / 2, -S / 2); }
     bx.drawImage(im, 0, 0, S, S);
     bx.setTransform(1, 0, 0, 1, 0, 0);
     if (src.badge) { const [f, e] = swatch(pack, variant, p); drawBadge(bx, src.badge, S, f, e, t); }
@@ -271,7 +269,6 @@
       ox.shadowOffsetX = p.shadowX * k * (p.mirror ? -1 : 1); ox.shadowOffsetY = p.shadowY * k;
       ox.drawImage(shape, 0, 0); ox.restore();
     } else ox.drawImage(shape, 0, 0);
-    if (p.glow) { ox.globalCompositeOperation = 'source-over'; ox.drawImage(shape, 0, 0); }
 
     // 4) opacity + mirror
     let fin = out;
@@ -371,7 +368,7 @@
     const icons = frames.map(f => chunk('icon', encodeCur(f)));
     const anih = new Uint8Array(36);
     const jif = delays.map(d => clamp(Math.round(d / (1000 / 60)), 1, 255));
-    u32(anih, 0, 36); u32(anih, 4, frames.length); u32(anih, 8, frames.length); u32(anih, 28, jif[0]); u32(anih, 32, jif.every(j => j === jif[0]) ? 1 : 3);
+    u32(anih, 0, 36); u32(anih, 4, frames.length); u32(anih, 8, frames.length); u32(anih, 28, jif[0]); u32(anih, 32, 1); // AF_ICON only: per-frame timing goes in 'rate', there is no 'seq ' chunk
     const parts = [];
     if (title) parts.push(concat([ascii('LIST'), (() => { const inam = chunk('INAM', ascii(title + '\0')); const b = new Uint8Array(4); u32(b, 0, inam.length + 4); return b; })(), ascii('INFO'), chunk('INAM', ascii(title + '\0'))]));
     parts.push(chunk('anih', anih));
@@ -473,7 +470,8 @@
     const roles = {}; const sq = c => { const S = Math.max(c.width, c.height); const o = mkCanvas(S); o.getContext('2d').drawImage(c, 0, 0); return o; };
     for (const [role, d] of Object.entries(byRole)) {
       const urls = d.frames.map(c => sq(c).toDataURL('image/png'));
-      roles[role] = urls.length > 1 ? { frames: urls, delay: d.delays[0] || 50, hot: d.hot } : { src: urls[0], hot: d.hot };
+      const c0 = d.frames[0], k = Math.max(c0.width, c0.height); const hot = [d.hot[0] * c0.width / k, d.hot[1] * c0.height / k];
+      roles[role] = urls.length > 1 ? { frames: urls, delay: d.delays[0] || 50, hot } : { src: urls[0], hot };
     }
     for (const role of ROLES) if (!roles[role]) roles[role] = { ref: roles.Arrow ? 'Arrow' : Object.keys(roles)[0] };
     return registerPack({ id, name, kind: 'files', base: '', fit: 1, user: true, tags: ['mine'], variants: [{ id: 'default', name: 'Default', dir: '', polarity: 'dark', swatch: ['#000', '#fff'] }], roles });

@@ -10,7 +10,8 @@ const RESTORE_ARG = process.argv.find(a => a.startsWith('--restore'));
 
 protocol.registerSchemesAsPrivileged([{ scheme: 'cursora', privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true } }]);
 
-if (!SELFTEST && !RESTORE_ARG && !app.requestSingleInstanceLock()) app.quit();
+const PRIMARY = SELFTEST || RESTORE_ARG || app.requestSingleInstanceLock();
+if (!PRIMARY) app.quit();
 
 let win = null;
 const dataDir = () => app.getPath('userData');
@@ -47,6 +48,7 @@ function createWindow() {
 app.on('second-instance', () => { if (win) { if (win.isMinimized()) win.restore(); win.focus(); } });
 
 app.whenReady().then(async () => {
+  if (!PRIMARY) return;
   protocol.handle('cursora', req => {
     const u = new URL(req.url);
     const rel = decodeURIComponent(u.pathname).replace(/^\/+/, '');

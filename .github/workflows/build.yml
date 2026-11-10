@@ -48,6 +48,15 @@ jobs:
           & { npx electron-builder --win --x64 --publish never; Get-ChildItem dist -File | ForEach-Object { '{0,10:N1} MB  {1}' -f ($_.Length/1MB), $_.Name } } *>&1 | Tee-Object -FilePath ci-logs/3-build.txt
           if (-not (Get-ChildItem dist/*.exe)) { exit 1 }
 
+      - name: Self-test the packaged app (asar build that users install)
+        timeout-minutes: 10
+        shell: pwsh
+        run: |
+          $env:CURSORA_SELFTEST_OUT = "$PWD\ci-logs\4-selftest-packaged.json"
+          $p = Start-Process -FilePath ".\dist\win-unpacked\CURSORA.exe" -ArgumentList "--selftest" -PassThru -Wait
+          "exit code: $($p.ExitCode)" | Tee-Object -FilePath ci-logs/4-selftest-packaged-exit.txt
+          if ($p.ExitCode -ne 0) { if (Test-Path ci-logs/4-selftest-packaged.json) { Get-Content ci-logs/4-selftest-packaged.json -TotalCount 40 }; exit 1 }
+
       - name: Upload installer
         continue-on-error: true
         uses: actions/upload-artifact@v4

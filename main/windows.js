@@ -94,6 +94,7 @@ module.exports = function create(dataDir) {
     // swap the folder in place (a stale copy may still be in use by Windows — rename it away first)
     if (fs.existsSync(dir)) { const old = dir + '.old-' + Date.now(); try { fs.renameSync(dir, old); fs.rm(old, { recursive: true, force: true }, () => {}); } catch { fs.rmSync(dir, { recursive: true, force: true }); } }
     fs.renameSync(tmp, dir);
+    for (const n of fs.readdirSync(ROOT)) if (/\.(old|tmp)-\d+$/.test(n)) fs.rm(path.join(ROOT, n), { recursive: true, force: true }, () => {});
     fs.writeFileSync(path.join(dir, 'scheme.txt'), ROLES.map(r => values[r] || '').join(','));
     // register as a named scheme so it also shows in Windows' own Mouse settings
     await runPS(`$s='HKCU:\\Control Panel\\Cursors\\Schemes'; if (!(Test-Path $s)) { New-Item -Path $s -Force | Out-Null }
