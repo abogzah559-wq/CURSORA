@@ -1,0 +1,275 @@
+{
+ "id": "volantes",
+ "name": "Volantes",
+ "author": "Varlesh",
+ "license": "GPL-2.0",
+ "url": "https://github.com/varlesh/volantes-cursors",
+ "tags": [
+  "dark",
+  "light",
+  "rounded"
+ ],
+ "desc": {
+  "ar": "\u0623\u0634\u0643\u0627\u0644 \u0645\u0646\u0641\u0648\u062e\u0629 \u0648\u0645\u062f\u0648\u0631\u0629 \u062c\u062f\u064b\u0627",
+  "en": "Plump, very rounded shapes"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "dark",
+   "name": "Dark",
+   "dir": "dark",
+   "polarity": "dark",
+   "swatch": [
+    "#272a2b",
+    "#e6e6e6"
+   ]
+  },
+  {
+   "id": "light",
+   "name": "Light",
+   "dir": "light",
+   "polarity": "light",
+   "swatch": [
+    "#eaeaea",
+    "#292c2d"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default.svg",
+   "hot": [
+    0.0625,
+    0.0625
+   ]
+  },
+  "Help": {
+   "src": "help.svg",
+   "hot": [
+    0.0625,
+    0.0625
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress-01.svg",
+    "progress-02.svg",
+    "progress-03.svg",
+    "progress-04.svg",
+    "progress-05.svg",
+    "progress-06.svg",
+    "progress-07.svg",
+    "progress-08.svg",
+    "progress-09.svg",
+    "progress-10.svg",
+    "progress-11.svg",
+    "progress-12.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.0625,
+    0.0625
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-01.svg",
+    "wait-02.svg",
+    "wait-03.svg",
+    "wait-04.svg",
+    "wait-05.svg",
+    "wait-06.svg",
+    "wait-07.svg",
+    "wait-08.svg",
+    "wait-09.svg",
+    "wait-10.svg",
+    "wait-11.svg",
+    "wait-12.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "IBeam": {
+   "src": "text.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.1875,
+    0.7813
+   ]
+  },
+  "No": {
+   "src": "not-allowed.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeNS": {
+   "src": "size_ver.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeWE": {
+   "src": "size_hor.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeNWSE": {
+   "src": "size_fdiag.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeNESW": {
+   "src": "size_bdiag.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeAll": {
+   "src": "fleur.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.4688,
+    0.2188
+   ]
+  },
+  "Hand": {
+   "src": "pointer.svg",
+   "hot": [
+    0.4063,
+    0.1875
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.031,
+   0.031,
+   0.559,
+   0.746
+  ],
+  "Help": [
+   0.031,
+   0.031,
+   0.965,
+   0.965
+  ],
+  "AppStarting": [
+   0.031,
+   0.031,
+   0.965,
+   0.965
+  ],
+  "Wait": [
+   0.152,
+   0.152,
+   0.879,
+   0.879
+  ],
+  "Crosshair": [
+   0.121,
+   0.121,
+   0.879,
+   0.879
+  ],
+  "IBeam": [
+   0.406,
+   0.156,
+   0.59,
+   0.871
+  ],
+  "NWPen": [
+   0.156,
+   0.156,
+   0.871,
+   0.875
+  ],
+  "No": [
+   0.152,
+   0.152,
+   0.879,
+   0.879
+  ],
+  "SizeNS": [
+   0.313,
+   0.063,
+   0.684,
+   0.934
+  ],
+  "SizeWE": [
+   0.063,
+   0.313,
+   0.934,
+   0.684
+  ],
+  "SizeNWSE": [
+   0.188,
+   0.188,
+   0.813,
+   0.813
+  ],
+  "SizeNESW": [
+   0.188,
+   0.188,
+   0.809,
+   0.813
+  ],
+  "SizeAll": [
+   0.063,
+   0.063,
+   0.938,
+   0.938
+  ],
+  "UpArrow": [
+   0.219,
+   0.188,
+   0.809,
+   0.84
+  ],
+  "Hand": [
+   0.156,
+   0.156,
+   0.813,
+   0.875
+  ]
+ },
+ "fit": 0.867
+}

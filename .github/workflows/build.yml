@@ -1,0 +1,82 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force ci-logs | Out-Null
+          npm install --no-audit --no-fund *>&1 | Tee-Object -FilePath ci-logs/1-install.txt
+
+      - name: Self-test on real Windows (render, encode, apply, verify with LoadCursorFromFile, restore)
+        timeout-minutes: 10
+        shell: pwsh
+        run: |
+          $env:CURSORA_SELFTEST_OUT = "$PWD\ci-logs\2-selftest.json"
+          $p = Start-Process -FilePath ".\node_modules\electron\dist\electron.exe" -ArgumentList ". --selftest" -PassThru -Wait
+          "exit code: $($p.ExitCode)" | Tee-Object -FilePath ci-logs/2-selftest-exit.txt
+          if (Test-Path ci-logs/2-selftest.json) { Get-Content ci-logs/2-selftest.json -TotalCount 60 }
+          if ($p.ExitCode -ne 0) { exit 1 }
+
+      - name: Build installer
+        shell: pwsh
+        run: |
+          & { npx electron-builder --win --x64 --publish never; Get-ChildItem dist -File | ForEach-Object { '{0,10:N1} MB  {1}' -f ($_.Length/1MB), $_.Name } } *>&1 | Tee-Object -FilePath ci-logs/3-build.txt
+          if (-not (Get-ChildItem dist/*.exe)) { exit 1 }
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: installer
+          path: dist/*.exe
+          compression-level: 0
+          retention-days: 14
+
+      - name: Publish test build (pre-release)
+        if: github.ref == 'refs/heads/main'
+        shell: bash
+        run: |
+          f=$(ls dist/*.exe | head -1)
+          gh release delete test-build -y --cleanup-tag 2>/dev/null || true
+          gh release create test-build "$f" --prerelease --title "Test build ${GITHUB_SHA::7}" --notes "Automatic build from ${GITHUB_SHA}. Self-test passed on Windows."
+
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        run: |
+          f=$(ls dist/*.exe | head -1)
+          gh release create "${GITHUB_REF_NAME}" "$f" --title "CURSORA ${GITHUB_REF_NAME}" --notes "CURSORA ${GITHUB_REF_NAME}"
+
+      - name: Save logs to the ci-logs branch
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p ci-logs && cd ci-logs
+          echo "run ${GITHUB_RUN_ID} sha ${GITHUB_SHA} ref ${GITHUB_REF} status ${{ job.status }}" > 0-run.txt
+          git init -q -b ci-logs && git add -A
+          git -c user.name=ci -c user.email=ci@7krh.dev commit -q -m "logs ${GITHUB_RUN_ID}"
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" ci-logs

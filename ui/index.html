@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' cursora:; img-src 'self' cursora: data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' cursora:; connect-src 'self' cursora: data: blob:">
+<title>CURSORA</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="grain"></div>
+<div class="aurora"><i></i><i></i><i></i></div>
+
+<header class="titlebar" dir="ltr">
+  <div class="lights">
+    <button class="light close" data-win="close" aria-label="close"><svg viewBox="0 0 10 10"><path d="M2.5 2.5l5 5M7.5 2.5l-5 5"/></svg></button>
+    <button class="light min" data-win="min" aria-label="minimize"><svg viewBox="0 0 10 10"><path d="M2 5h6"/></svg></button>
+    <button class="light max" data-win="max" aria-label="maximize"><svg viewBox="0 0 10 10"><path d="M3 7V3h4M7 3v4H3" class="m1"/></svg></button>
+  </div>
+  <div class="tb-title"><img src="assets/logo.png" alt=""><span>CURSORA</span></div>
+  <div class="tb-actions">
+    <button class="lang-btn" id="langBtn">EN</button>
+    <button class="coffee" id="coffee"><span class="cup">☕</span><span data-t="support"></span></button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo"><img src="assets/logo.png" alt="CURSORA"></div>
+      <div><div class="brand-name">CURSORA</div><div class="brand-tag" data-t="app_tag"></div></div>
+    </div>
+    <nav class="nav" id="nav">
+      <span class="nav-pill"></span>
+      <button data-view="library"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg><span data-t="nav_library"></span></button>
+      <button data-view="studio"><svg viewBox="0 0 24 24"><path d="M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M14 7l3 3"/></svg><span data-t="nav_studio"></span></button>
+      <button data-view="mine"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7.5 2.5c0 5.6-7.5 10-7.5 10z"/></svg><span data-t="nav_mine"></span><em class="count" id="mineCount"></em></button>
+      <button data-view="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg><span data-t="nav_settings"></span></button>
+    </nav>
+    <div class="now" id="nowCard">
+      <div class="now-label" data-t="applied_now"></div>
+      <div class="now-row"><canvas id="nowPreview" width="96" height="96"></canvas><div class="now-name" id="nowName"></div></div>
+      <button class="ghost sm" id="quickRestore"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span data-t="restore_quick"></span></button>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+    <!-- LIBRARY -->
+    <section class="view" id="view-library">
+      <div class="hero">
+        <div>
+          <h1 data-t="lib_title"></h1>
+          <p class="sub" data-t="lib_sub"></p>
+        </div>
+        <div class="hero-stats" id="libStats"></div>
+      </div>
+      <div class="toolbar">
+        <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="search" autocomplete="off"><kbd>Ctrl K</kbd></label>
+        <div class="chips" id="chips"></div>
+        <button class="btn shine" id="surprise"><span class="dice">🎲</span><span data-t="surprise"></span></button>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div class="empty hidden" id="libEmpty" data-t="no_results"></div>
+    </section>
+
+    <!-- PACK -->
+    <section class="view" id="view-pack"></section>
+
+    <!-- STUDIO -->
+    <section class="view" id="view-studio"></section>
+
+    <!-- MINE -->
+    <section class="view" id="view-mine">
+      <div class="hero">
+        <div><h1 data-t="mine_title"></h1><p class="sub" data-t="mine_sub"></p></div>
+        <div class="hero-actions">
+          <button class="btn ghost" id="impDesign"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 17v3h16v-3"/></svg><span data-t="import_design"></span></button>
+          <button class="btn ghost" id="impFolder"><svg viewBox="0 0 24 24"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2h8.5A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/></svg><span data-t="import_folder"></span></button>
+        </div>
+      </div>
+      <div class="grid" id="mineGrid"></div>
+      <div class="empty hidden" id="mineEmpty"><div class="empty-art">✦</div><span data-t="mine_empty"></span></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" id="view-settings"></section>
+  </main>
+</div>
+
+<div class="toasts" id="toasts"></div>
+<div class="overlay hidden" id="applyOverlay">
+  <div class="apply-card">
+    <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="track"/><circle cx="60" cy="60" r="52" class="bar" id="applyBar"/></svg><canvas id="applyCanvas" width="96" height="96"></canvas></div>
+    <div class="apply-t" id="applyT"></div>
+    <div class="apply-s" id="applyS"></div>
+  </div>
+</div>
+<div class="overlay hidden" id="modal"><div class="modal-card"><div id="modalBody"></div><div class="modal-actions" id="modalActions"></div></div></div>
+
+<script src="i18n.js"></script>
+<script src="mock.js"></script>
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

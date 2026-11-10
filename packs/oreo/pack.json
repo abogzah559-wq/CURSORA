@@ -1,0 +1,446 @@
+{
+ "id": "oreo",
+ "name": "Oreo",
+ "author": "Varlesh",
+ "license": "GPL-2.0",
+ "url": "https://github.com/varlesh/oreo-cursors",
+ "tags": [
+  "color",
+  "dark",
+  "playful"
+ ],
+ "desc": {
+  "ar": "\u0623\u0634\u0643\u0627\u0644 \u062f\u0627\u0626\u0631\u064a\u0629 \u0645\u0645\u062a\u0644\u0626\u0629 \u0645\u0639 \u0623\u0646\u064a\u0645\u064a\u0634\u0646 \u0644\u0637\u064a\u0641",
+  "en": "Chunky rounded shapes with cute animation"
+ },
+ "kind": "tokens",
+ "dir": "svg",
+ "tokens": {
+  "fill": "{{ background }}",
+  "edge": "{{ label }}",
+  "shadow": "{{ shadow }}",
+  "shadowOpacity": "{{ shadowopacity }}"
+ },
+ "variants": [
+  {
+   "id": "black",
+   "name": "Black",
+   "colors": {
+    "fill": "#2b2b2b",
+    "edge": "#ffffff",
+    "shadow": "#000000",
+    "shadowOpacity": "0.35"
+   },
+   "swatch": [
+    "#2b2b2b",
+    "#ffffff"
+   ]
+  },
+  {
+   "id": "spark-dark",
+   "name": "Spark Dark",
+   "colors": {
+    "fill": "#222222",
+    "edge": "#ffffff",
+    "shadow": "#000000",
+    "shadowOpacity": "0.35"
+   },
+   "swatch": [
+    "#222222",
+    "#ffffff"
+   ]
+  },
+  {
+   "id": "white",
+   "name": "White",
+   "colors": {
+    "fill": "#f2f2f2",
+    "edge": "#2b2b2b",
+    "shadow": "#000000",
+    "shadowOpacity": "0.35"
+   },
+   "swatch": [
+    "#f2f2f2",
+    "#2b2b2b"
+   ]
+  },
+  {
+   "id": "blue",
+   "name": "Blue",
+   "colors": {
+    "fill": "#4E81ED",
+    "edge": "#ffffff",
+    "shadow": "#000000",
+    "shadowOpacity": "0.35"
+   },
+   "swatch": [
+    "#4E81ED",
+    "#ffffff"
+   ]
+  },
+  {
+   "id": "purple",
+   "name": "Purple",
+   "colors": {
+    "fill": "#7E57C2",
+    "edge": "#ffffff",
+    "shadow": "#000000",
+    "shadowOpacity": "0.35"
+   },
+   "swatch": [
+    "#7E57C2",
+    "#ffffff"
+   ]
+  },
+  {
+   "id": "pink",
+   "name": "Pink",
+   "colors": {
+    "fill": "#EE5387",
+    "edge": "#ffffff",
+    "shadow": "#000000",
+    "shadowOpacity": "0.35"
+   },
+   "swatch": [
+    "#EE5387",
+    "#ffffff"
+   ]
+  },
+  {
+   "id": "red",
+   "name": "Red",
+   "colors": {
+    "fill": "#F44336",
+    "edge": "#ffffff",
+    "shadow": "#000000",
+    "shadowOpacity": "0.35"
+   },
+   "swatch": [
+    "#F44336",
+    "#ffffff"
+   ]
+  },
+  {
+   "id": "teal",
+   "name": "Teal",
+   "colors": {
+    "fill": "#009789",
+    "edge": "#ffffff",
+    "shadow": "#000000",
+    "shadowOpacity": "0.35"
+   },
+   "swatch": [
+    "#009789",
+    "#ffffff"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default.svg",
+   "hot": [
+    0.25,
+    0.0313
+   ]
+  },
+  "Help": {
+   "src": "help.svg",
+   "hot": [
+    0.25,
+    0.0313
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress-01.svg",
+    "progress-02.svg",
+    "progress-03.svg",
+    "progress-04.svg",
+    "progress-05.svg",
+    "progress-06.svg",
+    "progress-07.svg",
+    "progress-08.svg",
+    "progress-09.svg",
+    "progress-10.svg",
+    "progress-11.svg",
+    "progress-12.svg",
+    "progress-13.svg",
+    "progress-14.svg",
+    "progress-15.svg",
+    "progress-16.svg",
+    "progress-17.svg",
+    "progress-18.svg",
+    "progress-19.svg",
+    "progress-20.svg",
+    "progress-21.svg",
+    "progress-22.svg",
+    "progress-23.svg",
+    "progress-24.svg",
+    "progress-25.svg",
+    "progress-26.svg",
+    "progress-27.svg",
+    "progress-28.svg",
+    "progress-29.svg",
+    "progress-30.svg",
+    "progress-31.svg",
+    "progress-32.svg",
+    "progress-33.svg",
+    "progress-34.svg",
+    "progress-35.svg",
+    "progress-36.svg",
+    "progress-37.svg",
+    "progress-38.svg",
+    "progress-39.svg",
+    "progress-40.svg",
+    "progress-41.svg",
+    "progress-42.svg",
+    "progress-43.svg",
+    "progress-44.svg",
+    "progress-45.svg",
+    "progress-46.svg",
+    "progress-47.svg",
+    "progress-48.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.25,
+    0.0313
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-01.svg",
+    "wait-02.svg",
+    "wait-03.svg",
+    "wait-04.svg",
+    "wait-05.svg",
+    "wait-06.svg",
+    "wait-07.svg",
+    "wait-08.svg",
+    "wait-09.svg",
+    "wait-10.svg",
+    "wait-11.svg",
+    "wait-12.svg",
+    "wait-13.svg",
+    "wait-14.svg",
+    "wait-15.svg",
+    "wait-16.svg",
+    "wait-17.svg",
+    "wait-18.svg",
+    "wait-19.svg",
+    "wait-20.svg",
+    "wait-21.svg",
+    "wait-22.svg",
+    "wait-23.svg",
+    "wait-24.svg",
+    "wait-25.svg",
+    "wait-26.svg",
+    "wait-27.svg",
+    "wait-28.svg",
+    "wait-29.svg",
+    "wait-30.svg",
+    "wait-31.svg",
+    "wait-32.svg",
+    "wait-33.svg",
+    "wait-34.svg",
+    "wait-35.svg",
+    "wait-36.svg",
+    "wait-37.svg",
+    "wait-38.svg",
+    "wait-39.svg",
+    "wait-40.svg",
+    "wait-41.svg",
+    "wait-42.svg",
+    "wait-43.svg",
+    "wait-44.svg",
+    "wait-45.svg",
+    "wait-46.svg",
+    "wait-47.svg",
+    "wait-48.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "IBeam": {
+   "src": "text.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.1563,
+    0.8125
+   ]
+  },
+  "No": {
+   "src": "not-allowed.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeNS": {
+   "src": "size_ver.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeWE": {
+   "src": "size_hor.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeNWSE": {
+   "src": "size_fdiag.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeNESW": {
+   "src": "size_bdiag.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "SizeAll": {
+   "src": "fleur.svg",
+   "hot": [
+    0.4688,
+    0.4688
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.4688,
+    0.0313
+   ]
+  },
+  "Hand": {
+   "src": "pointer.svg",
+   "hot": [
+    0.4063,
+    0.125
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.152,
+   0.031,
+   0.848,
+   0.957
+  ],
+  "Help": [
+   0.152,
+   0.031,
+   0.848,
+   0.957
+  ],
+  "AppStarting": [
+   0.152,
+   0.031,
+   0.848,
+   0.957
+  ],
+  "Wait": [
+   0.09,
+   0.125,
+   0.91,
+   0.957
+  ],
+  "Crosshair": [
+   0.094,
+   0.125,
+   0.906,
+   0.953
+  ],
+  "IBeam": [
+   0.387,
+   0.156,
+   0.582,
+   0.91
+  ],
+  "NWPen": [
+   0.129,
+   0.156,
+   0.871,
+   0.918
+  ],
+  "No": [
+   0.09,
+   0.125,
+   0.91,
+   0.957
+  ],
+  "SizeNS": [
+   0.09,
+   0.125,
+   0.91,
+   0.957
+  ],
+  "SizeWE": [
+   0.09,
+   0.125,
+   0.91,
+   0.957
+  ],
+  "SizeNWSE": [
+   0.09,
+   0.125,
+   0.91,
+   0.957
+  ],
+  "SizeNESW": [
+   0.09,
+   0.125,
+   0.91,
+   0.957
+  ],
+  "SizeAll": [
+   0.09,
+   0.125,
+   0.91,
+   0.957
+  ],
+  "UpArrow": [
+   0.152,
+   0.031,
+   0.816,
+   0.957
+  ],
+  "Hand": [
+   0.133,
+   0.125,
+   0.875,
+   0.957
+  ]
+ },
+ "fit": 0.67
+}

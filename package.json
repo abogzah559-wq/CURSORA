@@ -1,0 +1,43 @@
+{
+  "name": "cursora",
+  "productName": "CURSORA",
+  "version": "1.0.0",
+  "description": "CURSORA — a beautiful cursor studio for Windows: browse, customise and apply cursor packs permanently.",
+  "author": "7krh",
+  "license": "GPL-3.0",
+  "main": "main/main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "selftest": "electron . --selftest",
+    "import-packs": "node scripts/import-packs.mjs ../src",
+    "dist": "electron-builder --win --x64 --publish never"
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "dev.7krh.cursora",
+    "productName": "CURSORA",
+    "copyright": "© 2026 7krh",
+    "artifactName": "CURSORA-Setup-${version}.${ext}",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["main/**", "ui/**", "packs/**", "package.json"],
+    "asar": true,
+    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "icon": "build/icon.ico" },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "CURSORA",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "uninstallDisplayName": "CURSORA",
+      "deleteAppDataOnUninstall": false,
+      "include": "build/installer.nsh"
+    }
+  }
+}

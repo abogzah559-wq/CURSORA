@@ -1,0 +1,403 @@
+{
+ "id": "bibata-original",
+ "name": "Bibata Original",
+ "author": "Abdulkaiz Khatri (ful1e5)",
+ "license": "GPL-3.0",
+ "url": "https://github.com/ful1e5/Bibata_Cursor",
+ "tags": [
+  "dark",
+  "light",
+  "color",
+  "sharp"
+ ],
+ "desc": {
+  "ar": "\u0646\u0641\u0633 \u0631\u0648\u062d Bibata \u0644\u0643\u0646 \u0628\u0623\u0637\u0631\u0627\u0641 \u062d\u0627\u062f\u0629",
+  "en": "Bibata with sharp tips"
+ },
+ "kind": "tokens",
+ "dir": "svg",
+ "tokens": {
+  "fill": "#00FF00",
+  "edge": "#0000FF",
+  "accent": "#FF0000"
+ },
+ "variants": [
+  {
+   "id": "classic",
+   "name": "Classic",
+   "colors": {
+    "fill": "#000000",
+    "edge": "#FFFFFF",
+    "accent": "#000000"
+   },
+   "swatch": [
+    "#000000",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "ice",
+   "name": "Ice",
+   "colors": {
+    "fill": "#FFFFFF",
+    "edge": "#000000",
+    "accent": "#FFFFFF"
+   },
+   "swatch": [
+    "#FFFFFF",
+    "#000000"
+   ]
+  },
+  {
+   "id": "amber",
+   "name": "Amber",
+   "colors": {
+    "fill": "#FF8300",
+    "edge": "#FFFFFF",
+    "accent": "#001524"
+   },
+   "swatch": [
+    "#FF8300",
+    "#FFFFFF"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.svg",
+   "hot": [
+    0.2148,
+    0.0664
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.svg",
+   "hot": [
+    0.1641,
+    0.3359
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch/left_ptr_watch-01.svg",
+    "left_ptr_watch/left_ptr_watch-02.svg",
+    "left_ptr_watch/left_ptr_watch-03.svg",
+    "left_ptr_watch/left_ptr_watch-04.svg",
+    "left_ptr_watch/left_ptr_watch-05.svg",
+    "left_ptr_watch/left_ptr_watch-06.svg",
+    "left_ptr_watch/left_ptr_watch-07.svg",
+    "left_ptr_watch/left_ptr_watch-08.svg",
+    "left_ptr_watch/left_ptr_watch-09.svg",
+    "left_ptr_watch/left_ptr_watch-10.svg",
+    "left_ptr_watch/left_ptr_watch-11.svg",
+    "left_ptr_watch/left_ptr_watch-12.svg",
+    "left_ptr_watch/left_ptr_watch-13.svg",
+    "left_ptr_watch/left_ptr_watch-14.svg",
+    "left_ptr_watch/left_ptr_watch-15.svg",
+    "left_ptr_watch/left_ptr_watch-16.svg",
+    "left_ptr_watch/left_ptr_watch-17.svg",
+    "left_ptr_watch/left_ptr_watch-18.svg",
+    "left_ptr_watch/left_ptr_watch-19.svg",
+    "left_ptr_watch/left_ptr_watch-20.svg",
+    "left_ptr_watch/left_ptr_watch-21.svg",
+    "left_ptr_watch/left_ptr_watch-22.svg",
+    "left_ptr_watch/left_ptr_watch-23.svg",
+    "left_ptr_watch/left_ptr_watch-24.svg",
+    "left_ptr_watch/left_ptr_watch-25.svg",
+    "left_ptr_watch/left_ptr_watch-26.svg",
+    "left_ptr_watch/left_ptr_watch-27.svg",
+    "left_ptr_watch/left_ptr_watch-28.svg",
+    "left_ptr_watch/left_ptr_watch-29.svg",
+    "left_ptr_watch/left_ptr_watch-30.svg",
+    "left_ptr_watch/left_ptr_watch-31.svg",
+    "left_ptr_watch/left_ptr_watch-32.svg",
+    "left_ptr_watch/left_ptr_watch-33.svg",
+    "left_ptr_watch/left_ptr_watch-34.svg",
+    "left_ptr_watch/left_ptr_watch-35.svg",
+    "left_ptr_watch/left_ptr_watch-36.svg",
+    "left_ptr_watch/left_ptr_watch-37.svg",
+    "left_ptr_watch/left_ptr_watch-38.svg",
+    "left_ptr_watch/left_ptr_watch-39.svg",
+    "left_ptr_watch/left_ptr_watch-40.svg",
+    "left_ptr_watch/left_ptr_watch-41.svg",
+    "left_ptr_watch/left_ptr_watch-42.svg",
+    "left_ptr_watch/left_ptr_watch-43.svg",
+    "left_ptr_watch/left_ptr_watch-44.svg",
+    "left_ptr_watch/left_ptr_watch-45.svg",
+    "left_ptr_watch/left_ptr_watch-46.svg",
+    "left_ptr_watch/left_ptr_watch-47.svg",
+    "left_ptr_watch/left_ptr_watch-48.svg",
+    "left_ptr_watch/left_ptr_watch-49.svg",
+    "left_ptr_watch/left_ptr_watch-50.svg",
+    "left_ptr_watch/left_ptr_watch-51.svg",
+    "left_ptr_watch/left_ptr_watch-52.svg",
+    "left_ptr_watch/left_ptr_watch-53.svg",
+    "left_ptr_watch/left_ptr_watch-54.svg"
+   ],
+   "delay": 40,
+   "hot": [
+    0.2148,
+    0.0664
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait/wait-01.svg",
+    "wait/wait-02.svg",
+    "wait/wait-03.svg",
+    "wait/wait-04.svg",
+    "wait/wait-05.svg",
+    "wait/wait-06.svg",
+    "wait/wait-07.svg",
+    "wait/wait-08.svg",
+    "wait/wait-09.svg",
+    "wait/wait-10.svg",
+    "wait/wait-11.svg",
+    "wait/wait-12.svg",
+    "wait/wait-13.svg",
+    "wait/wait-14.svg",
+    "wait/wait-15.svg",
+    "wait/wait-16.svg",
+    "wait/wait-17.svg",
+    "wait/wait-18.svg",
+    "wait/wait-19.svg",
+    "wait/wait-20.svg",
+    "wait/wait-21.svg",
+    "wait/wait-22.svg",
+    "wait/wait-23.svg",
+    "wait/wait-24.svg",
+    "wait/wait-25.svg",
+    "wait/wait-26.svg",
+    "wait/wait-27.svg",
+    "wait/wait-28.svg",
+    "wait/wait-29.svg",
+    "wait/wait-30.svg",
+    "wait/wait-31.svg",
+    "wait/wait-32.svg",
+    "wait/wait-33.svg",
+    "wait/wait-34.svg",
+    "wait/wait-35.svg",
+    "wait/wait-36.svg",
+    "wait/wait-37.svg",
+    "wait/wait-38.svg",
+    "wait/wait-39.svg",
+    "wait/wait-40.svg",
+    "wait/wait-41.svg",
+    "wait/wait-42.svg",
+    "wait/wait-43.svg",
+    "wait/wait-44.svg",
+    "wait/wait-45.svg",
+    "wait/wait-46.svg",
+    "wait/wait-47.svg",
+    "wait/wait-48.svg",
+    "wait/wait-49.svg",
+    "wait/wait-50.svg",
+    "wait/wait-51.svg",
+    "wait/wait-52.svg",
+    "wait/wait-53.svg",
+    "wait/wait-54.svg"
+   ],
+   "delay": 40,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.1797,
+    0.8242
+   ]
+  },
+  "No": {
+   "src": "circle.svg",
+   "hot": [
+    0.2148,
+    0.0664
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "bd_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNESW": {
+   "src": "fd_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeAll": {
+   "src": "move.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.4961,
+    0.0664
+   ]
+  },
+  "Hand": {
+   "src": "hand2.svg",
+   "hot": [
+    0.4453,
+    0.0703
+   ]
+  },
+  "Pin": {
+   "src": "pin.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Person": {
+   "src": "person.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.211,
+   0.059,
+   0.906,
+   0.98
+  ],
+  "Help": [
+   0.148,
+   0.059,
+   0.746,
+   0.934
+  ],
+  "AppStarting": [
+   0.152,
+   0,
+   0.773,
+   0.941
+  ],
+  "Wait": [
+   0.074,
+   0.082,
+   0.926,
+   0.941
+  ],
+  "Crosshair": [
+   0.02,
+   0.02,
+   0.98,
+   0.98
+  ],
+  "IBeam": [
+   0.281,
+   0.051,
+   0.719,
+   0.949
+  ],
+  "NWPen": [
+   0.141,
+   0.141,
+   0.863,
+   0.863
+  ],
+  "No": [
+   0.137,
+   0.02,
+   0.785,
+   0.977
+  ],
+  "SizeNS": [
+   0.203,
+   0.039,
+   0.801,
+   0.961
+  ],
+  "SizeWE": [
+   0.039,
+   0.203,
+   0.961,
+   0.801
+  ],
+  "SizeNWSE": [
+   0.172,
+   0.172,
+   0.824,
+   0.824
+  ],
+  "SizeNESW": [
+   0.172,
+   0.172,
+   0.828,
+   0.824
+  ],
+  "SizeAll": [
+   0.039,
+   0.039,
+   0.961,
+   0.961
+  ],
+  "UpArrow": [
+   0.121,
+   0.063,
+   0.879,
+   0.906
+  ],
+  "Hand": [
+   0.059,
+   0.051,
+   0.926,
+   0.953
+  ],
+  "Pin": [
+   0.137,
+   0.02,
+   0.785,
+   0.977
+  ],
+  "Person": [
+   0.137,
+   0.02,
+   0.785,
+   0.977
+  ]
+ },
+ "fit": 0.673
+}

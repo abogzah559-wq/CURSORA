@@ -1,0 +1,375 @@
+{
+ "id": "xcursor-pro",
+ "name": "XCursor Pro",
+ "author": "Abdulkaiz Khatri (ful1e5)",
+ "license": "GPL-3.0",
+ "url": "https://github.com/ful1e5/XCursor-pro",
+ "tags": [
+  "dark",
+  "light",
+  "color",
+  "classic"
+ ],
+ "desc": {
+  "ar": "\u0627\u0644\u0633\u0647\u0645 \u0627\u0644\u0643\u0644\u0627\u0633\u064a\u0643\u064a \u0628\u062a\u0635\u0645\u064a\u0645 \u0639\u0635\u0631\u064a \u0648\u0646\u0638\u064a\u0641",
+  "en": "The classic arrow, modernised"
+ },
+ "kind": "tokens",
+ "dir": "svg",
+ "tokens": {
+  "fill": "#00FF00",
+  "edge": "#0000FF",
+  "accent": "#FF0000"
+ },
+ "variants": [
+  {
+   "id": "dark",
+   "name": "Dark",
+   "colors": {
+    "fill": "#000000",
+    "edge": "#FFFFFF",
+    "accent": "#000000"
+   },
+   "swatch": [
+    "#000000",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "light",
+   "name": "Light",
+   "colors": {
+    "fill": "#FFFFFF",
+    "edge": "#000000",
+    "accent": "#FFFFFF"
+   },
+   "swatch": [
+    "#FFFFFF",
+    "#000000"
+   ]
+  },
+  {
+   "id": "red",
+   "name": "Red",
+   "colors": {
+    "fill": "#FF0000",
+    "edge": "#FFFFFF",
+    "accent": "#FF0000"
+   },
+   "swatch": [
+    "#FF0000",
+    "#FFFFFF"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.svg",
+   "hot": [
+    0.2461,
+    0.0781
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.svg",
+   "hot": [
+    0.1523,
+    0.125
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch/left_ptr_watch-01.svg",
+    "left_ptr_watch/left_ptr_watch-02.svg",
+    "left_ptr_watch/left_ptr_watch-03.svg",
+    "left_ptr_watch/left_ptr_watch-04.svg",
+    "left_ptr_watch/left_ptr_watch-05.svg",
+    "left_ptr_watch/left_ptr_watch-06.svg",
+    "left_ptr_watch/left_ptr_watch-07.svg",
+    "left_ptr_watch/left_ptr_watch-08.svg",
+    "left_ptr_watch/left_ptr_watch-09.svg",
+    "left_ptr_watch/left_ptr_watch-10.svg",
+    "left_ptr_watch/left_ptr_watch-11.svg",
+    "left_ptr_watch/left_ptr_watch-12.svg",
+    "left_ptr_watch/left_ptr_watch-13.svg",
+    "left_ptr_watch/left_ptr_watch-14.svg",
+    "left_ptr_watch/left_ptr_watch-15.svg",
+    "left_ptr_watch/left_ptr_watch-16.svg",
+    "left_ptr_watch/left_ptr_watch-17.svg",
+    "left_ptr_watch/left_ptr_watch-18.svg",
+    "left_ptr_watch/left_ptr_watch-19.svg",
+    "left_ptr_watch/left_ptr_watch-20.svg",
+    "left_ptr_watch/left_ptr_watch-21.svg",
+    "left_ptr_watch/left_ptr_watch-22.svg",
+    "left_ptr_watch/left_ptr_watch-23.svg",
+    "left_ptr_watch/left_ptr_watch-24.svg",
+    "left_ptr_watch/left_ptr_watch-25.svg",
+    "left_ptr_watch/left_ptr_watch-26.svg",
+    "left_ptr_watch/left_ptr_watch-27.svg",
+    "left_ptr_watch/left_ptr_watch-28.svg",
+    "left_ptr_watch/left_ptr_watch-29.svg",
+    "left_ptr_watch/left_ptr_watch-30.svg",
+    "left_ptr_watch/left_ptr_watch-31.svg",
+    "left_ptr_watch/left_ptr_watch-32.svg",
+    "left_ptr_watch/left_ptr_watch-33.svg",
+    "left_ptr_watch/left_ptr_watch-34.svg",
+    "left_ptr_watch/left_ptr_watch-35.svg",
+    "left_ptr_watch/left_ptr_watch-36.svg",
+    "left_ptr_watch/left_ptr_watch-37.svg",
+    "left_ptr_watch/left_ptr_watch-38.svg",
+    "left_ptr_watch/left_ptr_watch-39.svg",
+    "left_ptr_watch/left_ptr_watch-40.svg"
+   ],
+   "delay": 50,
+   "hot": [
+    0.1563,
+    0.1172
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait/wait-01.svg",
+    "wait/wait-02.svg",
+    "wait/wait-03.svg",
+    "wait/wait-04.svg",
+    "wait/wait-05.svg",
+    "wait/wait-06.svg",
+    "wait/wait-07.svg",
+    "wait/wait-08.svg",
+    "wait/wait-09.svg",
+    "wait/wait-10.svg",
+    "wait/wait-11.svg",
+    "wait/wait-12.svg",
+    "wait/wait-13.svg",
+    "wait/wait-14.svg",
+    "wait/wait-15.svg",
+    "wait/wait-16.svg",
+    "wait/wait-17.svg",
+    "wait/wait-18.svg",
+    "wait/wait-19.svg",
+    "wait/wait-20.svg",
+    "wait/wait-21.svg",
+    "wait/wait-22.svg",
+    "wait/wait-23.svg",
+    "wait/wait-24.svg",
+    "wait/wait-25.svg",
+    "wait/wait-26.svg",
+    "wait/wait-27.svg",
+    "wait/wait-28.svg",
+    "wait/wait-29.svg",
+    "wait/wait-30.svg",
+    "wait/wait-31.svg",
+    "wait/wait-32.svg",
+    "wait/wait-33.svg",
+    "wait/wait-34.svg",
+    "wait/wait-35.svg",
+    "wait/wait-36.svg",
+    "wait/wait-37.svg",
+    "wait/wait-38.svg",
+    "wait/wait-39.svg",
+    "wait/wait-40.svg"
+   ],
+   "delay": 50,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.svg",
+   "hot": [
+    0.5,
+    0.4922
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.1094,
+    0.8828
+   ]
+  },
+  "No": {
+   "src": "crossed_circle.svg",
+   "hot": [
+    0.1523,
+    0.125
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "bottom_right_corner.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNESW": {
+   "src": "bottom_left_corner.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeAll": {
+   "src": "all-scroll.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.4688,
+    0.0391
+   ]
+  },
+  "Hand": {
+   "src": "hand2.svg",
+   "hot": [
+    0.3828,
+    0.0938
+   ]
+  },
+  "Pin": {
+   "src": "pin.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Person": {
+   "src": "person.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.215,
+   0.074,
+   0.883,
+   0.91
+  ],
+  "Help": [
+   0.125,
+   0.113,
+   0.832,
+   0.949
+  ],
+  "AppStarting": [
+   0.125,
+   0.113,
+   0.832,
+   0.945
+  ],
+  "Wait": [
+   0.027,
+   0.047,
+   0.973,
+   0.992
+  ],
+  "Crosshair": [
+   0.055,
+   0.074,
+   0.945,
+   0.965
+  ],
+  "IBeam": [
+   0.285,
+   0.098,
+   0.719,
+   0.945
+  ],
+  "NWPen": [
+   0.098,
+   0.109,
+   0.898,
+   0.922
+  ],
+  "No": [
+   0.125,
+   0.113,
+   0.832,
+   0.949
+  ],
+  "SizeNS": [
+   0.121,
+   0.102,
+   0.879,
+   0.934
+  ],
+  "SizeWE": [
+   0.086,
+   0.145,
+   0.914,
+   0.898
+  ],
+  "SizeNWSE": [
+   0.156,
+   0.172,
+   0.844,
+   0.863
+  ],
+  "SizeNESW": [
+   0.156,
+   0.172,
+   0.844,
+   0.863
+  ],
+  "SizeAll": [
+   0.086,
+   0.102,
+   0.914,
+   0.93
+  ],
+  "UpArrow": [
+   0.176,
+   0.039,
+   0.828,
+   0.941
+  ],
+  "Hand": [
+   0.113,
+   0.09,
+   0.887,
+   0.949
+  ],
+  "Pin": [
+   0.125,
+   0.113,
+   0.832,
+   0.949
+  ],
+  "Person": [
+   0.125,
+   0.113,
+   0.832,
+   0.949
+  ]
+ },
+ "fit": 0.742
+}

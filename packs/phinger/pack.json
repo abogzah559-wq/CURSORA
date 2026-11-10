@@ -1,0 +1,253 @@
+{
+ "id": "phinger",
+ "name": "Phinger",
+ "author": "Philipp Schaffrath",
+ "license": "CC-BY-SA-4.0",
+ "url": "https://github.com/phisch/phinger-cursors",
+ "tags": [
+  "dark",
+  "light",
+  "playful"
+ ],
+ "desc": {
+  "ar": "\u064a\u062f \u0645\u0631\u0633\u0648\u0645\u0629 \u0628\u0623\u0633\u0644\u0648\u0628 \u0644\u0637\u064a\u0641 \u0648\u0623\u0634\u0643\u0627\u0644 \u0645\u0645\u064a\u0632\u0629",
+  "en": "Friendly hand and distinctive shapes"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "dark",
+   "name": "Dark",
+   "polarity": "dark",
+   "swatch": [
+    "#0e0e0e",
+    "#ffffff"
+   ],
+   "dir": "dark"
+  },
+  {
+   "id": "light",
+   "name": "Light",
+   "polarity": "light",
+   "swatch": [
+    "#fafafa",
+    "#000000"
+   ],
+   "dir": "light"
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default_32.svg",
+   "hot": [
+    0.0156,
+    0.0156
+   ]
+  },
+  "Help": {
+   "src": "help_32.svg",
+   "hot": [
+    0.0156,
+    0.0156
+   ]
+  },
+  "AppStarting": {
+   "src": "progress_32.svg",
+   "spin": "spinner",
+   "spinFrames": 30,
+   "delay": 33,
+   "hot": [
+    0.0156,
+    0.0156
+   ]
+  },
+  "Wait": {
+   "src": "wait_32.svg",
+   "spin": "spinner",
+   "spinFrames": 30,
+   "delay": 33,
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair_32.svg",
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "IBeam": {
+   "src": "text_32.svg",
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "NWPen": {
+   "src": "pencil_32.svg",
+   "hot": [
+    0.1406,
+    0.8594
+   ]
+  },
+  "No": {
+   "src": "not-allowed_32.svg",
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "SizeNS": {
+   "src": "ns-resize_32.svg",
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "SizeWE": {
+   "src": "ew-resize_32.svg",
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "SizeNWSE": {
+   "src": "nwse-resize_32.svg",
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "SizeNESW": {
+   "src": "nesw-resize_32.svg",
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "SizeAll": {
+   "src": "move_32.svg",
+   "hot": [
+    0.4844,
+    0.4844
+   ]
+  },
+  "UpArrow": {
+   "src": "up_32.svg",
+   "hot": [
+    0.4844,
+    0.1406
+   ]
+  },
+  "Hand": {
+   "src": "pointer_32.svg",
+   "hot": [
+    0.4219,
+    0.2031
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0,
+   0,
+   0.469,
+   0.77
+  ],
+  "Help": [
+   0,
+   0,
+   1,
+   1
+  ],
+  "AppStarting": [
+   0,
+   0,
+   1,
+   1
+  ],
+  "Wait": [
+   0.156,
+   0.156,
+   0.813,
+   0.813
+  ],
+  "Crosshair": [
+   0.063,
+   0.063,
+   0.906,
+   0.906
+  ],
+  "IBeam": [
+   0.344,
+   0.125,
+   0.625,
+   0.844
+  ],
+  "NWPen": [
+   0.074,
+   0.098,
+   0.902,
+   0.926
+  ],
+  "No": [
+   0.152,
+   0.156,
+   0.813,
+   0.813
+  ],
+  "SizeNS": [
+   0.219,
+   0,
+   0.75,
+   0.969
+  ],
+  "SizeWE": [
+   0,
+   0.219,
+   0.969,
+   0.75
+  ],
+  "SizeNWSE": [
+   0.094,
+   0.094,
+   0.875,
+   0.875
+  ],
+  "SizeNESW": [
+   0.094,
+   0.094,
+   0.875,
+   0.875
+  ],
+  "SizeAll": [
+   0,
+   0,
+   0.969,
+   0.969
+  ],
+  "UpArrow": [
+   0.281,
+   0.125,
+   0.688,
+   0.844
+  ],
+  "Hand": [
+   0.063,
+   0.125,
+   0.813,
+   0.906
+  ]
+ },
+ "fit": 0.805
+}

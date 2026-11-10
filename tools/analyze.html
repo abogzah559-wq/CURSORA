@@ -1,0 +1,44 @@
+<!doctype html><meta charset="utf-8"><body><script src="../ui/engine.js"></script><script>
+window.analyze = async () => {
+  const E = CursoraEngine; const packs = await E.loadIndex('../packs/');
+  const res = {};
+  for (const p of packs) {
+    p.fit = 1; p.bbox = null;
+    const r = { bbox: {}, hashes: {}, errors: [] };
+    for (const role of E.ROLES) {
+      const spec = p.roles[role]; if (!spec.src && !spec.frames) continue;
+      try {
+        const d = E.newDesign(p.id, p.variants[0].id); d.global = { size: 256, shadow: false };
+        const out = await E.renderRole(d, role, 256);
+        const c = out.frames[0]; const px = c.getContext('2d').getImageData(0, 0, 256, 256).data;
+        let x0 = 256, y0 = 256, x1 = -1, y1 = -1;
+        for (const f of out.frames) { const q = f.getContext('2d').getImageData(0,0,256,256).data;
+          for (let y = 0; y < 256; y++) for (let x = 0; x < 256; x++) if (q[(y*256+x)*4+3] > 8) { if (x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; } }
+        r.bbox[role] = [x0/256, y0/256, (x1+1)/256, (y1+1)/256].map(v => Math.round(v*1000)/1000);
+        if (role === 'Arrow' || role === 'Hand' || role === 'IBeam') {
+          // shape hash: 16x16 alpha grid of the bbox region
+          const g = document.createElement('canvas'); g.width = g.height = 16; const gx = g.getContext('2d');
+          gx.drawImage(c, x0, y0, Math.max(1,x1-x0+1), Math.max(1,y1-y0+1), 0, 0, 16, 16);
+          const a = gx.getImageData(0,0,16,16).data; let bits = ''; for (let i = 0; i < 256; i++) bits += a[i*4+3] > 100 ? '1' : '0';
+          r.hashes[role] = bits;
+        }
+      } catch (e) { r.errors.push(role + ': ' + e.message); }
+    }
+    r.variants = {};
+    if (p.kind === 'files') for (const v of p.variants) {
+      try {
+        const d = E.newDesign(p.id, v.id); d.global = { size: 64, shadow: false };
+        const c = (await E.renderRole(d, 'Arrow', 64)).frames[0]; const q = c.getContext('2d').getImageData(0,0,64,64).data;
+        const px = []; for (let i = 0; i < q.length; i += 4) if (q[i+3] > 200) px.push([q[i],q[i+1],q[i+2],(0.2126*q[i]+0.7152*q[i+1]+0.0722*q[i+2])/255]);
+        px.sort((a,b) => a[3]-b[3]); const mid = px.length >> 1;
+        const dark = px.filter(x => x[3] < 0.5), light = px.filter(x => x[3] >= 0.5);
+        const avg = arr => '#' + [0,1,2].map(k => Math.round(arr.reduce((s,x)=>s+x[k],0)/Math.max(1,arr.length)).toString(16).padStart(2,'0')).join('');
+        const isDark = dark.length >= light.length;
+        r.variants[v.id] = { polarity: isDark ? 'dark' : 'light', swatch: isDark ? [avg(dark), avg(light.length ? light : [[255,255,255]])] : [avg(light), avg(dark.length ? dark : [[0,0,0]])] };
+      } catch (e) { r.errors.push(v.id + ': ' + e.message); }
+    }
+    res[p.id] = r;
+  }
+  return res;
+};
+</script>

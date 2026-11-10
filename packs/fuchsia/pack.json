@@ -1,0 +1,426 @@
+{
+ "id": "fuchsia",
+ "name": "Fuchsia",
+ "author": "Abdulkaiz Khatri (ful1e5)",
+ "license": "GPL-3.0",
+ "url": "https://github.com/ful1e5/fuchsia-cursor",
+ "tags": [
+  "color",
+  "rounded"
+ ],
+ "desc": {
+  "ar": "\u0645\u0633\u062a\u0648\u062d\u0649 \u0645\u0646 \u0646\u0638\u0627\u0645 Fuchsia\u060c \u0645\u0644\u0648\u0646 \u0648\u062d\u064a\u0648\u064a",
+  "en": "Inspired by Fuchsia OS"
+ },
+ "kind": "tokens",
+ "dir": "svg",
+ "tokens": {
+  "fill": "#00FF00",
+  "edge": "#0000FF",
+  "accent": "#FF0000"
+ },
+ "variants": [
+  {
+   "id": "fuchsia",
+   "name": "Fuchsia",
+   "colors": {
+    "fill": "#E11C79",
+    "edge": "#FFFFFF",
+    "accent": "#E11C79"
+   },
+   "swatch": [
+    "#E11C79",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "pop",
+   "name": "Pop",
+   "colors": {
+    "fill": "#F8B572",
+    "edge": "#FFFFFF",
+    "accent": "#F8B572"
+   },
+   "swatch": [
+    "#F8B572",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "red",
+   "name": "Red",
+   "colors": {
+    "fill": "#FF0000",
+    "edge": "#FFFFFF",
+    "accent": "#FF0000"
+   },
+   "swatch": [
+    "#FF0000",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "amber",
+   "name": "Amber",
+   "colors": {
+    "fill": "#FFA400",
+    "edge": "#FFFFFF",
+    "accent": "#FFA400"
+   },
+   "swatch": [
+    "#FFA400",
+    "#FFFFFF"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.svg",
+   "hot": [
+    0.1289,
+    0.1289
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.svg",
+   "hot": [
+    0.1289,
+    0.1289
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch/left_ptr_watch-01.svg",
+    "left_ptr_watch/left_ptr_watch-02.svg",
+    "left_ptr_watch/left_ptr_watch-03.svg",
+    "left_ptr_watch/left_ptr_watch-04.svg",
+    "left_ptr_watch/left_ptr_watch-05.svg",
+    "left_ptr_watch/left_ptr_watch-06.svg",
+    "left_ptr_watch/left_ptr_watch-07.svg",
+    "left_ptr_watch/left_ptr_watch-08.svg",
+    "left_ptr_watch/left_ptr_watch-09.svg",
+    "left_ptr_watch/left_ptr_watch-10.svg",
+    "left_ptr_watch/left_ptr_watch-11.svg",
+    "left_ptr_watch/left_ptr_watch-12.svg",
+    "left_ptr_watch/left_ptr_watch-13.svg",
+    "left_ptr_watch/left_ptr_watch-14.svg",
+    "left_ptr_watch/left_ptr_watch-15.svg",
+    "left_ptr_watch/left_ptr_watch-16.svg",
+    "left_ptr_watch/left_ptr_watch-17.svg",
+    "left_ptr_watch/left_ptr_watch-18.svg",
+    "left_ptr_watch/left_ptr_watch-19.svg",
+    "left_ptr_watch/left_ptr_watch-20.svg",
+    "left_ptr_watch/left_ptr_watch-21.svg",
+    "left_ptr_watch/left_ptr_watch-22.svg",
+    "left_ptr_watch/left_ptr_watch-23.svg",
+    "left_ptr_watch/left_ptr_watch-24.svg",
+    "left_ptr_watch/left_ptr_watch-25.svg",
+    "left_ptr_watch/left_ptr_watch-26.svg",
+    "left_ptr_watch/left_ptr_watch-27.svg",
+    "left_ptr_watch/left_ptr_watch-28.svg",
+    "left_ptr_watch/left_ptr_watch-29.svg",
+    "left_ptr_watch/left_ptr_watch-30.svg",
+    "left_ptr_watch/left_ptr_watch-31.svg",
+    "left_ptr_watch/left_ptr_watch-32.svg",
+    "left_ptr_watch/left_ptr_watch-33.svg",
+    "left_ptr_watch/left_ptr_watch-34.svg",
+    "left_ptr_watch/left_ptr_watch-35.svg",
+    "left_ptr_watch/left_ptr_watch-36.svg",
+    "left_ptr_watch/left_ptr_watch-37.svg",
+    "left_ptr_watch/left_ptr_watch-38.svg",
+    "left_ptr_watch/left_ptr_watch-39.svg",
+    "left_ptr_watch/left_ptr_watch-40.svg",
+    "left_ptr_watch/left_ptr_watch-41.svg",
+    "left_ptr_watch/left_ptr_watch-42.svg",
+    "left_ptr_watch/left_ptr_watch-43.svg",
+    "left_ptr_watch/left_ptr_watch-44.svg",
+    "left_ptr_watch/left_ptr_watch-45.svg",
+    "left_ptr_watch/left_ptr_watch-46.svg",
+    "left_ptr_watch/left_ptr_watch-47.svg",
+    "left_ptr_watch/left_ptr_watch-48.svg",
+    "left_ptr_watch/left_ptr_watch-49.svg",
+    "left_ptr_watch/left_ptr_watch-50.svg",
+    "left_ptr_watch/left_ptr_watch-51.svg",
+    "left_ptr_watch/left_ptr_watch-52.svg",
+    "left_ptr_watch/left_ptr_watch-53.svg",
+    "left_ptr_watch/left_ptr_watch-54.svg",
+    "left_ptr_watch/left_ptr_watch-55.svg",
+    "left_ptr_watch/left_ptr_watch-56.svg",
+    "left_ptr_watch/left_ptr_watch-57.svg",
+    "left_ptr_watch/left_ptr_watch-58.svg",
+    "left_ptr_watch/left_ptr_watch-59.svg",
+    "left_ptr_watch/left_ptr_watch-60.svg"
+   ],
+   "delay": 35,
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait/wait-01.svg",
+    "wait/wait-02.svg",
+    "wait/wait-03.svg",
+    "wait/wait-04.svg",
+    "wait/wait-05.svg",
+    "wait/wait-06.svg",
+    "wait/wait-07.svg",
+    "wait/wait-08.svg",
+    "wait/wait-09.svg",
+    "wait/wait-10.svg",
+    "wait/wait-11.svg",
+    "wait/wait-12.svg",
+    "wait/wait-13.svg",
+    "wait/wait-14.svg",
+    "wait/wait-15.svg",
+    "wait/wait-16.svg",
+    "wait/wait-17.svg",
+    "wait/wait-18.svg",
+    "wait/wait-19.svg",
+    "wait/wait-20.svg",
+    "wait/wait-21.svg",
+    "wait/wait-22.svg",
+    "wait/wait-23.svg",
+    "wait/wait-24.svg",
+    "wait/wait-25.svg",
+    "wait/wait-26.svg",
+    "wait/wait-27.svg",
+    "wait/wait-28.svg",
+    "wait/wait-29.svg",
+    "wait/wait-30.svg",
+    "wait/wait-31.svg",
+    "wait/wait-32.svg",
+    "wait/wait-33.svg",
+    "wait/wait-34.svg",
+    "wait/wait-35.svg",
+    "wait/wait-36.svg",
+    "wait/wait-37.svg",
+    "wait/wait-38.svg",
+    "wait/wait-39.svg",
+    "wait/wait-40.svg",
+    "wait/wait-41.svg",
+    "wait/wait-42.svg",
+    "wait/wait-43.svg",
+    "wait/wait-44.svg",
+    "wait/wait-45.svg",
+    "wait/wait-46.svg",
+    "wait/wait-47.svg",
+    "wait/wait-48.svg",
+    "wait/wait-49.svg",
+    "wait/wait-50.svg",
+    "wait/wait-51.svg",
+    "wait/wait-52.svg",
+    "wait/wait-53.svg",
+    "wait/wait-54.svg",
+    "wait/wait-55.svg",
+    "wait/wait-56.svg",
+    "wait/wait-57.svg",
+    "wait/wait-58.svg",
+    "wait/wait-59.svg",
+    "wait/wait-60.svg"
+   ],
+   "delay": 35,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.2148,
+    0.793
+   ]
+  },
+  "No": {
+   "src": "crossed_circle.svg",
+   "hot": [
+    0.1289,
+    0.1289
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "bottom_right_corner.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNESW": {
+   "src": "bottom_left_corner.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeAll": {
+   "src": "all-scroll.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.5,
+    0.0703
+   ]
+  },
+  "Hand": {
+   "src": "hand2.svg",
+   "hot": [
+    0.1289,
+    0.1289
+   ]
+  },
+  "Pin": {
+   "src": "pin.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Person": {
+   "src": "person.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.113,
+   0.125,
+   0.887,
+   0.906
+  ],
+  "Help": [
+   0.113,
+   0.125,
+   0.887,
+   0.906
+  ],
+  "AppStarting": [
+   0.113,
+   0.125,
+   0.887,
+   0.906
+  ],
+  "Wait": [
+   0.027,
+   0.016,
+   0.973,
+   0.961
+  ],
+  "Crosshair": [
+   0.051,
+   0.074,
+   0.938,
+   0.961
+  ],
+  "IBeam": [
+   0.406,
+   0.102,
+   0.59,
+   0.941
+  ],
+  "NWPen": [
+   0.191,
+   0.223,
+   0.793,
+   0.832
+  ],
+  "No": [
+   0.113,
+   0.125,
+   0.887,
+   0.906
+  ],
+  "SizeNS": [
+   0.066,
+   0.199,
+   0.926,
+   0.832
+  ],
+  "SizeWE": [
+   0.176,
+   0.082,
+   0.801,
+   0.949
+  ],
+  "SizeNWSE": [
+   0.117,
+   0.125,
+   0.883,
+   0.902
+  ],
+  "SizeNESW": [
+   0.105,
+   0.125,
+   0.875,
+   0.902
+  ],
+  "SizeAll": [
+   0.09,
+   0.098,
+   0.895,
+   0.914
+  ],
+  "UpArrow": [
+   0.113,
+   0.059,
+   0.887,
+   0.996
+  ],
+  "Hand": [
+   0.125,
+   0.125,
+   0.875,
+   0.875
+  ],
+  "Pin": [
+   0.113,
+   0.125,
+   0.887,
+   0.906
+  ],
+  "Person": [
+   0.113,
+   0.125,
+   0.887,
+   0.906
+  ]
+ },
+ "fit": 0.794
+}

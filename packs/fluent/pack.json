@@ -1,0 +1,297 @@
+{
+ "id": "fluent",
+ "name": "Fluent",
+ "author": "Vince Liuice",
+ "license": "GPL-3.0",
+ "url": "https://github.com/vinceliuice/Fluent-icon-theme",
+ "tags": [
+  "dark",
+  "light",
+  "windows"
+ ],
+ "desc": {
+  "ar": "\u0628\u0631\u0648\u062d \u0648\u064a\u0646\u062f\u0648\u0632 11 \u0648\u062a\u0635\u0645\u064a\u0645 Fluent",
+  "en": "Windows 11 Fluent spirit"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "dark",
+   "name": "Dark",
+   "dir": "dark",
+   "polarity": "dark",
+   "swatch": [
+    "#353535",
+    "#f5f5f5"
+   ]
+  },
+  {
+   "id": "white",
+   "name": "White",
+   "dir": "white",
+   "polarity": "light",
+   "swatch": [
+    "#fbfbfb",
+    "#272931"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default.svg",
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "Help": {
+   "src": "help.svg",
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress-01.svg",
+    "progress-02.svg",
+    "progress-03.svg",
+    "progress-04.svg",
+    "progress-05.svg",
+    "progress-06.svg",
+    "progress-07.svg",
+    "progress-08.svg",
+    "progress-09.svg",
+    "progress-10.svg",
+    "progress-11.svg",
+    "progress-12.svg",
+    "progress-13.svg",
+    "progress-14.svg",
+    "progress-15.svg",
+    "progress-16.svg",
+    "progress-17.svg",
+    "progress-18.svg",
+    "progress-19.svg",
+    "progress-20.svg",
+    "progress-21.svg",
+    "progress-22.svg",
+    "progress-23.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-01.svg",
+    "wait-02.svg",
+    "wait-03.svg",
+    "wait-04.svg",
+    "wait-05.svg",
+    "wait-06.svg",
+    "wait-07.svg",
+    "wait-08.svg",
+    "wait-09.svg",
+    "wait-10.svg",
+    "wait-11.svg",
+    "wait-12.svg",
+    "wait-13.svg",
+    "wait-14.svg",
+    "wait-15.svg",
+    "wait-16.svg",
+    "wait-17.svg",
+    "wait-18.svg",
+    "wait-19.svg",
+    "wait-20.svg",
+    "wait-21.svg",
+    "wait-22.svg",
+    "wait-23.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "text.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.125,
+    0.9063
+   ]
+  },
+  "No": {
+   "src": "not-allowed.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNS": {
+   "src": "size_ver.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "size_hor.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "size_fdiag.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNESW": {
+   "src": "size_bdiag.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeAll": {
+   "src": "fleur.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.625,
+    0.125
+   ]
+  },
+  "Hand": {
+   "src": "pointer.svg",
+   "hot": [
+    0.375,
+    0.125
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.082,
+   0.125,
+   0.563,
+   0.789
+  ],
+  "Help": [
+   0.082,
+   0.125,
+   0.977,
+   0.977
+  ],
+  "AppStarting": [
+   0.082,
+   0.125,
+   0.977,
+   0.977
+  ],
+  "Wait": [
+   0.105,
+   0.148,
+   0.895,
+   0.934
+  ],
+  "Crosshair": [
+   0.184,
+   0.184,
+   0.879,
+   0.879
+  ],
+  "IBeam": [
+   0.363,
+   0.203,
+   0.668,
+   0.828
+  ],
+  "NWPen": [
+   0.039,
+   0.383,
+   0.641,
+   0.992
+  ],
+  "No": [
+   0.125,
+   0.152,
+   0.879,
+   0.906
+  ],
+  "SizeNS": [
+   0.313,
+   0.031,
+   0.688,
+   1
+  ],
+  "SizeWE": [
+   0.004,
+   0.34,
+   0.996,
+   0.719
+  ],
+  "SizeNWSE": [
+   0.129,
+   0.156,
+   0.871,
+   0.91
+  ],
+  "SizeNESW": [
+   0.129,
+   0.156,
+   0.871,
+   0.91
+  ],
+  "SizeAll": [
+   0.031,
+   0.031,
+   0.973,
+   0.988
+  ],
+  "UpArrow": [
+   0.25,
+   0.125,
+   0.75,
+   0.844
+  ],
+  "Hand": [
+   0.297,
+   0.125,
+   0.879,
+   0.723
+  ]
+ },
+ "fit": 0.934
+}

@@ -1,0 +1,412 @@
+{
+ "id": "banana",
+ "name": "Banana",
+ "author": "Abdulkaiz Khatri (ful1e5)",
+ "license": "GPL-3.0",
+ "url": "https://github.com/ful1e5/banana-cursor",
+ "tags": [
+  "color",
+  "playful"
+ ],
+ "desc": {
+  "ar": "\u0633\u0647\u0645 \u0639\u0644\u0649 \u0634\u0643\u0644 \u0645\u0648\u0632\u0629\u060c \u0645\u0631\u062d \u0648\u063a\u0631\u064a\u0628",
+  "en": "A banana-shaped pointer"
+ },
+ "kind": "tokens",
+ "dir": "svg",
+ "tokens": {
+  "fill": "#FCD900",
+  "edge": "#6D3C1B"
+ },
+ "variants": [
+  {
+   "id": "banana",
+   "name": "Banana",
+   "colors": {
+    "fill": "#FCD900",
+    "edge": "#6D3C1B",
+    "accent": "#FCD900"
+   },
+   "swatch": [
+    "#FCD900",
+    "#6D3C1B"
+   ]
+  },
+  {
+   "id": "green",
+   "name": "Green",
+   "colors": {
+    "fill": "#54F851",
+    "edge": "#0C2608",
+    "accent": "#54F851"
+   },
+   "swatch": [
+    "#54F851",
+    "#0C2608"
+   ]
+  },
+  {
+   "id": "blue",
+   "name": "Blue",
+   "colors": {
+    "fill": "#64CDCD",
+    "edge": "#0E2026",
+    "accent": "#64CDCD"
+   },
+   "swatch": [
+    "#64CDCD",
+    "#0E2026"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.svg",
+   "hot": [
+    0.2031,
+    0.1953
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.svg",
+   "hot": [
+    0.1328,
+    0.1836
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch/left_ptr_watch-01.svg",
+    "left_ptr_watch/left_ptr_watch-02.svg",
+    "left_ptr_watch/left_ptr_watch-03.svg",
+    "left_ptr_watch/left_ptr_watch-04.svg",
+    "left_ptr_watch/left_ptr_watch-05.svg",
+    "left_ptr_watch/left_ptr_watch-06.svg",
+    "left_ptr_watch/left_ptr_watch-07.svg",
+    "left_ptr_watch/left_ptr_watch-08.svg",
+    "left_ptr_watch/left_ptr_watch-09.svg",
+    "left_ptr_watch/left_ptr_watch-10.svg",
+    "left_ptr_watch/left_ptr_watch-11.svg",
+    "left_ptr_watch/left_ptr_watch-12.svg",
+    "left_ptr_watch/left_ptr_watch-13.svg",
+    "left_ptr_watch/left_ptr_watch-14.svg",
+    "left_ptr_watch/left_ptr_watch-15.svg",
+    "left_ptr_watch/left_ptr_watch-16.svg",
+    "left_ptr_watch/left_ptr_watch-17.svg",
+    "left_ptr_watch/left_ptr_watch-18.svg",
+    "left_ptr_watch/left_ptr_watch-19.svg",
+    "left_ptr_watch/left_ptr_watch-20.svg",
+    "left_ptr_watch/left_ptr_watch-21.svg",
+    "left_ptr_watch/left_ptr_watch-22.svg",
+    "left_ptr_watch/left_ptr_watch-23.svg",
+    "left_ptr_watch/left_ptr_watch-24.svg",
+    "left_ptr_watch/left_ptr_watch-25.svg",
+    "left_ptr_watch/left_ptr_watch-26.svg",
+    "left_ptr_watch/left_ptr_watch-27.svg",
+    "left_ptr_watch/left_ptr_watch-28.svg",
+    "left_ptr_watch/left_ptr_watch-29.svg",
+    "left_ptr_watch/left_ptr_watch-30.svg",
+    "left_ptr_watch/left_ptr_watch-31.svg",
+    "left_ptr_watch/left_ptr_watch-32.svg",
+    "left_ptr_watch/left_ptr_watch-33.svg",
+    "left_ptr_watch/left_ptr_watch-34.svg",
+    "left_ptr_watch/left_ptr_watch-35.svg",
+    "left_ptr_watch/left_ptr_watch-36.svg",
+    "left_ptr_watch/left_ptr_watch-37.svg",
+    "left_ptr_watch/left_ptr_watch-38.svg",
+    "left_ptr_watch/left_ptr_watch-39.svg",
+    "left_ptr_watch/left_ptr_watch-40.svg",
+    "left_ptr_watch/left_ptr_watch-41.svg",
+    "left_ptr_watch/left_ptr_watch-42.svg",
+    "left_ptr_watch/left_ptr_watch-43.svg",
+    "left_ptr_watch/left_ptr_watch-44.svg",
+    "left_ptr_watch/left_ptr_watch-45.svg",
+    "left_ptr_watch/left_ptr_watch-46.svg",
+    "left_ptr_watch/left_ptr_watch-47.svg",
+    "left_ptr_watch/left_ptr_watch-48.svg",
+    "left_ptr_watch/left_ptr_watch-49.svg",
+    "left_ptr_watch/left_ptr_watch-50.svg",
+    "left_ptr_watch/left_ptr_watch-51.svg",
+    "left_ptr_watch/left_ptr_watch-52.svg",
+    "left_ptr_watch/left_ptr_watch-53.svg",
+    "left_ptr_watch/left_ptr_watch-54.svg",
+    "left_ptr_watch/left_ptr_watch-55.svg",
+    "left_ptr_watch/left_ptr_watch-56.svg",
+    "left_ptr_watch/left_ptr_watch-57.svg",
+    "left_ptr_watch/left_ptr_watch-58.svg",
+    "left_ptr_watch/left_ptr_watch-59.svg",
+    "left_ptr_watch/left_ptr_watch-60.svg"
+   ],
+   "delay": 20,
+   "hot": [
+    0.2031,
+    0.1953
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait/wait-01.svg",
+    "wait/wait-02.svg",
+    "wait/wait-03.svg",
+    "wait/wait-04.svg",
+    "wait/wait-05.svg",
+    "wait/wait-06.svg",
+    "wait/wait-07.svg",
+    "wait/wait-08.svg",
+    "wait/wait-09.svg",
+    "wait/wait-10.svg",
+    "wait/wait-11.svg",
+    "wait/wait-12.svg",
+    "wait/wait-13.svg",
+    "wait/wait-14.svg",
+    "wait/wait-15.svg",
+    "wait/wait-16.svg",
+    "wait/wait-17.svg",
+    "wait/wait-18.svg",
+    "wait/wait-19.svg",
+    "wait/wait-20.svg",
+    "wait/wait-21.svg",
+    "wait/wait-22.svg",
+    "wait/wait-23.svg",
+    "wait/wait-24.svg",
+    "wait/wait-25.svg",
+    "wait/wait-26.svg",
+    "wait/wait-27.svg",
+    "wait/wait-28.svg",
+    "wait/wait-29.svg",
+    "wait/wait-30.svg",
+    "wait/wait-31.svg",
+    "wait/wait-32.svg",
+    "wait/wait-33.svg",
+    "wait/wait-34.svg",
+    "wait/wait-35.svg",
+    "wait/wait-36.svg",
+    "wait/wait-37.svg",
+    "wait/wait-38.svg",
+    "wait/wait-39.svg",
+    "wait/wait-40.svg",
+    "wait/wait-41.svg",
+    "wait/wait-42.svg",
+    "wait/wait-43.svg",
+    "wait/wait-44.svg",
+    "wait/wait-45.svg",
+    "wait/wait-46.svg",
+    "wait/wait-47.svg",
+    "wait/wait-48.svg",
+    "wait/wait-49.svg",
+    "wait/wait-50.svg",
+    "wait/wait-51.svg",
+    "wait/wait-52.svg",
+    "wait/wait-53.svg",
+    "wait/wait-54.svg",
+    "wait/wait-55.svg",
+    "wait/wait-56.svg",
+    "wait/wait-57.svg",
+    "wait/wait-58.svg",
+    "wait/wait-59.svg",
+    "wait/wait-60.svg"
+   ],
+   "delay": 20,
+   "hot": [
+    0.1953,
+    0.2031
+   ]
+  },
+  "Crosshair": {
+   "src": "cross.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.1992,
+    0.8008
+   ]
+  },
+  "No": {
+   "src": "dnd_no_drop.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "bd_double_arrow.svg",
+   "hot": [
+    0.5,
+    0.5078
+   ]
+  },
+  "SizeNESW": {
+   "src": "fd_double_arrow.svg",
+   "hot": [
+    0.4961,
+    0.5039
+   ]
+  },
+  "SizeAll": {
+   "src": "all-scroll.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.2031,
+    0.1953
+   ]
+  },
+  "Hand": {
+   "src": "hand2.svg",
+   "hot": [
+    0.1523,
+    0.1758
+   ]
+  },
+  "Pin": {
+   "src": "pin.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Person": {
+   "src": "person.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.195,
+   0.109,
+   0.824,
+   0.891
+  ],
+  "Help": [
+   0.125,
+   0.008,
+   0.965,
+   0.891
+  ],
+  "AppStarting": [
+   0.059,
+   0.055,
+   0.957,
+   0.941
+  ],
+  "Wait": [
+   0.059,
+   0.055,
+   0.957,
+   0.941
+  ],
+  "Crosshair": [
+   0.125,
+   0.121,
+   0.875,
+   0.875
+  ],
+  "IBeam": [
+   0.355,
+   0.156,
+   0.672,
+   0.848
+  ],
+  "NWPen": [
+   0.199,
+   0.199,
+   0.805,
+   0.809
+  ],
+  "No": [
+   0.191,
+   0.18,
+   0.824,
+   0.813
+  ],
+  "SizeNS": [
+   0.324,
+   0.016,
+   0.699,
+   0.98
+  ],
+  "SizeWE": [
+   0.012,
+   0.32,
+   0.996,
+   0.68
+  ],
+  "SizeNWSE": [
+   0.129,
+   0.125,
+   0.891,
+   0.867
+  ],
+  "SizeNESW": [
+   0.129,
+   0.125,
+   0.891,
+   0.867
+  ],
+  "SizeAll": [
+   0.113,
+   0.109,
+   0.906,
+   0.883
+  ],
+  "UpArrow": [
+   0.195,
+   0.109,
+   0.824,
+   0.891
+  ],
+  "Hand": [
+   0.133,
+   0.047,
+   0.828,
+   0.848
+  ],
+  "Pin": [
+   0.125,
+   0.008,
+   0.965,
+   0.891
+  ],
+  "Person": [
+   0.125,
+   0.008,
+   0.965,
+   0.891
+  ]
+ },
+ "fit": 0.793
+}

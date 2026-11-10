@@ -1,0 +1,299 @@
+{
+ "id": "capitaine",
+ "name": "Capitaine",
+ "author": "Keefer Rourke",
+ "license": "LGPL-3.0",
+ "url": "https://github.com/keeferrourke/capitaine-cursors",
+ "tags": [
+  "dark",
+  "light",
+  "mac"
+ ],
+ "desc": {
+  "ar": "\u0645\u0633\u062a\u0648\u062d\u0649 \u0645\u0646 \u0627\u0644\u0645\u0627\u0643 \u0628\u0644\u0645\u0633\u0629 KDE\u060c \u0646\u0627\u0639\u0645 \u0648\u0647\u0627\u062f\u0626",
+  "en": "macOS-inspired with a KDE touch"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "dark",
+   "name": "Dark",
+   "polarity": "dark",
+   "swatch": [
+    "#1d1d1d",
+    "#e5e5e5"
+   ],
+   "dir": "dark"
+  },
+  {
+   "id": "light",
+   "name": "Light",
+   "polarity": "light",
+   "swatch": [
+    "#f9f9f9",
+    "#1b1b1b"
+   ],
+   "dir": "light"
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default.svg",
+   "hot": [
+    0.1667,
+    0.0833
+   ]
+  },
+  "Help": {
+   "src": "help.svg",
+   "hot": [
+    0.1667,
+    0.0833
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress-00.svg",
+    "progress-01.svg",
+    "progress-02.svg",
+    "progress-03.svg",
+    "progress-04.svg",
+    "progress-05.svg",
+    "progress-06.svg",
+    "progress-07.svg",
+    "progress-08.svg",
+    "progress-09.svg",
+    "progress-10.svg",
+    "progress-11.svg",
+    "progress-12.svg",
+    "progress-13.svg",
+    "progress-14.svg",
+    "progress-15.svg",
+    "progress-16.svg",
+    "progress-17.svg",
+    "progress-18.svg",
+    "progress-19.svg",
+    "progress-20.svg",
+    "progress-21.svg",
+    "progress-22.svg",
+    "progress-23.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.1667,
+    0.0833
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-00.svg",
+    "wait-01.svg",
+    "wait-02.svg",
+    "wait-03.svg",
+    "wait-04.svg",
+    "wait-05.svg",
+    "wait-06.svg",
+    "wait-07.svg",
+    "wait-08.svg",
+    "wait-09.svg",
+    "wait-10.svg",
+    "wait-11.svg",
+    "wait-12.svg",
+    "wait-13.svg",
+    "wait-14.svg",
+    "wait-15.svg",
+    "wait-16.svg",
+    "wait-17.svg",
+    "wait-18.svg",
+    "wait-19.svg",
+    "wait-20.svg",
+    "wait-21.svg",
+    "wait-22.svg",
+    "wait-23.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "text.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.1667,
+    0.1667
+   ]
+  },
+  "No": {
+   "src": "not-allowed.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNS": {
+   "src": "size_ver.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "size_hor.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "size_fdiag.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNESW": {
+   "src": "size_bdiag.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeAll": {
+   "src": "fleur.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.5,
+    0.1667
+   ]
+  },
+  "Hand": {
+   "src": "pointer.svg",
+   "hot": [
+    0.5,
+    0.25
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.102,
+   0.031,
+   0.566,
+   0.738
+  ],
+  "Help": [
+   0.102,
+   0.031,
+   0.961,
+   0.902
+  ],
+  "AppStarting": [
+   0.102,
+   0.031,
+   0.961,
+   0.902
+  ],
+  "Wait": [
+   0.082,
+   0.082,
+   0.918,
+   0.918
+  ],
+  "Crosshair": [
+   0.059,
+   0.059,
+   0.941,
+   0.941
+  ],
+  "IBeam": [
+   0.328,
+   0.117,
+   0.672,
+   0.965
+  ],
+  "NWPen": [
+   0.102,
+   0.387,
+   0.645,
+   0.938
+  ],
+  "No": [
+   0.176,
+   0.215,
+   0.824,
+   0.867
+  ],
+  "SizeNS": [
+   0.355,
+   0.07,
+   0.645,
+   0.93
+  ],
+  "SizeWE": [
+   0.07,
+   0.387,
+   0.93,
+   0.688
+  ],
+  "SizeNWSE": [
+   0.172,
+   0.203,
+   0.828,
+   0.871
+  ],
+  "SizeNESW": [
+   0.172,
+   0.203,
+   0.828,
+   0.871
+  ],
+  "SizeAll": [
+   0.07,
+   0.078,
+   0.93,
+   0.949
+  ],
+  "UpArrow": [
+   0.266,
+   0.137,
+   0.746,
+   0.895
+  ],
+  "Hand": [
+   0.238,
+   0.215,
+   0.848,
+   0.867
+  ]
+ },
+ "fit": 0.877
+}

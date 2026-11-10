@@ -1,0 +1,323 @@
+{
+ "id": "google-dot",
+ "name": "Google Dot",
+ "author": "Abdulkaiz Khatri (ful1e5)",
+ "license": "GPL-3.0",
+ "url": "https://github.com/ful1e5/Google_Cursor",
+ "tags": [
+  "dark",
+  "light",
+  "color",
+  "minimal"
+ ],
+ "desc": {
+  "ar": "\u0646\u0642\u0637\u0629 \u062f\u0627\u0626\u0631\u064a\u0629 \u0628\u0623\u0633\u0644\u0648\u0628 \u062c\u0648\u062c\u0644\u060c \u0645\u062e\u062a\u0644\u0641 \u062a\u0645\u0627\u0645\u064b\u0627",
+  "en": "Google-style round dot cursor"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "black",
+   "name": "Black",
+   "dir": "black",
+   "polarity": "light",
+   "swatch": [
+    "#fbfbfb",
+    "#050505"
+   ]
+  },
+  {
+   "id": "white",
+   "name": "White",
+   "dir": "white",
+   "polarity": "dark",
+   "swatch": [
+    "#030303",
+    "#fafafa"
+   ]
+  },
+  {
+   "id": "blue",
+   "name": "Blue",
+   "dir": "blue",
+   "polarity": "light",
+   "swatch": [
+    "#f2f6fe",
+    "#4285f4"
+   ]
+  },
+  {
+   "id": "red",
+   "name": "Red",
+   "dir": "red",
+   "polarity": "light",
+   "swatch": [
+    "#fff9f9",
+    "#ff0303"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch-0001.png",
+    "left_ptr_watch-0003.png",
+    "left_ptr_watch-0005.png",
+    "left_ptr_watch-0007.png",
+    "left_ptr_watch-0009.png",
+    "left_ptr_watch-0011.png",
+    "left_ptr_watch-0013.png",
+    "left_ptr_watch-0015.png",
+    "left_ptr_watch-0017.png",
+    "left_ptr_watch-0019.png",
+    "left_ptr_watch-0021.png",
+    "left_ptr_watch-0023.png",
+    "left_ptr_watch-0025.png",
+    "left_ptr_watch-0027.png",
+    "left_ptr_watch-0029.png",
+    "left_ptr_watch-0031.png",
+    "left_ptr_watch-0033.png",
+    "left_ptr_watch-0035.png",
+    "left_ptr_watch-0037.png",
+    "left_ptr_watch-0039.png",
+    "left_ptr_watch-0041.png",
+    "left_ptr_watch-0043.png"
+   ],
+   "delay": 20,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-0001.png",
+    "wait-0003.png",
+    "wait-0005.png",
+    "wait-0007.png",
+    "wait-0009.png",
+    "wait-0011.png",
+    "wait-0013.png",
+    "wait-0015.png",
+    "wait-0017.png",
+    "wait-0019.png",
+    "wait-0021.png",
+    "wait-0023.png",
+    "wait-0025.png",
+    "wait-0027.png",
+    "wait-0029.png",
+    "wait-0031.png",
+    "wait-0033.png",
+    "wait-0035.png",
+    "wait-0037.png",
+    "wait-0039.png",
+    "wait-0041.png",
+    "wait-0043.png",
+    "wait-0045.png",
+    "wait-0047.png",
+    "wait-0049.png",
+    "wait-0051.png",
+    "wait-0053.png",
+    "wait-0055.png",
+    "wait-0057.png"
+   ],
+   "delay": 20,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "cross.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "No": {
+   "src": "dnd_no_drop.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "bottom_right_corner.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNESW": {
+   "src": "bottom_left_corner.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeAll": {
+   "src": "all-scroll.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "left_ptr.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Hand": {
+   "src": "hand2.png",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.09,
+   0.102,
+   0.91,
+   0.918
+  ],
+  "Help": [
+   0.09,
+   0.102,
+   0.91,
+   0.918
+  ],
+  "AppStarting": [
+   0.02,
+   0.031,
+   0.98,
+   0.988
+  ],
+  "Wait": [
+   0.02,
+   0.031,
+   0.98,
+   0.988
+  ],
+  "Crosshair": [
+   0.227,
+   0.242,
+   0.781,
+   0.785
+  ],
+  "IBeam": [
+   0.379,
+   0.094,
+   0.621,
+   0.902
+  ],
+  "NWPen": [
+   0.227,
+   0.242,
+   0.781,
+   0.785
+  ],
+  "No": [
+   0.09,
+   0.102,
+   0.91,
+   0.918
+  ],
+  "SizeNS": [
+   0.148,
+   0.09,
+   0.781,
+   0.926
+  ],
+  "SizeWE": [
+   0.082,
+   0.195,
+   0.918,
+   0.828
+  ],
+  "SizeNWSE": [
+   0.18,
+   0.191,
+   0.816,
+   0.828
+  ],
+  "SizeNESW": [
+   0.184,
+   0.195,
+   0.82,
+   0.828
+  ],
+  "SizeAll": [
+   0.098,
+   0.109,
+   0.898,
+   0.91
+  ],
+  "UpArrow": [
+   0.09,
+   0.102,
+   0.91,
+   0.918
+  ],
+  "Hand": [
+   0.09,
+   0.102,
+   0.91,
+   0.918
+  ]
+ },
+ "fit": 0.512
+}
