@@ -34,7 +34,7 @@
     gradient: false, fill2: '#6366f1', angle: 135,
     outline: 0, outlineColor: '#ffffff',
     shadow: true, shadowBlur: 2.5, shadowX: 0.6, shadowY: 1.4, shadowOpacity: 0.45, shadowColor: '#000000',
-    glow: false, glowColor: '#7dd3fc', glowBlur: 6, glowStrength: 1.3, glowSoft: 0.7,
+    glow: false, glowMode: 'circle', glowPos: 'center', glowColor: '#ffffff', glowBlur: 16, glowStrength: 1.6, glowSoft: 0.75,
     speed: 1,
   };
 
@@ -266,8 +266,8 @@
       for (let rr = w; rr > 0; rr -= Math.max(0.5, w / 3)) for (let i = 0; i < steps; i++) { const a = i / steps * Math.PI * 2; cx.drawImage(sil, Math.cos(a) * rr, Math.sin(a) * rr); }
       cx.drawImage(base, 0, 0); shape = c;
     }
-    if (p.glow) {
-      // a soft halo that follows the shape: widen the silhouette, blur it, and let it fade out before the canvas edge
+    if (p.glow && p.glowMode === 'shape') {
+      // a halo that hugs the outline: widen the silhouette, blur it
       const reach = p.glowBlur * k, soft = clamp(p.glowSoft == null ? 0.7 : p.glowSoft, 0, 1);
       const dil = reach * (1 - soft) * 0.6, sigma = Math.max(0.4, (reach - dil) / 2.6);
       let g = silhouette(shape, p.glowColor);
@@ -278,6 +278,20 @@
       }
       const gl = mkCanvas(C), gx = gl.getContext('2d'); gx.filter = `blur(${sigma}px)`; gx.drawImage(g, 0, 0);
       ox.save(); for (let st = p.glowStrength; st > 0.01; st -= 1) { ox.globalAlpha = Math.min(1, st); ox.drawImage(gl, 0, 0); } ox.restore();
+    } else if (p.glow) {
+      // a round disc of light behind the cursor (default): centred on the shape, or on the hotspot ("tip")
+      const [cx, cy] = p.glowPos === 'tip' ? [off + hpx, off + hpy] : glowCenter(src, base, C);
+      // never let the disc reach the frame edge, so it always stays a clean circle
+      const R = Math.max(1, Math.min(glowRadius(p, S), cx - 1, cy - 1, C - cx - 1, C - cy - 1)), soft = clamp(p.glowSoft == null ? 0.7 : p.glowSoft, 0, 1);
+      const [r, g, b] = hexRgb(p.glowColor);
+      const a = clamp(p.glowStrength, 0, 3) / 3; // brightness 0..300% → peak opacity
+      const core = Math.min(1, a * 1.15), inner = R * (1 - soft) * 0.92;
+      const gr = ox.createRadialGradient(cx, cy, 0, cx, cy, R);
+      gr.addColorStop(0, `rgba(${r},${g},${b},${core})`);
+      gr.addColorStop(Math.max(0.001, inner / R), `rgba(${r},${g},${b},${core})`);
+      // smooth fall-off (eased) between the solid core and the rim
+      for (let i = 1; i <= 6; i++) { const u = i / 6, pos = inner / R + (1 - inner / R) * u; const e = Math.pow(1 - u, 2.2); gr.addColorStop(Math.min(1, pos), `rgba(${r},${g},${b},${core * e})`); }
+      ox.save(); ox.fillStyle = gr; ox.beginPath(); ox.arc(cx, cy, R, 0, Math.PI * 2); ox.fill(); ox.restore();
     }
     if (p.shadow) {
       const [r, g, b] = hexRgb(p.shadowColor);
@@ -298,6 +312,18 @@
     return { canvas: fin, hot: [clamp(hx, 0, C - 1), clamp(hy, 0, C - 1)] };
   }
 
+  // Radius of the round glow in canvas pixels: glowBlur is the disc *diameter* as a multiple of the shape box ×10
+  // (slider "size"), so 10 = as wide as the cursor box, 20 = twice as wide.
+  function glowRadius(p, S) { return Math.max(1, (p.glowBlur / 10) * S / 2); }
+  // Centre of the visible shape (first frame of each role is enough; animated frames share the same box).
+  function glowCenter(src, canvas, C) {
+    if (src._gc && src._gc[0] === C) return src._gc[1];
+    const px = canvas.getContext('2d').getImageData(0, 0, C, C).data; let x0 = C, y0 = C, x1 = -1, y1 = -1;
+    for (let y = 0; y < C; y++) for (let x = 0; x < C; x++) if (px[(y * C + x) * 4 + 3] > 30) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    const c = x1 < 0 ? [C / 2, C / 2] : [(x0 + x1 + 1) / 2, (y0 + y1 + 1) / 2];
+    src._gc = [C, c]; return c;
+  }
+
   // Effective params for a role inside a design.
   function paramsFor(design, role) {
     const g = { ...DEFAULTS, ...(design.global || {}) };
@@ -313,10 +339,15 @@
   // has a single cursor size: the canvas grows (to a multiple of 16) and the shape keeps its on-screen size.
   function layout(design, size) {
     const S0 = { ...DEFAULTS, ...(design.global || {}) }.size; size = size || S0;
-    let gm = 0;
-    for (const role of ROLES) { const p = paramsFor(design, role); if (p.glow) gm = Math.max(gm, p.glowBlur * 1.2 + 1); }
-    if (!gm) return { canvas: size, shape: size };
-    const need = 1 + 2 * gm / BASE_SIZE;
+    let need = 1;
+    for (const role of ROLES) {
+      const p = paramsFor(design, role); if (!p.glow) continue;
+      // the shape-hugging halo needs a margin; the round disc needs its diameter (it may sit off-centre at the tip)
+      if (p.glowMode === 'shape') need = Math.max(need, 1 + 2 * (p.glowBlur * 1.2 + 1) / BASE_SIZE);
+      // the disc is centred on the visible shape (up to ~0.2 box off the box centre) or on the hotspot (up to 0.5)
+      else need = Math.max(need, p.glowBlur / 10 + (p.glowPos === 'tip' ? 1 : 0.4));
+    }
+    if (need <= 1) return { canvas: size, shape: size };
     const C0 = Math.min(256, Math.ceil(S0 * need / 16) * 16);
     const canvas = Math.max(8, Math.round(size * C0 / S0));
     return { canvas, shape: Math.min(size, canvas / need) };
@@ -413,15 +444,20 @@
   const sizeSet = S => [...new Set([S, Math.round(S * 1.25), Math.round(S * 1.5), S * 2].map(v => Math.min(256, v)))];
 
   // Builds every Windows file for a design: [{role, ext, bytes}]
-  async function buildFiles(design, onProgress) {
+  // Builds every Windows file for a design: [{role, ext, bytes}].
+  // Each file holds exactly the pixel sizes Windows will ask for — the cursor size at each display scale in `scales`
+  // (1 = 100 %, 1.5 = 150 % …). Offering Windows several unrelated sizes let it pick different ones for different
+  // shapes (a giant hand next to a normal arrow), so nothing else goes in.
+  async function buildFiles(design, onProgress, scales) {
     const S = { ...DEFAULTS, ...(design.global || {}) }.size;
+    const list = [...new Set((scales && scales.length ? scales : [1]).map(k => Math.round(S * k)))].sort((a, b) => a - b);
     const fits = (v, i) => i === 0 || layout(design, v).canvas <= 256;
-    const sizes = sizeSet(S).filter(fits); const aniSizes = [...new Set([S, S * 2].map(v => Math.min(256, v)))].filter(fits); // animated files get fewer sizes: each one repeats for every frame
+    const sizes = list.filter(fits), aniSizes = sizes;
     const files = [];
     let n = 0;
     for (const role of ROLES) {
       const per = [];
-      const anim = !!(await renderRole(design, role, S)).animated;
+      const anim = !!(await renderRole(design, role, sizes[0])).animated;
       for (const sz of (anim ? aniSizes : sizes)) per.push(await renderRole(design, role, sz));
       if (per[0].animated) {
         const frames = per[0].frames.map((_, i) => per.map(r => ({ canvas: r.frames[Math.min(i, r.frames.length - 1)], hot: r.hot })));
@@ -515,11 +551,19 @@
     return `url(${c.toDataURL('image/png')}) ${hx} ${hy}, auto`;
   }
 
-  function newDesign(pack, variant) { return { v: 1, name: '', pack, variant, global: {}, roles: {} }; }
+  // Designs saved before v2 had only the outline-hugging glow (glowBlur in px): keep them looking the same.
+  function migrateDesign(d) {
+    if (!d || d.v >= 2) return d;
+    const fix = o => { if (o && (o.glow != null || o.glowBlur != null) && o.glowMode == null) { o.glowMode = 'shape'; if (o.glowBlur == null) o.glowBlur = 6; if (o.glowColor == null) o.glowColor = '#7dd3fc'; if (o.glowStrength == null) o.glowStrength = 1.3; } };
+    fix(d.global); for (const r of Object.values(d.roles || {})) fix(r.params);
+    d.v = 2; return d;
+  }
+
+  function newDesign(pack, variant) { return { v: 2, name: '', pack, variant, global: {}, roles: {} }; }
 
   window.CursoraEngine = {
     ROLES, ROLE_INFO, ANIMATED, DEFAULTS, loadIndex, getPack, registerPack, renderRole, buildFiles, encodeCur, encodeAni,
-    decodeAny, packFromDecoded, cssCursor, newDesign, paramsFor, sourceFor, variantOf, clone, sizeSet, layout, canvasSize,
+    decodeAny, packFromDecoded, cssCursor, newDesign, migrateDesign, paramsFor, sourceFor, variantOf, clone, sizeSet, layout, canvasSize,
     clearCache: () => cache.render.clear(),
   };
 })();

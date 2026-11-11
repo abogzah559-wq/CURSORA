@@ -298,13 +298,16 @@
     try {
       const d = E.clone(design); d.name = name || d.name || 'CURSORA';
       if (!d.global || d.global.size == null) d.global = { ...(d.global || {}), size: S.sysSize || 32 };
+      // the cursor size Windows uses grows with the display scale: give it exactly that size (and 100 % for other screens)
+      const dpr = Math.round((window.devicePixelRatio || 1) * 4) / 4;
       const files = await E.buildFiles(d, async (pct, role) => {
         bar.style.strokeDashoffset = 327 * (1 - pct * 0.9); $('#applyS').textContent = t('building', { r: roleName(role) });
         try { show(cv, await E.renderRole(d, role, 96)); } catch {}
-      });
+      }, dpr === 1 ? [1] : [1, dpr]);
       const size = E.canvasSize(d);
       if (B.mock) await B.apply({ name: d.name, files: [], size, design: d });
       else await B.apply({ name: d.name, files, size, design: d });
+      if (!B.mock) checkLive(d).catch(() => {});
       bar.style.strokeDashoffset = 0; card.classList.add('done');
       $('#applyT').textContent = t('applied_ok'); $('#applyS').textContent = B.mock ? t('only_windows') : t('applied_ok_s');
       S.settings = await B.settings.get(); renderNow(); renderLibrary();
@@ -313,6 +316,19 @@
     } catch (e) {
       ov.classList.add('hidden'); toast(t('err', { e: e.message || e }), null, true, 6000);
     }
+  }
+  // After applying, measure what Windows really draws. If one shape comes out much bigger or smaller than the arrow,
+  // say so (and keep the numbers in the log) instead of leaving the user with a giant hand.
+  async function checkLive(d) {
+    await new Promise(r => setTimeout(r, 400));
+    const m = await B.measure(); if (!m || !m.Arrow) return;
+    const ref = Math.max(m.Arrow.vis[0], m.Arrow.vis[1]) || 1;
+    const odd = Object.entries(m).filter(([r, v]) => v && v.vis && !['Pin', 'Person', 'Help', 'AppStarting'].includes(r) && Math.max(v.vis[0], v.vis[1]) / ref > 1.7);
+    const want = E.canvasSize(d);
+    const tiny = m.Arrow.img && m.Arrow.img < want * 0.75;
+    B.log({ at: Date.now(), design: d.name, want, dpr: window.devicePixelRatio, measure: m });
+    if (odd.length) toast(t('size_odd', { r: odd.map(([r]) => roleName(r)).join('، ') }), t('size_odd_s'), true, 9000);
+    else if (tiny) toast(t('size_small'), t('size_small_s'), true, 9000);
   }
   async function restoreFlow() {
     const has = await B.hasBackup();
@@ -392,6 +408,9 @@
       inp._fmt = fmt || (v => v); inp._out = out;
       return h('div', { class: 'field' }, h('div', { class: 'field-h' }, h('span', {}, t(key === 'shadowOpacity' ? 'sop' : key === 'shadowBlur' ? 'blur' : key === 'shadowX' ? 'sx' : key === 'shadowY' ? 'sy' : key === 'glowBlur' ? 'gblur' : key === 'glowStrength' ? 'gstr' : key)), out), inp);
     };
+    const segCtl = (key, items, patch) => h('div', { class: 'seg' }, items.map(([v, l]) => h('button', { class: curParams()[key] === v ? 'on' : '', onclick: () => {
+      const b = snapshot(); const ch = patch ? patch(v) : { [key]: v }; for (const [k2, v2] of Object.entries(ch)) setParam(k2, v2); commit(b); renderStudio();
+    } }, l)));
     const tog = (key, label) => {
       const s = h('span', { class: 'sw-t', 'data-k': key });
       return h('button', { class: 'toggle', onclick: () => { const b = snapshot(); setParam(key, !curParams()[key]); commit(b); } }, h('span', {}, t(label || key)), s);
@@ -442,7 +461,12 @@
         tog('gradient'), col('fill2'), rng('angle', 0, 360, 5, v => v + '°')]),
       sec(t('sec_outline'), [rng('outline', 0, 4, 0.25, v => v + 'px'), col('outlineColor', 'outline_color')], false),
       sec(t('sec_shadow'), [tog('shadow'), rng('shadowBlur', 0, 8, 0.25), h('div', { class: 'row2' }, rng('shadowX', -4, 4, 0.2), rng('shadowY', -4, 6, 0.2)), rng('shadowOpacity', 0, 1, 0.05, v => Math.round(v * 100) + '%'), col('shadowColor', 'scolor')], false),
-      sec(t('sec_glow'), [tog('glow'), col('glowColor', 'gcolor'), rng('glowStrength', 0.2, 3, 0.05, v => Math.round(v * 100) + '%'), rng('glowBlur', 1, 16, 0.5), rng('glowSoft', 0, 1, 0.05, v => Math.round(v * 100) + '%')], !!curParams().glow),
+      sec(t('sec_glow'), [tog('glow'),
+        segCtl('glowMode', [['circle', t('glow_circle')], ['shape', t('glow_shape')]], v => ({ glowMode: v, glowBlur: v === 'circle' ? 16 : 6 })),
+        curParams().glowMode !== 'shape' ? segCtl('glowPos', [['center', t('glow_center')], ['tip', t('glow_tip')]]) : null,
+        col('glowColor', 'gcolor'), rng('glowStrength', 0.2, 3, 0.05, v => Math.round(v * 100) + '%'),
+        curParams().glowMode !== 'shape' ? rng('glowBlur', 10, 30, 0.5, v => (v / 10).toFixed(2) + '×') : rng('glowBlur', 1, 16, 0.5),
+        rng('glowSoft', 0, 1, 0.05, v => Math.round(v * 100) + '%')], !!curParams().glow),
       sec(t('sec_more'), [rng('opacity', 0.3, 1, 0.05, v => Math.round(v * 100) + '%'), rng('speed', 0.25, 3, 0.05, v => v.toFixed(2) + '×'), tog('mirror')], false),
     );
 
@@ -644,7 +668,7 @@
     S.mine = await B.mine.set(S.mine); updateMineCount(); renderMine(); toast(t('imported_ok'), r.name);
   }
   async function importDesign() {
-    const d = await B.importDesign(); if (!d) return;
+    const d = E.migrateDesign(await B.importDesign()); if (!d) return;
     S.mine.unshift({ id: 'm' + Date.now().toString(36), design: d, created: Date.now() });
     S.mine = await B.mine.set(S.mine); updateMineCount(); renderMine(); toast(t('imported_ok'), d.name);
   }
@@ -661,7 +685,7 @@
         row(t('set_lang'), null, h('div', { class: 'seg' }, [['ar', 'العربية'], ['en', 'English']].map(([v, l]) => h('button', { class: S.lang === v ? 'on' : '', onclick: () => setLang(v) }, l)))),
         row(t('set_accent'), null, h('div', { class: 'accents' }, ACCENTS.map(c => h('button', { class: 'accent-dot' + (S.settings.accent === c ? ' on' : ''), style: { background: c, color: c }, onclick: async () => { await saveSettings({ accent: c }); renderSettings(); } })))),
         row(t('set_motion'), t('set_motion_d'), h('button', { class: 'toggle', onclick: async () => { await saveSettings({ motion: S.settings.motion === false }); motion.classList.toggle('on', S.settings.motion !== false); } }, motion)),
-        row(t('set_perm'), t('set_perm_d'), h('button', { class: 'btn sm', onclick: () => B.openFolder() }, t('open_folder'))),
+        row(t('set_perm'), t('set_perm_d'), h('button', { class: 'btn sm', onclick: () => B.openFolder() }, t('open_folder')), h('button', { class: 'btn sm', onclick: () => B.openLog() }, t('open_log'))),
         row(t('set_restore'), t('set_restore_d') + ' ' + t('shortcut_restore'), h('button', { class: 'btn sm', onclick: restoreFlow }, svgI(IC.reset), t('restore_quick'))),
         row(t('set_about'), `CURSORA ${S.info.version || ''}`, h('button', { class: 'btn sm', onclick: () => B.url(S.info.repo) }, 'GitHub'), h('button', { class: 'btn sm', onclick: support }, '☕ ' + t('support'))),
         h('div', { class: 'set-row', style: { display: 'block' } }, h('div', { class: 't' }, t('set_credits')), h('div', { class: 'd' }, t('set_credits_d')),
@@ -712,6 +736,8 @@
   /* ---------------- boot ---------------- */
   async function boot() {
     [S.settings, S.mine, S.info] = await Promise.all([B.settings.get(), B.mine.get(), B.info()]);
+    for (const m of S.mine) E.migrateDesign(m.design);
+    if (S.settings.applied && S.settings.applied.design) E.migrateDesign(S.settings.applied.design);
     S.lang = S.settings.lang || 'ar';
     const ap = S.settings.applied && S.settings.applied.design;
     if (ap && ap.global && ap.global.size) S.sysSize = ap.global.size; // registry size may include glow padding

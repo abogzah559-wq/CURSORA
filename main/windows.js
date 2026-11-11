@@ -67,6 +67,38 @@ $o | ConvertTo-Json -Compress`);
   return JSON.parse(out || '{}');
 }
 
+const MEASURE_PS = `
+Add-Type -ReferencedAssemblies System.Drawing -TypeDefinition @'
+using System; using System.Drawing; using System.Runtime.InteropServices;
+public static class CursoraMeasure {
+  [DllImport("user32.dll")] static extern IntPtr LoadCursor(IntPtr h, IntPtr id);
+  [DllImport("user32.dll")] static extern bool DrawIconEx(IntPtr hdc, int x, int y, IntPtr h, int cx, int cy, int step, IntPtr br, int flags);
+  [DllImport("user32.dll")] static extern bool GetIconInfo(IntPtr h, out ICONINFO ii);
+  [DllImport("gdi32.dll")] static extern int GetObject(IntPtr h, int n, ref BITMAP bm);
+  [DllImport("gdi32.dll")] static extern bool DeleteObject(IntPtr h);
+  [StructLayout(LayoutKind.Sequential)] struct ICONINFO { public bool fIcon; public int x; public int y; public IntPtr mask; public IntPtr color; }
+  [StructLayout(LayoutKind.Sequential)] struct BITMAP { public int type, w, h, wb; public short planes, bpp; public IntPtr bits; }
+  public static string Measure(int id) {
+    IntPtr h = LoadCursor(IntPtr.Zero, (IntPtr)id); if (h == IntPtr.Zero) return "null";
+    ICONINFO ii; GetIconInfo(h, out ii); BITMAP bm = new BITMAP(); int w = 0;
+    if (ii.color != IntPtr.Zero) { GetObject(ii.color, Marshal.SizeOf(bm), ref bm); w = bm.w; } else { GetObject(ii.mask, Marshal.SizeOf(bm), ref bm); w = bm.w; }
+    if (ii.color != IntPtr.Zero) DeleteObject(ii.color); if (ii.mask != IntPtr.Zero) DeleteObject(ii.mask);
+    int S = Math.Max(64, w + 8); var a = new Bitmap(S, S); var b = new Bitmap(S, S);
+    using (var g = Graphics.FromImage(a)) { g.Clear(Color.White); var dc = g.GetHdc(); DrawIconEx(dc, 0, 0, h, 0, 0, 0, IntPtr.Zero, 3); g.ReleaseHdc(dc); }
+    using (var g = Graphics.FromImage(b)) { g.Clear(Color.Black); var dc = g.GetHdc(); DrawIconEx(dc, 0, 0, h, 0, 0, 0, IntPtr.Zero, 3); g.ReleaseHdc(dc); }
+    int x0 = S, y0 = S, x1 = -1, y1 = -1;
+    for (int y = 0; y < S; y++) for (int x = 0; x < S; x++) { Color p = a.GetPixel(x, y), q = b.GetPixel(x, y);
+      if (!(p.R == 255 && p.G == 255 && p.B == 255) || !(q.R == 0 && q.G == 0 && q.B == 0)) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; } }
+    a.Dispose(); b.Dispose();
+    return "{\\"img\\":" + w + ",\\"vis\\":[" + (x1 >= 0 ? x1 - x0 + 1 : 0) + "," + (y1 >= 0 ? y1 - y0 + 1 : 0) + "]}";
+  }
+}
+'@
+$ids = [ordered]@{ Arrow=32512; IBeam=32513; Wait=32514; Crosshair=32515; UpArrow=32516; SizeNWSE=32642; SizeNESW=32643; SizeWE=32644; SizeNS=32645; SizeAll=32646; No=32648; Hand=32649; AppStarting=32650; Help=32651; Pin=32671; Person=32672 }
+$parts = foreach ($n in $ids.Keys) { '"' + $n + '":' + [CursoraMeasure]::Measure($ids[$n]) }
+'{' + ($parts -join ',') + '}'
+`;
+
 const safe = s => (String(s || 'CURSORA').normalize('NFKC').replace(/[<>:"/\\|?*\u0000-\u001f]/g, '').trim() || 'CURSORA').slice(0, 60);
 
 module.exports = function create(dataDir) {
@@ -132,7 +164,13 @@ $r['CursorBaseSize'] = $raw.GetValue('CursorBaseSize', 0)
 $r | ConvertTo-Json -Compress -Depth 4`));
   }
 
-  return { apply, restore, readCurrent, verify, hasBackup: () => fs.existsSync(backupFile), ROOT };
+  // What Windows really draws right now for each system cursor: loaded image size and visible bounding box.
+  async function measure() {
+    if (process.platform !== 'win32') return null;
+    return JSON.parse(await runPS(MEASURE_PS));
+  }
+
+  return { apply, restore, readCurrent, verify, measure, hasBackup: () => fs.existsSync(backupFile), ROOT };
 };
 module.exports.ROLES = ROLES;
 module.exports.WINDOWS_DEFAULT = WINDOWS_DEFAULT;

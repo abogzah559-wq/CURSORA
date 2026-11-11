@@ -92,6 +92,15 @@ ipcMain.handle('cursor:restore', async (e, kind) => {
   return r;
 });
 ipcMain.handle('cursor:current', () => winApi().readCurrent());
+ipcMain.handle('cursor:measure', () => winApi().measure().catch(() => null));
+const logFile = () => path.join(dataDir(), 'cursora.log');
+ipcMain.handle('log', (e, entry) => {
+  try {
+    const f = logFile(); if (fs.existsSync(f) && fs.statSync(f).size > 512 * 1024) fs.renameSync(f, f + '.old');
+    fs.appendFileSync(f, JSON.stringify(entry) + '\n');
+  } catch {}
+});
+ipcMain.handle('openLog', () => { const f = logFile(); if (!fs.existsSync(f)) fs.writeFileSync(f, ''); shell.openPath(f); });
 ipcMain.handle('cursor:hasBackup', () => winApi().hasBackup());
 
 ipcMain.handle('files:openCursors', async () => {
@@ -137,13 +146,15 @@ ipcMain.handle('selftest:report', async (e, report) => {
       await new Promise(r => setTimeout(r, 50));
       report.apply2 = await api.apply({ name: 'SelfTest', files: report.files, size: report.size || 48 });
       report.verify = await api.verify();
+      report.measure = await api.measure();
       await new Promise(r => setTimeout(r, 800)); // old files are removed in the background
       report.leftovers = fs.readdirSync(report.apply2.dir).length; // 17 cursor files + scheme.txt
       report.restore = await api.restore('backup');
       report.after = await api.readCurrent();
       report.ok = report.ok && Object.entries(report.verify).filter(([k]) => require('./windows').ROLES.includes(k)).every(([, v]) => v.ok && v.exists)
         && report.verify.CursorBaseSize === (report.size || 48) && report.after.Arrow === report.before.Arrow
-        && report.apply.dir === report.apply2.dir && report.leftovers === 18;
+        && report.apply.dir === report.apply2.dir && report.leftovers === 18
+        && !!(report.measure && report.measure.Arrow && report.measure.Arrow.img > 0 && report.measure.Hand.vis[1] > 0);
       report.files = report.files.map(f => ({ role: f.role, ext: f.ext, size: f.bytes.length }));
     }
   } catch (err) { report.ok = false; report.error = String(err && err.stack || err); }

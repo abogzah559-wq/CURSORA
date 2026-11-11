@@ -11,7 +11,7 @@ if (!window.cursora) {
     url: async u => window.open(u, '_blank'), openFolder: async () => {},
     apply: async p => { await new Promise(r => setTimeout(r, 500)); const s = ls('cs.settings', {}); put('cs.settings', { ...s, applied: { name: p.name, design: p.design, at: Date.now() } }); return { mock: true }; },
     restore: async () => { const s = ls('cs.settings', {}); put('cs.settings', { ...s, applied: null }); return 'windows'; },
-    current: async () => ({}), hasBackup: async () => true,
+    current: async () => ({}), measure: async () => null, log: async () => {}, openLog: async () => {}, hasBackup: async () => true,
     openCursors: async () => [], openFolderCursors: async () => null,
     exportDesign: async d => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ cursora: 1, design: d })])); a.download = (d.name || 'cursor') + '.cursora'; a.click(); return true; },
     importDesign: async () => null, selftestReport: async r => console.log('SELFTEST ' + JSON.stringify({ ...r, files: (r.files || []).length })),
