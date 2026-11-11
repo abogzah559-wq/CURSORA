@@ -126,12 +126,18 @@ ipcMain.handle('selftest:report', async (e, report) => {
     if (report.files) {
       const api = winApi();
       report.before = await api.readCurrent();
-      report.apply = await api.apply({ name: 'SelfTest', files: report.files, size: 48 });
+      report.apply = await api.apply({ name: 'SelfTest', files: report.files, size: report.size || 48 });
+      // apply the same design again: new file names, and the previous files get cleaned up without touching the live ones
+      await new Promise(r => setTimeout(r, 50));
+      report.apply2 = await api.apply({ name: 'SelfTest', files: report.files, size: report.size || 48 });
       report.verify = await api.verify();
+      await new Promise(r => setTimeout(r, 800)); // old files are removed in the background
+      report.leftovers = fs.readdirSync(report.apply2.dir).length; // 17 cursor files + scheme.txt
       report.restore = await api.restore('backup');
       report.after = await api.readCurrent();
       report.ok = report.ok && Object.entries(report.verify).filter(([k]) => require('./windows').ROLES.includes(k)).every(([, v]) => v.ok && v.exists)
-        && report.verify.CursorBaseSize === 48 && report.after.Arrow === report.before.Arrow;
+        && report.verify.CursorBaseSize === (report.size || 48) && report.after.Arrow === report.before.Arrow
+        && report.apply.dir === report.apply2.dir && report.leftovers === 18;
       report.files = report.files.map(f => ({ role: f.role, ext: f.ext, size: f.bytes.length }));
     }
   } catch (err) { report.ok = false; report.error = String(err && err.stack || err); }

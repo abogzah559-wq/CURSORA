@@ -1,0 +1,404 @@
+{
+ "id": "nordzy",
+ "name": "Nordzy",
+ "author": "alvatip",
+ "license": "GPL-3.0",
+ "url": "https://github.com/guillaumeboehm/Nordzy-cursors",
+ "tags": [
+  "dark",
+  "light",
+  "color",
+  "rounded"
+ ],
+ "desc": {
+  "ar": "\u0646\u0627\u0639\u0645 \u0648\u0645\u062f\u0648\u0651\u0631 \u0628\u0623\u0644\u0648\u0627\u0646 Nord \u0648 Catppuccin \u0627\u0644\u0647\u0627\u062f\u0626\u0629",
+  "en": "Soft and round, Nord & Catppuccin palettes"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "dark",
+   "name": "Nord Dark",
+   "dir": "dark",
+   "polarity": "dark",
+   "swatch": [
+    "#343a46",
+    "#d0d6e2"
+   ]
+  },
+  {
+   "id": "white",
+   "name": "Nord White",
+   "dir": "white",
+   "polarity": "light",
+   "swatch": [
+    "#d1d7e2",
+    "#343a46"
+   ]
+  },
+  {
+   "id": "cat-mocha-dark",
+   "name": "Catppuccin Mocha Dark",
+   "dir": "cat-mocha-dark",
+   "polarity": "dark",
+   "swatch": [
+    "#252536",
+    "#c6cfec"
+   ]
+  },
+  {
+   "id": "cat-mocha-light",
+   "name": "Catppuccin Mocha Light",
+   "dir": "cat-mocha-light",
+   "polarity": "light",
+   "swatch": [
+    "#c6cfed",
+    "#252536"
+   ]
+  },
+  {
+   "id": "cat-mocha-mauve",
+   "name": "Catppuccin Mocha Mauve",
+   "dir": "cat-mocha-mauve",
+   "polarity": "color",
+   "swatch": [
+    "#c9a5f5",
+    "#cba6f7"
+   ]
+  },
+  {
+   "id": "cat-mocha-pink",
+   "name": "Catppuccin Mocha Pink",
+   "dir": "cat-mocha-pink",
+   "polarity": "light",
+   "swatch": [
+    "#edbce0",
+    "#272535"
+   ]
+  },
+  {
+   "id": "cat-mocha-blue",
+   "name": "Catppuccin Mocha Blue",
+   "dir": "cat-mocha-blue",
+   "polarity": "color",
+   "swatch": [
+    "#88b3f8",
+    "#88b2f7"
+   ]
+  },
+  {
+   "id": "cat-mocha-teal",
+   "name": "Catppuccin Mocha Teal",
+   "dir": "cat-mocha-teal",
+   "polarity": "color",
+   "swatch": [
+    "#90dbcf",
+    "#94e2d5"
+   ]
+  },
+  {
+   "id": "cat-mocha-green",
+   "name": "Catppuccin Mocha Green",
+   "dir": "cat-mocha-green",
+   "polarity": "light",
+   "swatch": [
+    "#a1dc9d",
+    "#232633"
+   ]
+  },
+  {
+   "id": "cat-mocha-peach",
+   "name": "Catppuccin Mocha Peach",
+   "dir": "cat-mocha-peach",
+   "polarity": "color",
+   "swatch": [
+    "#f2ae84",
+    "#f8b286"
+   ]
+  },
+  {
+   "id": "cat-mocha-red",
+   "name": "Catppuccin Mocha Red",
+   "dir": "cat-mocha-red",
+   "polarity": "color",
+   "swatch": [
+    "#f28aa7",
+    "#f28aa7"
+   ]
+  },
+  {
+   "id": "cat-mocha-yellow",
+   "name": "Catppuccin Mocha Yellow",
+   "dir": "cat-mocha-yellow",
+   "polarity": "light",
+   "swatch": [
+    "#f1daaa",
+    "#262533"
+   ]
+  },
+  {
+   "id": "cat-latte-dark",
+   "name": "Catppuccin Latte Dark",
+   "dir": "cat-latte-dark",
+   "polarity": "dark",
+   "swatch": [
+    "#4d506a",
+    "#dcdee4"
+   ]
+  },
+  {
+   "id": "cat-latte-light",
+   "name": "Catppuccin Latte Light",
+   "dir": "cat-latte-light",
+   "polarity": "light",
+   "swatch": [
+    "#e6e8ed",
+    "#4e516b"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.png",
+   "hot": [
+    0.0938,
+    0.0729
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.png",
+   "hot": [
+    0.0938,
+    0.0729
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch-00.png",
+    "left_ptr_watch-01.png",
+    "left_ptr_watch-02.png",
+    "left_ptr_watch-03.png",
+    "left_ptr_watch-04.png",
+    "left_ptr_watch-05.png",
+    "left_ptr_watch-06.png",
+    "left_ptr_watch-07.png",
+    "left_ptr_watch-08.png",
+    "left_ptr_watch-09.png",
+    "left_ptr_watch-10.png",
+    "left_ptr_watch-11.png",
+    "left_ptr_watch-12.png",
+    "left_ptr_watch-13.png",
+    "left_ptr_watch-14.png",
+    "left_ptr_watch-15.png"
+   ],
+   "delay": 60.0,
+   "hot": [
+    0.0938,
+    0.0729
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-00.png",
+    "wait-01.png",
+    "wait-02.png",
+    "wait-03.png",
+    "wait-04.png",
+    "wait-05.png",
+    "wait-06.png",
+    "wait-07.png",
+    "wait-08.png",
+    "wait-09.png",
+    "wait-10.png",
+    "wait-11.png",
+    "wait-12.png",
+    "wait-13.png",
+    "wait-14.png",
+    "wait-15.png"
+   ],
+   "delay": 60.0,
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.png",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.png",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.png",
+   "hot": [
+    0.0833,
+    0.8438
+   ]
+  },
+  "No": {
+   "src": "circle.png",
+   "hot": [
+    0.0938,
+    0.0729
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.png",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.png",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "SizeNWSE": {
+   "src": "size_fdiag.png",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "SizeNESW": {
+   "src": "size_bdiag.png",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "SizeAll": {
+   "src": "fleur.png",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.png",
+   "hot": [
+    0.5,
+    0.0938
+   ]
+  },
+  "Hand": {
+   "src": "hand2.png",
+   "hot": [
+    0.2917,
+    0.1146
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.09,
+   0.059,
+   0.555,
+   0.91
+  ],
+  "Help": [
+   0.078,
+   0.047,
+   0.984,
+   0.992
+  ],
+  "AppStarting": [
+   0.078,
+   0.047,
+   0.965,
+   0.922
+  ],
+  "Wait": [
+   0.078,
+   0.078,
+   0.879,
+   0.879
+  ],
+  "Crosshair": [
+   0.121,
+   0.121,
+   0.84,
+   0.84
+  ],
+  "IBeam": [
+   0.328,
+   0.16,
+   0.629,
+   0.84
+  ],
+  "NWPen": [
+   0.035,
+   0.078,
+   0.703,
+   0.91
+  ],
+  "No": [
+   0.078,
+   0.059,
+   0.984,
+   1
+  ],
+  "SizeNS": [
+   0.207,
+   0.047,
+   0.754,
+   0.91
+  ],
+  "SizeWE": [
+   0.047,
+   0.207,
+   0.91,
+   0.754
+  ],
+  "SizeNWSE": [
+   0.16,
+   0.16,
+   0.797,
+   0.797
+  ],
+  "SizeNESW": [
+   0.16,
+   0.16,
+   0.797,
+   0.797
+  ],
+  "SizeAll": [
+   0.047,
+   0.047,
+   0.91,
+   0.91
+  ],
+  "UpArrow": [
+   0.258,
+   0.078,
+   0.746,
+   0.984
+  ],
+  "Hand": [
+   0.078,
+   0.078,
+   0.754,
+   0.797
+  ]
+ },
+ "fit": 0.729
+}

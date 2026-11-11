@@ -1,0 +1,318 @@
+{
+ "id": "arc-starry",
+ "name": "Arc",
+ "author": "yeyushengfan258",
+ "license": "GPL-3.0",
+ "url": "https://github.com/yeyushengfan258/ArcStarry-Cursors",
+ "tags": [
+  "dark",
+  "light",
+  "color",
+  "futuristic"
+ ],
+ "desc": {
+  "ar": "\u0646\u0641\u0633 \u0627\u0644\u062a\u0635\u0645\u064a\u0645 \u0628\u0623\u0631\u0628\u0639 \u0623\u062c\u0648\u0627\u0621: \u0646\u062c\u0648\u0645\u060c \u0645\u0646\u062a\u0635\u0641 \u0627\u0644\u0644\u064a\u0644\u060c \u0634\u0641\u0642\u060c \u0648\u0644\u064a\u0644 \u0642\u0637\u0628\u064a",
+  "en": "One design, four moods: starry, midnight, aurora, polar night"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "default",
+   "name": "Starry",
+   "dir": "default",
+   "polarity": "light",
+   "swatch": [
+    "#93d2e2",
+    "#059cc2"
+   ]
+  },
+  {
+   "id": "arc-midnight-default",
+   "name": "Midnight",
+   "dir": "arc-midnight-default",
+   "polarity": "light",
+   "swatch": [
+    "#baefe7",
+    "#6bead8"
+   ]
+  },
+  {
+   "id": "arc-aurora-default",
+   "name": "Aurora",
+   "dir": "arc-aurora-default",
+   "polarity": "light",
+   "swatch": [
+    "#b2e4ac",
+    "#59cf48"
+   ]
+  },
+  {
+   "id": "polarnight-default",
+   "name": "Polar Night",
+   "dir": "polarnight-default",
+   "polarity": "light",
+   "swatch": [
+    "#f6f6f6",
+    "#121212"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default.svg",
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "Help": {
+   "src": "help.svg",
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress-01.svg",
+    "progress-02.svg",
+    "progress-03.svg",
+    "progress-04.svg",
+    "progress-05.svg",
+    "progress-06.svg",
+    "progress-07.svg",
+    "progress-08.svg",
+    "progress-09.svg",
+    "progress-10.svg",
+    "progress-11.svg",
+    "progress-12.svg",
+    "progress-13.svg",
+    "progress-14.svg",
+    "progress-15.svg",
+    "progress-16.svg",
+    "progress-17.svg",
+    "progress-18.svg",
+    "progress-19.svg",
+    "progress-20.svg",
+    "progress-21.svg",
+    "progress-22.svg",
+    "progress-23.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-01.svg",
+    "wait-02.svg",
+    "wait-03.svg",
+    "wait-04.svg",
+    "wait-05.svg",
+    "wait-06.svg",
+    "wait-07.svg",
+    "wait-08.svg",
+    "wait-09.svg",
+    "wait-10.svg",
+    "wait-11.svg",
+    "wait-12.svg",
+    "wait-13.svg",
+    "wait-14.svg",
+    "wait-15.svg",
+    "wait-16.svg",
+    "wait-17.svg",
+    "wait-18.svg",
+    "wait-19.svg",
+    "wait-20.svg",
+    "wait-21.svg",
+    "wait-22.svg",
+    "wait-23.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "text.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.125,
+    0.9063
+   ]
+  },
+  "No": {
+   "src": "not-allowed.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNS": {
+   "src": "size_ver.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "size_hor.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "size_fdiag.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNESW": {
+   "src": "size_bdiag.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeAll": {
+   "src": "fleur.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.625,
+    0.125
+   ]
+  },
+  "Hand": {
+   "src": "pointer.svg",
+   "hot": [
+    0.5,
+    0.125
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.16,
+   0.105,
+   0.664,
+   0.766
+  ],
+  "Help": [
+   0.16,
+   0.117,
+   0.859,
+   0.973
+  ],
+  "AppStarting": [
+   0.16,
+   0.113,
+   1,
+   1
+  ],
+  "Wait": [
+   0.102,
+   0.102,
+   0.93,
+   0.93
+  ],
+  "Crosshair": [
+   0.188,
+   0.188,
+   0.848,
+   0.844
+  ],
+  "IBeam": [
+   0.375,
+   0.215,
+   0.594,
+   0.75
+  ],
+  "NWPen": [
+   0.063,
+   0.355,
+   0.648,
+   0.941
+  ],
+  "No": [
+   0.156,
+   0.152,
+   0.848,
+   0.844
+  ],
+  "SizeNS": [
+   0.375,
+   0.063,
+   0.625,
+   0.938
+  ],
+  "SizeWE": [
+   0.063,
+   0.375,
+   0.938,
+   0.625
+  ],
+  "SizeNWSE": [
+   0.188,
+   0.172,
+   0.832,
+   0.816
+  ],
+  "SizeNESW": [
+   0.18,
+   0.172,
+   0.824,
+   0.816
+  ],
+  "SizeAll": [
+   0.047,
+   0.047,
+   0.984,
+   0.984
+  ],
+  "UpArrow": [
+   0.188,
+   0.172,
+   0.75,
+   0.77
+  ],
+  "Hand": [
+   0.191,
+   0.188,
+   0.703,
+   0.719
+  ]
+ },
+ "fit": 0.938
+}

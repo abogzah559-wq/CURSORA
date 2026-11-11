@@ -72,7 +72,8 @@ jobs:
         run: |
           f=$(ls dist/*.exe | head -1)
           gh release delete test-build -y --cleanup-tag 2>/dev/null || true
-          gh release create test-build "$f" --prerelease --title "Test build ${GITHUB_SHA::7}" --notes "Automatic build from ${GITHUB_SHA}. Self-test passed on Windows."
+          cp dist/win-unpacked/resources/app.asar CURSORA-app.asar
+          gh release create test-build "$f" CURSORA-app.asar --prerelease --title "Test build ${GITHUB_SHA::7}" --notes "Automatic build from ${GITHUB_SHA}. Self-test passed on Windows. CURSORA-app.asar = the app files only (to update an existing install)."
 
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/v')

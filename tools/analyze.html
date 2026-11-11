@@ -34,7 +34,12 @@ window.analyze = async () => {
         const dark = px.filter(x => x[3] < 0.5), light = px.filter(x => x[3] >= 0.5);
         const avg = arr => '#' + [0,1,2].map(k => Math.round(arr.reduce((s,x)=>s+x[k],0)/Math.max(1,arr.length)).toString(16).padStart(2,'0')).join('');
         const isDark = dark.length >= light.length;
-        r.variants[v.id] = { polarity: isDark ? 'dark' : 'light', swatch: isDark ? [avg(dark), avg(light.length ? light : [[255,255,255]])] : [avg(light), avg(dark.length ? dark : [[0,0,0]])] };
+        // a coloured accent (Lyra, Nordzy…) is what tells colours apart: use it when there is a real one
+        const sat = x => (Math.max(x[0], x[1], x[2]) - Math.min(x[0], x[1], x[2])) / 255;
+        const vivid = px.filter(x => sat(x) > 0.3);
+        const accent = vivid.length > px.length * 0.04 ? avg(vivid) : null;
+        const base = isDark ? avg(dark) : avg(light), other = isDark ? avg(light.length ? light : [[255,255,255]]) : avg(dark.length ? dark : [[0,0,0]]);
+        r.variants[v.id] = { polarity: accent && vivid.length > px.length * 0.4 ? 'color' : (isDark ? 'dark' : 'light'), swatch: [base, accent || other] };
       } catch (e) { r.errors.push(v.id + ': ' + e.message); }
     }
     res[p.id] = r;

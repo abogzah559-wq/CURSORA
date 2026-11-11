@@ -29,12 +29,12 @@
   const MAX_FRAMES = 36;
 
   const DEFAULTS = {
-    size: 32, scale: 1, mirror: false, opacity: 1,
+    size: 32, scale: 1, own: 1, mirror: false, opacity: 1,
     recolor: false, fill: '#000000', edge: '#ffffff', accent: '#000000',
     gradient: false, fill2: '#6366f1', angle: 135,
     outline: 0, outlineColor: '#ffffff',
     shadow: true, shadowBlur: 2.5, shadowX: 0.6, shadowY: 1.4, shadowOpacity: 0.45, shadowColor: '#000000',
-    glow: false, glowColor: '#7dd3fc', glowBlur: 5, glowStrength: 0.9,
+    glow: false, glowColor: '#7dd3fc', glowBlur: 6, glowStrength: 1.3, glowSoft: 0.7,
     speed: 1,
   };
 
@@ -53,13 +53,16 @@
   }
   async function fetchJSON(url) { return JSON.parse(await fetchText(url)); }
 
+  let ALIASES = {};
   async function loadIndex(base) {
     if (base) BASE = base;
-    const ids = await fetchJSON(BASE + 'index.json');
+    const idx = await fetchJSON(BASE + 'index.json');
+    const ids = Array.isArray(idx) ? idx : idx.packs; ALIASES = (idx && idx.aliases) || {};
     return Promise.all(ids.map(getPack));
   }
   async function getPack(id) {
     if (cache.packs[id]) return cache.packs[id];
+    if (ALIASES[id]) return getPack(ALIASES[id]);
     const p = await fetchJSON(BASE + id + '/pack.json');
     p.base = BASE + id + '/';
     return (cache.packs[id] = p);
@@ -88,7 +91,7 @@
       let fill = pick('fill');
       if (p.recolor && p.gradient) fill = 'url(#cursoraGrad)';
       for (const k of Object.keys(tokens)) {
-        let val = k === 'fill' ? fill : k === 'accent' ? (pick('accent') || vc.fill) : (k === 'edge' ? pick('edge') : vc[k]);
+        let val = k === 'fill' ? fill : k === 'accent' ? (pick('accent') || vc.fill) : (/^edge/.test(k) ? pick('edge') : /^fill/.test(k) ? pick('fill') : vc[k]);
         if (val == null) continue;
         s = s.replace(new RegExp(escRe(tokens[k]), 'gi'), val);
       }
@@ -153,7 +156,7 @@
   }
 
   /* ---------------- source resolution ---------------- */
-  function variantOf(pack, vid) { return pack.variants.find(v => v.id === vid) || pack.variants[0]; }
+  function variantOf(pack, vid) { return pack.variants.find(v => v.id === vid) || pack.variants.find(v => vid && v.id.endsWith('-' + vid)) || pack.variants[0]; }
   function swatch(pack, variant, p) {
     if (p.recolor) return [p.fill, p.edge];
     if (variant.colors) return [variant.colors.fill, variant.colors.edge];
@@ -215,53 +218,66 @@
   }
 
   // Draws one frame at size S. Returns { canvas, hot:[px,py] }.
-  async function drawFrame(frame, src, pack, variant, p, S, t) {
-    const k = S / BASE_SIZE;
-    const fit = (pack.fit || 1) * (p.scale || 1);
+  // S = size of the shape box, C = size of the output canvas (larger than S when a glow needs room around the shape)
+  async function drawFrame(frame, src, pack, variant, p, S, C, t) {
+    const k = S / BASE_SIZE, off = (C - S) / 2;
+    const fit = (pack.fit || 1) * (p.scale || 1), own = p.own || 1;
     const hot = src.hot;
     // keep the shape (plus the room its effects need) inside the canvas, anchored on the hotspot
-    const ow = (p.outline || 0) + (p.glow ? p.glowBlur * 0.6 : 0);
+    const ow = p.outline || 0;
     const sb = p.shadow ? p.shadowBlur * 0.7 : 0;
     const mL = (ow + Math.max(0, sb - p.shadowX)) * k, mT = (ow + Math.max(0, sb - p.shadowY)) * k;
     const mR = (ow + Math.max(0, sb + p.shadowX)) * k, mB = (ow + Math.max(0, sb + p.shadowY)) * k;
-    let scale = fit;
+    let scale = fit * own;
     const bb = src.bbox; // normalised alpha bbox of the source at scale 1
     if (bb) {
       const hx = hot[0] * S, hy = hot[1] * S;
-      const need = (room, extent) => (extent > 0.5 ? room / extent : 99);
-      const lim = Math.min(
-        need(hx - mL, hx - bb[0] * S), need(S - mR - hx, bb[2] * S - hx),
-        need(hy - mT, hy - bb[1] * S), need(S - mB - hy, bb[3] * S - hy));
-      scale = Math.max(Math.min(scale, lim), fit * 0.8);
+      // a side with no room (shape starts right at the hotspot, e.g. an arrow tip in the corner) can't be helped by
+      // shrinking, so it must not shrink the whole shape either
+      const need = (room, extent) => (extent > 0.5 && room > 0 ? room / extent : 99);
+      const limit = (l, t, r, b) => Math.min(need(hx - l, hx - bb[0] * S), need(S - r - hx, bb[2] * S - hx), need(hy - t, hy - bb[1] * S), need(S - b - hy, bb[3] * S - hy));
+      const base = Math.max(Math.min(fit, limit(mL, mT, mR, mB)), fit * 0.8);
+      // "own" (size of this shape only) scales on top; enlarging may use the whole frame, up to its edges
+      scale = own > 1 ? Math.max(base, Math.min(base * own, limit(0, 0, 0, 0))) : base * own;
     }
     scale = clamp(scale, 0.2, 3);
     const hpx = hot[0] * S, hpy = hot[1] * S;
 
     // 1) base shape
     const im = await loadImage(frame.url);
-    const base = mkCanvas(S), bx = base.getContext('2d');
+    const base = mkCanvas(C), bx = base.getContext('2d');
     bx.imageSmoothingQuality = 'high';
+    bx.translate(off, off);
     bx.translate(hpx, hpy); bx.scale(scale, scale); bx.translate(-hpx, -hpy);
     bx.drawImage(im, 0, 0, S, S);
     bx.setTransform(1, 0, 0, 1, 0, 0);
-    if (src.badge) { const [f, e] = swatch(pack, variant, p); drawBadge(bx, src.badge, S, f, e, t); }
+    if (src.badge) { const [f, e] = swatch(pack, variant, p); bx.translate(off, off); drawBadge(bx, src.badge, S, f, e, t); bx.setTransform(1, 0, 0, 1, 0, 0); }
 
     // 2) pixel recolour for packs without colour tokens
-    if (p.recolor && pack.kind !== 'tokens') recolorPixels(bx, S, p, variant.polarity || 'dark');
+    if (p.recolor && pack.kind !== 'tokens') recolorPixels(bx, C, p, variant.polarity || 'dark');
 
     // 3) compose effects
-    const out = mkCanvas(S), ox = out.getContext('2d');
+    const out = mkCanvas(C), ox = out.getContext('2d');
     let shape = base;
     if (p.outline > 0) {
       const sil = silhouette(base, p.outlineColor); const w = p.outline * k;
-      const c = mkCanvas(S), cx = c.getContext('2d');
+      const c = mkCanvas(C), cx = c.getContext('2d');
       const steps = Math.max(12, Math.ceil(w * 8));
       for (let rr = w; rr > 0; rr -= Math.max(0.5, w / 3)) for (let i = 0; i < steps; i++) { const a = i / steps * Math.PI * 2; cx.drawImage(sil, Math.cos(a) * rr, Math.sin(a) * rr); }
       cx.drawImage(base, 0, 0); shape = c;
     }
     if (p.glow) {
-      ox.save(); ox.shadowColor = p.glowColor; ox.shadowBlur = p.glowBlur * k * 2; ox.globalAlpha = p.glowStrength;
-      ox.drawImage(silhouette(shape, p.glowColor), 0, 0); ox.drawImage(silhouette(shape, p.glowColor), 0, 0); ox.restore();
+      // a soft halo that follows the shape: widen the silhouette, blur it, and let it fade out before the canvas edge
+      const reach = p.glowBlur * k, soft = clamp(p.glowSoft == null ? 0.7 : p.glowSoft, 0, 1);
+      const dil = reach * (1 - soft) * 0.6, sigma = Math.max(0.4, (reach - dil) / 2.6);
+      let g = silhouette(shape, p.glowColor);
+      if (dil >= 0.5) {
+        const w = mkCanvas(C), wx = w.getContext('2d'); const steps = Math.max(16, Math.ceil(dil * 6));
+        for (let rr = dil; rr > 0; rr -= Math.max(0.75, dil / 4)) for (let i = 0; i < steps; i++) { const a = i / steps * Math.PI * 2; wx.drawImage(g, Math.cos(a) * rr, Math.sin(a) * rr); }
+        wx.drawImage(g, 0, 0); g = w;
+      }
+      const gl = mkCanvas(C), gx = gl.getContext('2d'); gx.filter = `blur(${sigma}px)`; gx.drawImage(g, 0, 0);
+      ox.save(); for (let st = p.glowStrength; st > 0.01; st -= 1) { ox.globalAlpha = Math.min(1, st); ox.drawImage(gl, 0, 0); } ox.restore();
     }
     if (p.shadow) {
       const [r, g, b] = hexRgb(p.shadowColor);
@@ -273,13 +289,13 @@
     // 4) opacity + mirror
     let fin = out;
     if (p.opacity < 1 || p.mirror) {
-      fin = mkCanvas(S); const fx = fin.getContext('2d');
-      if (p.mirror) { fx.translate(S, 0); fx.scale(-1, 1); }
+      fin = mkCanvas(C); const fx = fin.getContext('2d');
+      if (p.mirror) { fx.translate(C, 0); fx.scale(-1, 1); }
       fx.globalAlpha = p.opacity; fx.drawImage(out, 0, 0);
     }
-    let hx = Math.round(hpx), hy = Math.round(hpy);
-    if (p.mirror) hx = S - 1 - hx;
-    return { canvas: fin, hot: [clamp(hx, 0, S - 1), clamp(hy, 0, S - 1)] };
+    let hx = Math.round(off + hpx), hy = Math.round(off + hpy);
+    if (p.mirror) hx = C - 1 - hx;
+    return { canvas: fin, hot: [clamp(hx, 0, C - 1), clamp(hy, 0, C - 1)] };
   }
 
   // Effective params for a role inside a design.
@@ -293,11 +309,25 @@
     return { pack: o.pack || design.pack, variant: o.pack ? o.variant : (o.variant || design.variant) };
   }
 
-  // Render a role → { frames:[canvas], delays:[ms], hot:[x,y], animated }
+  // A glow needs empty room around the shape. The whole design shares one canvas/shape ratio, because Windows
+  // has a single cursor size: the canvas grows (to a multiple of 16) and the shape keeps its on-screen size.
+  function layout(design, size) {
+    const S0 = { ...DEFAULTS, ...(design.global || {}) }.size; size = size || S0;
+    let gm = 0;
+    for (const role of ROLES) { const p = paramsFor(design, role); if (p.glow) gm = Math.max(gm, p.glowBlur * 1.2 + 1); }
+    if (!gm) return { canvas: size, shape: size };
+    const need = 1 + 2 * gm / BASE_SIZE;
+    const C0 = Math.min(256, Math.ceil(S0 * need / 16) * 16);
+    const canvas = Math.max(8, Math.round(size * C0 / S0));
+    return { canvas, shape: Math.min(size, canvas / need) };
+  }
+  const canvasSize = design => layout(design).canvas;
+
+  // Render a role → { frames:[canvas], delays:[ms], hot:[x,y], animated }. `size` is the shape size; the canvas may be larger.
   async function renderRole(design, role, size) {
-    const p = paramsFor(design, role); const S = size || p.size;
+    const p = paramsFor(design, role); const lay = layout(design, size || p.size); const S = lay.shape, C = lay.canvas;
     const sref = sourceFor(design, role);
-    const key = JSON.stringify([sref, role, p, S]);
+    const key = JSON.stringify([sref, role, p, S, C]);
     if (cache.render.has(key)) return cache.render.get(key);
     const job = (async () => {
       const pack = await getPack(sref.pack); const variant = variantOf(pack, sref.variant);
@@ -307,7 +337,7 @@
       let hot = [0, 0];
       const count = src.badge === 'busy' ? 24 : src.frames.length;
       const done = await Promise.all(Array.from({ length: count }, (_, i) =>
-        drawFrame(src.frames[Math.min(i, src.frames.length - 1)], src, pack, variant, p, S, i / count)));
+        drawFrame(src.frames[Math.min(i, src.frames.length - 1)], src, pack, variant, p, S, C, i / count)));
       for (const r of done) { frames.push(r.canvas); hot = r.hot; delays.push(src.badge === 'busy' ? 42 / p.speed : src.delay / p.speed); }
       return { frames, delays, hot, animated: frames.length > 1 };
     })();
@@ -385,7 +415,8 @@
   // Builds every Windows file for a design: [{role, ext, bytes}]
   async function buildFiles(design, onProgress) {
     const S = { ...DEFAULTS, ...(design.global || {}) }.size;
-    const sizes = sizeSet(S); const aniSizes = [...new Set([S, Math.round(S * 1.5), S * 2].map(v => Math.min(256, v)))];
+    const fits = (v, i) => i === 0 || layout(design, v).canvas <= 256;
+    const sizes = sizeSet(S).filter(fits); const aniSizes = [...new Set([S, S * 2].map(v => Math.min(256, v)))].filter(fits); // animated files get fewer sizes: each one repeats for every frame
     const files = [];
     let n = 0;
     for (const role of ROLES) {
@@ -478,7 +509,7 @@
   }
 
   /* ---------------- helpers for the UI ---------------- */
-  function cssCursor(r, frameIndex = 0, max = 64) {
+  function cssCursor(r, frameIndex = 0, max = 128) {
     let c = r.frames[frameIndex % r.frames.length]; let [hx, hy] = r.hot;
     if (c.width > max) { const k = max / c.width; const s = mkCanvas(max); s.getContext('2d').drawImage(c, 0, 0, max, max); c = s; hx = Math.round(hx * k); hy = Math.round(hy * k); }
     return `url(${c.toDataURL('image/png')}) ${hx} ${hy}, auto`;
@@ -488,7 +519,7 @@
 
   window.CursoraEngine = {
     ROLES, ROLE_INFO, ANIMATED, DEFAULTS, loadIndex, getPack, registerPack, renderRole, buildFiles, encodeCur, encodeAni,
-    decodeAny, packFromDecoded, cssCursor, newDesign, paramsFor, sourceFor, variantOf, clone, sizeSet,
+    decodeAny, packFromDecoded, cssCursor, newDesign, paramsFor, sourceFor, variantOf, clone, sizeSet, layout, canvasSize,
     clearCache: () => cache.render.clear(),
   };
 })();

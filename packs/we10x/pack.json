@@ -1,0 +1,296 @@
+{
+ "id": "we10x",
+ "name": "We10X",
+ "author": "yeyushengfan258",
+ "license": "GPL-3.0",
+ "url": "https://github.com/yeyushengfan258/We10XOS-cursors",
+ "tags": [
+  "light",
+  "windows"
+ ],
+ "desc": {
+  "ar": "\u0645\u0633\u062a\u0648\u062d\u0649 \u0645\u0646 \u0648\u064a\u0646\u062f\u0648\u0632 10X \u0627\u0644\u0645\u0644\u063a\u064a",
+  "en": "Inspired by Windows 10X"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "default",
+   "name": "Default",
+   "dir": "default",
+   "polarity": "light",
+   "swatch": [
+    "#f8f8f8",
+    "#202020"
+   ]
+  },
+  {
+   "id": "winsur-default",
+   "name": "WinSur",
+   "dir": "winsur-default",
+   "polarity": "light",
+   "swatch": [
+    "#f9f9f9",
+    "#0f0f0f"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default.svg",
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "Help": {
+   "src": "help.svg",
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress-01.svg",
+    "progress-02.svg",
+    "progress-03.svg",
+    "progress-04.svg",
+    "progress-05.svg",
+    "progress-06.svg",
+    "progress-07.svg",
+    "progress-08.svg",
+    "progress-09.svg",
+    "progress-10.svg",
+    "progress-11.svg",
+    "progress-12.svg",
+    "progress-13.svg",
+    "progress-14.svg",
+    "progress-15.svg",
+    "progress-16.svg",
+    "progress-17.svg",
+    "progress-18.svg",
+    "progress-19.svg",
+    "progress-20.svg",
+    "progress-21.svg",
+    "progress-22.svg",
+    "progress-23.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.125,
+    0.125
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-01.svg",
+    "wait-02.svg",
+    "wait-03.svg",
+    "wait-04.svg",
+    "wait-05.svg",
+    "wait-06.svg",
+    "wait-07.svg",
+    "wait-08.svg",
+    "wait-09.svg",
+    "wait-10.svg",
+    "wait-11.svg",
+    "wait-12.svg",
+    "wait-13.svg",
+    "wait-14.svg",
+    "wait-15.svg",
+    "wait-16.svg",
+    "wait-17.svg",
+    "wait-18.svg",
+    "wait-19.svg",
+    "wait-20.svg",
+    "wait-21.svg",
+    "wait-22.svg",
+    "wait-23.svg"
+   ],
+   "delay": 30,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "IBeam": {
+   "src": "text.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.125,
+    0.9063
+   ]
+  },
+  "No": {
+   "src": "not-allowed.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNS": {
+   "src": "size_ver.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeWE": {
+   "src": "size_hor.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "size_fdiag.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNESW": {
+   "src": "size_bdiag.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeAll": {
+   "src": "fleur.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.625,
+    0.125
+   ]
+  },
+  "Hand": {
+   "src": "pointer.svg",
+   "hot": [
+    0.5,
+    0.125
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.156,
+   0.113,
+   0.563,
+   0.723
+  ],
+  "Help": [
+   0.156,
+   0.125,
+   0.91,
+   0.973
+  ],
+  "AppStarting": [
+   0.156,
+   0.125,
+   0.934,
+   0.934
+  ],
+  "Wait": [
+   0.113,
+   0.113,
+   0.887,
+   0.887
+  ],
+  "Crosshair": [
+   0.184,
+   0.184,
+   0.879,
+   0.879
+  ],
+  "IBeam": [
+   0.363,
+   0.203,
+   0.668,
+   0.828
+  ],
+  "NWPen": [
+   0.039,
+   0.383,
+   0.641,
+   0.992
+  ],
+  "No": [
+   0.125,
+   0.152,
+   0.879,
+   0.906
+  ],
+  "SizeNS": [
+   0.34,
+   0.195,
+   0.723,
+   0.867
+  ],
+  "SizeWE": [
+   0.195,
+   0.34,
+   0.867,
+   0.723
+  ],
+  "SizeNWSE": [
+   0.262,
+   0.281,
+   0.75,
+   0.781
+  ],
+  "SizeNESW": [
+   0.258,
+   0.277,
+   0.746,
+   0.777
+  ],
+  "SizeAll": [
+   0.125,
+   0.094,
+   0.875,
+   0.844
+  ],
+  "UpArrow": [
+   0.242,
+   0.152,
+   0.695,
+   0.797
+  ],
+  "Hand": [
+   0.25,
+   0.16,
+   0.75,
+   0.813
+  ]
+ },
+ "fit": 1.016
+}

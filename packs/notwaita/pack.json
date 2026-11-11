@@ -1,0 +1,418 @@
+{
+ "id": "notwaita",
+ "name": "Notwaita",
+ "author": "Abdulkaiz Khatri (ful1e5)",
+ "license": "LGPL-3.0 / CC-BY-SA-3.0",
+ "url": "https://github.com/ful1e5/notwaita-cursor",
+ "tags": [
+  "dark",
+  "light",
+  "classic"
+ ],
+ "desc": {
+  "ar": "\u0628\u0631\u0648\u062d GNOME \u0627\u0644\u0643\u0644\u0627\u0633\u064a\u0643\u064a\u0629 \u0628\u0644\u0645\u0633\u0629 \u0623\u0646\u0638\u0641",
+  "en": "Classic GNOME Adwaita spirit, cleaner"
+ },
+ "kind": "tokens",
+ "dir": "svg",
+ "tokens": {
+  "fill": "#00FF00",
+  "edge": "#0000FF",
+  "accent": "#FF0000",
+  "edge2": "#FFFF00"
+ },
+ "variants": [
+  {
+   "id": "black",
+   "name": "Black",
+   "colors": {
+    "fill": "#000000",
+    "edge": "#FFFFFF",
+    "accent": "#000000",
+    "edge2": "#FFFFFF"
+   },
+   "swatch": [
+    "#000000",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "gray",
+   "name": "Gray",
+   "colors": {
+    "fill": "#404040",
+    "edge": "#FFFFFF",
+    "accent": "#404040",
+    "edge2": "#FFFFFF"
+   },
+   "swatch": [
+    "#404040",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "white",
+   "name": "White",
+   "colors": {
+    "fill": "#FFFFFF",
+    "edge": "#000000",
+    "accent": "#FFFFFF",
+    "edge2": "#000000"
+   },
+   "swatch": [
+    "#FFFFFF",
+    "#000000"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.svg",
+   "hot": [
+    0.1445,
+    0.0938
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.svg",
+   "hot": [
+    0.4805,
+    0.2383
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch/left_ptr_watch-01.svg",
+    "left_ptr_watch/left_ptr_watch-02.svg",
+    "left_ptr_watch/left_ptr_watch-03.svg",
+    "left_ptr_watch/left_ptr_watch-04.svg",
+    "left_ptr_watch/left_ptr_watch-05.svg",
+    "left_ptr_watch/left_ptr_watch-06.svg",
+    "left_ptr_watch/left_ptr_watch-07.svg",
+    "left_ptr_watch/left_ptr_watch-08.svg",
+    "left_ptr_watch/left_ptr_watch-09.svg",
+    "left_ptr_watch/left_ptr_watch-10.svg",
+    "left_ptr_watch/left_ptr_watch-11.svg",
+    "left_ptr_watch/left_ptr_watch-12.svg",
+    "left_ptr_watch/left_ptr_watch-13.svg",
+    "left_ptr_watch/left_ptr_watch-14.svg",
+    "left_ptr_watch/left_ptr_watch-15.svg",
+    "left_ptr_watch/left_ptr_watch-16.svg",
+    "left_ptr_watch/left_ptr_watch-17.svg",
+    "left_ptr_watch/left_ptr_watch-18.svg",
+    "left_ptr_watch/left_ptr_watch-19.svg",
+    "left_ptr_watch/left_ptr_watch-20.svg",
+    "left_ptr_watch/left_ptr_watch-21.svg",
+    "left_ptr_watch/left_ptr_watch-22.svg",
+    "left_ptr_watch/left_ptr_watch-23.svg",
+    "left_ptr_watch/left_ptr_watch-24.svg",
+    "left_ptr_watch/left_ptr_watch-25.svg",
+    "left_ptr_watch/left_ptr_watch-26.svg",
+    "left_ptr_watch/left_ptr_watch-27.svg",
+    "left_ptr_watch/left_ptr_watch-28.svg",
+    "left_ptr_watch/left_ptr_watch-29.svg",
+    "left_ptr_watch/left_ptr_watch-30.svg",
+    "left_ptr_watch/left_ptr_watch-31.svg",
+    "left_ptr_watch/left_ptr_watch-32.svg",
+    "left_ptr_watch/left_ptr_watch-33.svg",
+    "left_ptr_watch/left_ptr_watch-34.svg",
+    "left_ptr_watch/left_ptr_watch-35.svg",
+    "left_ptr_watch/left_ptr_watch-36.svg",
+    "left_ptr_watch/left_ptr_watch-37.svg",
+    "left_ptr_watch/left_ptr_watch-38.svg",
+    "left_ptr_watch/left_ptr_watch-39.svg",
+    "left_ptr_watch/left_ptr_watch-40.svg",
+    "left_ptr_watch/left_ptr_watch-41.svg",
+    "left_ptr_watch/left_ptr_watch-42.svg",
+    "left_ptr_watch/left_ptr_watch-43.svg",
+    "left_ptr_watch/left_ptr_watch-44.svg",
+    "left_ptr_watch/left_ptr_watch-45.svg",
+    "left_ptr_watch/left_ptr_watch-46.svg",
+    "left_ptr_watch/left_ptr_watch-47.svg",
+    "left_ptr_watch/left_ptr_watch-48.svg",
+    "left_ptr_watch/left_ptr_watch-49.svg",
+    "left_ptr_watch/left_ptr_watch-50.svg",
+    "left_ptr_watch/left_ptr_watch-51.svg",
+    "left_ptr_watch/left_ptr_watch-52.svg",
+    "left_ptr_watch/left_ptr_watch-53.svg",
+    "left_ptr_watch/left_ptr_watch-54.svg",
+    "left_ptr_watch/left_ptr_watch-55.svg",
+    "left_ptr_watch/left_ptr_watch-56.svg",
+    "left_ptr_watch/left_ptr_watch-57.svg",
+    "left_ptr_watch/left_ptr_watch-58.svg",
+    "left_ptr_watch/left_ptr_watch-59.svg",
+    "left_ptr_watch/left_ptr_watch-60.svg"
+   ],
+   "delay": 20,
+   "hot": [
+    0.1367,
+    0.1328
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "watch/watch-01.svg",
+    "watch/watch-02.svg",
+    "watch/watch-03.svg",
+    "watch/watch-04.svg",
+    "watch/watch-05.svg",
+    "watch/watch-06.svg",
+    "watch/watch-07.svg",
+    "watch/watch-08.svg",
+    "watch/watch-09.svg",
+    "watch/watch-10.svg",
+    "watch/watch-11.svg",
+    "watch/watch-12.svg",
+    "watch/watch-13.svg",
+    "watch/watch-14.svg",
+    "watch/watch-15.svg",
+    "watch/watch-16.svg",
+    "watch/watch-17.svg",
+    "watch/watch-18.svg",
+    "watch/watch-19.svg",
+    "watch/watch-20.svg",
+    "watch/watch-21.svg",
+    "watch/watch-22.svg",
+    "watch/watch-23.svg",
+    "watch/watch-24.svg",
+    "watch/watch-25.svg",
+    "watch/watch-26.svg",
+    "watch/watch-27.svg",
+    "watch/watch-28.svg",
+    "watch/watch-29.svg",
+    "watch/watch-30.svg",
+    "watch/watch-31.svg",
+    "watch/watch-32.svg",
+    "watch/watch-33.svg",
+    "watch/watch-34.svg",
+    "watch/watch-35.svg",
+    "watch/watch-36.svg",
+    "watch/watch-37.svg",
+    "watch/watch-38.svg",
+    "watch/watch-39.svg",
+    "watch/watch-40.svg",
+    "watch/watch-41.svg",
+    "watch/watch-42.svg",
+    "watch/watch-43.svg",
+    "watch/watch-44.svg",
+    "watch/watch-45.svg",
+    "watch/watch-46.svg",
+    "watch/watch-47.svg",
+    "watch/watch-48.svg",
+    "watch/watch-49.svg",
+    "watch/watch-50.svg",
+    "watch/watch-51.svg",
+    "watch/watch-52.svg",
+    "watch/watch-53.svg",
+    "watch/watch-54.svg",
+    "watch/watch-55.svg",
+    "watch/watch-56.svg",
+    "watch/watch-57.svg",
+    "watch/watch-58.svg",
+    "watch/watch-59.svg",
+    "watch/watch-60.svg"
+   ],
+   "delay": 20,
+   "hot": [
+    0.4922,
+    0.4922
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.4492,
+    0.4414
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.svg",
+   "hot": [
+    0.4297,
+    0.4648
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.2383,
+    0.9063
+   ]
+  },
+  "No": {
+   "src": "circle.svg",
+   "hot": [
+    0.1406,
+    0.1016
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.svg",
+   "hot": [
+    0.4688,
+    0.4766
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.svg",
+   "hot": [
+    0.4961,
+    0.4609
+   ]
+  },
+  "SizeNWSE": {
+   "src": "bd_double_arrow.svg",
+   "hot": [
+    0.4219,
+    0.418
+   ]
+  },
+  "SizeNESW": {
+   "src": "fd_double_arrow.svg",
+   "hot": [
+    0.4375,
+    0.4102
+   ]
+  },
+  "SizeAll": {
+   "src": "move.svg",
+   "hot": [
+    0.4883,
+    0.4414
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.4844,
+    0.082
+   ]
+  },
+  "Hand": {
+   "src": "hand2.svg",
+   "hot": [
+    0.3633,
+    0.1641
+   ]
+  },
+  "Pin": {
+   "src": "pin.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Person": {
+   "src": "person.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.086,
+   0.035,
+   0.707,
+   0.992
+  ],
+  "Help": [
+   0.176,
+   0.043,
+   0.836,
+   0.949
+  ],
+  "AppStarting": [
+   0.051,
+   0.078,
+   0.875,
+   0.91
+  ],
+  "Wait": [
+   0.082,
+   0.078,
+   0.965,
+   0.961
+  ],
+  "Crosshair": [
+   0.004,
+   0,
+   0.957,
+   0.953
+  ],
+  "IBeam": [
+   0.211,
+   0.043,
+   0.707,
+   0.996
+  ],
+  "NWPen": [
+   0.211,
+   0.039,
+   0.805,
+   0.977
+  ],
+  "No": [
+   0.086,
+   0.035,
+   0.969,
+   0.992
+  ],
+  "SizeNS": [
+   0.156,
+   0.039,
+   0.844,
+   0.996
+  ],
+  "SizeWE": [
+   0.047,
+   0.152,
+   1,
+   0.844
+  ],
+  "SizeNWSE": [
+   0.09,
+   0.082,
+   0.836,
+   0.824
+  ],
+  "SizeNESW": [
+   0.09,
+   0.082,
+   0.836,
+   0.824
+  ],
+  "SizeAll": [
+   0.027,
+   0,
+   1,
+   0.977
+  ],
+  "UpArrow": [
+   0.203,
+   0.016,
+   0.863,
+   1
+  ],
+  "Hand": [
+   0.059,
+   0.133,
+   0.918,
+   0.996
+  ],
+  "Pin": [
+   0.086,
+   0.035,
+   0.973,
+   0.992
+  ],
+  "Person": [
+   0.086,
+   0.035,
+   0.961,
+   0.992
+  ]
+ },
+ "fit": 0.648
+}

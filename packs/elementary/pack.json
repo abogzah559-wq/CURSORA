@@ -1,0 +1,252 @@
+{
+ "id": "elementary",
+ "name": "elementary",
+ "author": "elementary",
+ "license": "GPL-3.0",
+ "url": "https://github.com/elementary/icons",
+ "tags": [
+  "dark",
+  "classic"
+ ],
+ "desc": {
+  "ar": "\u0645\u0627\u0648\u0633 \u0646\u0638\u0627\u0645 elementary OS\u060c \u0646\u0627\u0639\u0645 \u0648\u0623\u0646\u064a\u0642",
+  "en": "The elementary OS cursor"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "default",
+   "name": "Default",
+   "dir": "default",
+   "polarity": "dark",
+   "swatch": [
+    "#353535",
+    "#f1f1f1"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default/default.svg",
+   "hot": [
+    0.2917,
+    0.1667
+   ]
+  },
+  "Help": {
+   "src": "help/help.svg",
+   "hot": [
+    0.2917,
+    0.1667
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress/progress_01.svg",
+    "progress/progress_02.svg",
+    "progress/progress_03.svg",
+    "progress/progress_04.svg",
+    "progress/progress_05.svg",
+    "progress/progress_06.svg",
+    "progress/progress_07.svg",
+    "progress/progress_08.svg",
+    "progress/progress_09.svg",
+    "progress/progress_10.svg",
+    "progress/progress_11.svg",
+    "progress/progress_12.svg",
+    "progress/progress_13.svg",
+    "progress/progress_14.svg",
+    "progress/progress_15.svg",
+    "progress/progress_16.svg"
+   ],
+   "delay": 40,
+   "hot": [
+    0.2917,
+    0.1667
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait/wait_01.svg",
+    "wait/wait_02.svg",
+    "wait/wait_03.svg",
+    "wait/wait_04.svg",
+    "wait/wait_05.svg",
+    "wait/wait_06.svg",
+    "wait/wait_07.svg",
+    "wait/wait_08.svg",
+    "wait/wait_09.svg",
+    "wait/wait_10.svg",
+    "wait/wait_11.svg",
+    "wait/wait_12.svg",
+    "wait/wait_13.svg",
+    "wait/wait_14.svg",
+    "wait/wait_15.svg",
+    "wait/wait_16.svg"
+   ],
+   "delay": 40,
+   "hot": [
+    0.5,
+    0.4167
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair/crosshair.svg",
+   "hot": [
+    0.5,
+    0.4583
+   ]
+  },
+  "IBeam": {
+   "src": "text/text.svg",
+   "hot": [
+    0.4583,
+    0.4167
+   ]
+  },
+  "No": {
+   "src": "not-allowed/not-allowed.svg",
+   "hot": [
+    0.2917,
+    0.1667
+   ]
+  },
+  "SizeNS": {
+   "src": "ns-resize/ns-resize.svg",
+   "hot": [
+    0.5,
+    0.4583
+   ]
+  },
+  "SizeWE": {
+   "src": "ew-resize/ew-resize.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNWSE": {
+   "src": "nwse-resize/nwse-resize.svg",
+   "hot": [
+    0.5,
+    0.4583
+   ]
+  },
+  "SizeNESW": {
+   "src": "nesw-resize/nesw-resize.svg",
+   "hot": [
+    0.5,
+    0.4583
+   ]
+  },
+  "SizeAll": {
+   "src": "move/move.svg",
+   "hot": [
+    0.2917,
+    0.1667
+   ]
+  },
+  "Hand": {
+   "src": "pointer/pointer.svg",
+   "hot": [
+    0.375,
+    0.2083
+   ]
+  },
+  "NWPen": {
+   "ref": "Arrow"
+  },
+  "UpArrow": {
+   "ref": "Arrow"
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.164,
+   0.043,
+   0.836,
+   0.961
+  ],
+  "Help": [
+   0.164,
+   0.043,
+   1,
+   1
+  ],
+  "AppStarting": [
+   0.164,
+   0.043,
+   1,
+   1
+  ],
+  "Wait": [
+   0.039,
+   0.043,
+   0.961,
+   0.957
+  ],
+  "Crosshair": [
+   0.039,
+   0.039,
+   0.961,
+   0.961
+  ],
+  "IBeam": [
+   0.207,
+   0.043,
+   0.75,
+   0.961
+  ],
+  "No": [
+   0.164,
+   0.043,
+   1,
+   1
+  ],
+  "SizeNS": [
+   0.238,
+   0.039,
+   0.762,
+   0.957
+  ],
+  "SizeWE": [
+   0.039,
+   0.277,
+   0.961,
+   0.805
+  ],
+  "SizeNWSE": [
+   0.082,
+   0.082,
+   0.918,
+   0.918
+  ],
+  "SizeNESW": [
+   0.082,
+   0.082,
+   0.918,
+   0.918
+  ],
+  "SizeAll": [
+   0.164,
+   0.043,
+   0.977,
+   1
+  ],
+  "Hand": [
+   0.09,
+   0.043,
+   0.871,
+   0.918
+  ]
+ },
+ "fit": 0.675
+}

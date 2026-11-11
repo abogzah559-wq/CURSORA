@@ -14,6 +14,6 @@ if (!window.cursora) {
     current: async () => ({}), hasBackup: async () => true,
     openCursors: async () => [], openFolderCursors: async () => null,
     exportDesign: async d => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify({ cursora: 1, design: d })])); a.download = (d.name || 'cursor') + '.cursora'; a.click(); return true; },
-    importDesign: async () => null, selftestReport: async r => console.log('selftest', r),
+    importDesign: async () => null, selftestReport: async r => console.log('SELFTEST ' + JSON.stringify({ ...r, files: (r.files || []).length })),
   };
 }

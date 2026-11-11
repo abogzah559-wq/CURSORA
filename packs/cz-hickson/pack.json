@@ -1,0 +1,284 @@
+{
+ "id": "cz-hickson",
+ "name": "Hickson",
+ "author": "charakterziffer",
+ "license": "GPL-3.0",
+ "url": "https://github.com/charakterziffer/cursor-toolbox",
+ "tags": [
+  "dark",
+  "light",
+  "minimal",
+  "classic"
+ ],
+ "desc": {
+  "ar": "\u062d\u0627\u062f \u0648\u0631\u0633\u0645\u064a \u0628\u062e\u0637\u0648\u0637 \u062f\u0642\u064a\u0642\u0629",
+  "en": "Sharp, formal, precise lines"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "black",
+   "name": "Black",
+   "dir": "black",
+   "polarity": "dark",
+   "swatch": [
+    "#2d2d2d",
+    "#e6e6e6"
+   ]
+  },
+  {
+   "id": "white",
+   "name": "White",
+   "dir": "white",
+   "polarity": "light",
+   "swatch": [
+    "#e1e1e1",
+    "#222222"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr/left_ptr.png",
+   "hot": [
+    0.0833,
+    0.0417
+   ]
+  },
+  "Help": {
+   "src": "help/help.png",
+   "hot": [
+    0.0833,
+    0.0417
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress/progress-01.png",
+    "progress/progress-02.png",
+    "progress/progress-03.png",
+    "progress/progress-04.png",
+    "progress/progress-05.png",
+    "progress/progress-06.png",
+    "progress/progress-07.png",
+    "progress/progress-08.png",
+    "progress/progress-09.png",
+    "progress/progress-10.png",
+    "progress/progress-11.png",
+    "progress/progress-12.png",
+    "progress/progress-13.png",
+    "progress/progress-14.png",
+    "progress/progress-15.png",
+    "progress/progress-16.png"
+   ],
+   "delay": 60,
+   "hot": [
+    0.0833,
+    0.0417
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait/wait-01.png",
+    "wait/wait-02.png",
+    "wait/wait-03.png",
+    "wait/wait-04.png",
+    "wait/wait-05.png",
+    "wait/wait-06.png",
+    "wait/wait-07.png",
+    "wait/wait-08.png",
+    "wait/wait-09.png",
+    "wait/wait-10.png",
+    "wait/wait-11.png",
+    "wait/wait-12.png",
+    "wait/wait-13.png",
+    "wait/wait-14.png",
+    "wait/wait-15.png",
+    "wait/wait-16.png"
+   ],
+   "delay": 60,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair/crosshair.png",
+   "hot": [
+    0.4583,
+    0.4583
+   ]
+  },
+  "IBeam": {
+   "src": "text/text.png",
+   "hot": [
+    0.4583,
+    0.4583
+   ]
+  },
+  "NWPen": {
+   "src": "pencil/pencil.png",
+   "hot": [
+    0.0833,
+    0.8333
+   ]
+  },
+  "No": {
+   "src": "circle/circle.png",
+   "hot": [
+    0.0833,
+    0.0417
+   ]
+  },
+  "SizeNS": {
+   "src": "ns-resize/ns-resize.png",
+   "hot": [
+    0.4583,
+    0.4583
+   ]
+  },
+  "SizeWE": {
+   "src": "ew-resize/ew-resize.png",
+   "hot": [
+    0.4583,
+    0.4583
+   ]
+  },
+  "SizeNWSE": {
+   "src": "nwse-resize/nwse-resize.png",
+   "hot": [
+    0.4583,
+    0.4583
+   ]
+  },
+  "SizeNESW": {
+   "src": "nesw-resize/nesw-resize.png",
+   "hot": [
+    0.4583,
+    0.4583
+   ]
+  },
+  "SizeAll": {
+   "src": "move/move.png",
+   "hot": [
+    0.4583,
+    0.4583
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr/center_ptr.png",
+   "hot": [
+    0.4583,
+    0.0417
+   ]
+  },
+  "Hand": {
+   "src": "pointing_hand/pointing_hand.png",
+   "hot": [
+    0.25,
+    0.125
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.031,
+   0.039,
+   0.688,
+   0.91
+  ],
+  "Help": [
+   0.031,
+   0.039,
+   0.98,
+   0.926
+  ],
+  "AppStarting": [
+   0.031,
+   0.039,
+   0.953,
+   0.957
+  ],
+  "Wait": [
+   0.086,
+   0.055,
+   0.926,
+   0.926
+  ],
+  "Crosshair": [
+   0.078,
+   0.098,
+   0.902,
+   0.922
+  ],
+  "IBeam": [
+   0.297,
+   0.176,
+   0.688,
+   0.887
+  ],
+  "NWPen": [
+   0.031,
+   0.055,
+   0.789,
+   0.957
+  ],
+  "No": [
+   0.031,
+   0.039,
+   0.984,
+   1
+  ],
+  "SizeNS": [
+   0.215,
+   0.035,
+   0.77,
+   0.973
+  ],
+  "SizeWE": [
+   0.027,
+   0.219,
+   0.957,
+   0.785
+  ],
+  "SizeNWSE": [
+   0.098,
+   0.113,
+   0.887,
+   0.906
+  ],
+  "SizeNESW": [
+   0.098,
+   0.113,
+   0.887,
+   0.906
+  ],
+  "SizeAll": [
+   0.027,
+   0.035,
+   0.957,
+   0.973
+  ],
+  "UpArrow": [
+   0.148,
+   0.063,
+   0.875,
+   0.895
+  ],
+  "Hand": [
+   0.031,
+   0.094,
+   0.832,
+   0.93
+  ]
+ },
+ "fit": 0.712
+}

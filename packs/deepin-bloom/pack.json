@@ -1,0 +1,295 @@
+{
+ "id": "deepin-bloom",
+ "name": "Deepin Bloom",
+ "author": "Deepin Technology",
+ "license": "GPL-3.0",
+ "url": "https://github.com/linuxdeepin/deepin-icon-theme",
+ "tags": [
+  "dark",
+  "light",
+  "color"
+ ],
+ "desc": {
+  "ar": "\u0645\u0627\u0648\u0633 \u0646\u0638\u0627\u0645 Deepin \u0627\u0644\u0631\u0633\u0645\u064a \u0628\u0646\u0633\u062e\u0647 \u0627\u0644\u0623\u0631\u0628\u0639",
+  "en": "The official Deepin cursors, four styles"
+ },
+ "kind": "files",
+ "variants": [
+  {
+   "id": "bloom",
+   "name": "Bloom",
+   "dir": "bloom",
+   "polarity": "dark",
+   "swatch": [
+    "#181818",
+    "#dfdfdf"
+   ]
+  },
+  {
+   "id": "bloom-dark",
+   "name": "Bloom Dark",
+   "dir": "bloom-dark",
+   "polarity": "dark",
+   "swatch": [
+    "#0e212f",
+    "#0184cd"
+   ]
+  },
+  {
+   "id": "fantacy",
+   "name": "Fantasy",
+   "dir": "fantacy",
+   "polarity": "color",
+   "swatch": [
+    "#13151c",
+    "#3dccdc"
+   ]
+  },
+  {
+   "id": "vintage",
+   "name": "Vintage",
+   "dir": "vintage",
+   "polarity": "light",
+   "swatch": [
+    "#dadada",
+    "#373737"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.png",
+   "hot": [
+    0.0859,
+    0.043
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.png",
+   "hot": [
+    0.0859,
+    0.043
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch-00.png",
+    "left_ptr_watch-01.png",
+    "left_ptr_watch-02.png",
+    "left_ptr_watch-03.png",
+    "left_ptr_watch-04.png",
+    "left_ptr_watch-05.png",
+    "left_ptr_watch-06.png",
+    "left_ptr_watch-07.png"
+   ],
+   "delay": 60.0,
+   "hot": [
+    0.0859,
+    0.043
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait-00.png",
+    "wait-01.png",
+    "wait-02.png",
+    "wait-03.png",
+    "wait-04.png",
+    "wait-05.png",
+    "wait-06.png",
+    "wait-07.png",
+    "wait-08.png",
+    "wait-09.png",
+    "wait-10.png",
+    "wait-11.png",
+    "wait-12.png",
+    "wait-13.png",
+    "wait-14.png",
+    "wait-15.png"
+   ],
+   "delay": 60.0,
+   "hot": [
+    0.4609,
+    0.4609
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.png",
+   "hot": [
+    0.4609,
+    0.4609
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.png",
+   "hot": [
+    0.4609,
+    0.4609
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.png",
+   "hot": [
+    0.125,
+    0.8359
+   ]
+  },
+  "No": {
+   "src": "circle.png",
+   "hot": [
+    0.0859,
+    0.043
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.png",
+   "hot": [
+    0.4609,
+    0.4609
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.png",
+   "hot": [
+    0.4609,
+    0.4609
+   ]
+  },
+  "SizeNWSE": {
+   "src": "size_fdiag.png",
+   "hot": [
+    0.4609,
+    0.4609
+   ]
+  },
+  "SizeNESW": {
+   "src": "size_bdiag.png",
+   "hot": [
+    0.4609,
+    0.4609
+   ]
+  },
+  "SizeAll": {
+   "src": "fleur.png",
+   "hot": [
+    0.4609,
+    0.4609
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.png",
+   "hot": [
+    0.4609,
+    0.043
+   ]
+  },
+  "Hand": {
+   "src": "hand2.png",
+   "hot": [
+    0.375,
+    0.043
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.027,
+   0.039,
+   0.684,
+   0.941
+  ],
+  "Help": [
+   0.027,
+   0.039,
+   0.734,
+   0.973
+  ],
+  "AppStarting": [
+   0.012,
+   0.035,
+   0.75,
+   1
+  ],
+  "Wait": [
+   0.027,
+   0.059,
+   0.977,
+   1
+  ],
+  "Crosshair": [
+   0.039,
+   0.07,
+   0.961,
+   0.992
+  ],
+  "IBeam": [
+   0.293,
+   0.129,
+   0.676,
+   0.934
+  ],
+  "NWPen": [
+   0.09,
+   0.137,
+   0.902,
+   0.945
+  ],
+  "No": [
+   0.027,
+   0.039,
+   0.734,
+   0.973
+  ],
+  "SizeNS": [
+   0.227,
+   0.063,
+   0.773,
+   0.996
+  ],
+  "SizeWE": [
+   0.023,
+   0.25,
+   0.977,
+   0.809
+  ],
+  "SizeNWSE": [
+   0.191,
+   0.16,
+   0.871,
+   0.84
+  ],
+  "SizeNESW": [
+   0.16,
+   0.191,
+   0.84,
+   0.871
+  ],
+  "SizeAll": [
+   0.07,
+   0.086,
+   0.898,
+   0.93
+  ],
+  "UpArrow": [
+   0.156,
+   0.063,
+   0.871,
+   1
+  ],
+  "Hand": [
+   0.066,
+   0.055,
+   0.906,
+   0.938
+  ]
+ },
+ "fit": 0.687
+}

@@ -1,0 +1,344 @@
+{
+ "id": "mocu",
+ "name": "Mocu",
+ "author": "Severin Meyer",
+ "license": "CC0-1.0",
+ "url": "https://github.com/sevmeyer/mocu-xcursor",
+ "tags": [
+  "dark",
+  "light",
+  "minimal",
+  "classic"
+ ],
+ "desc": {
+  "ar": "\u0635\u063a\u064a\u0631 \u0648\u062d\u0627\u062f \u0648\u0646\u0638\u064a\u0641 \u062c\u062f\u064b\u0627\u060c \u0644\u0644\u064a \u064a\u062d\u0628 \u0627\u0644\u0628\u0633\u0627\u0637\u0629",
+  "en": "Tiny, crisp and very clean"
+ },
+ "kind": "tokens",
+ "dir": "svg",
+ "tokens": {
+  "fill": "#fafbfc",
+  "edge": "#1a1b1c",
+  "shadow": "#0a0b0c"
+ },
+ "variants": [
+  {
+   "id": "black",
+   "name": "Black",
+   "colors": {
+    "fill": "#111111",
+    "edge": "#f9f9f9",
+    "shadow": "#000000"
+   },
+   "swatch": [
+    "#111111",
+    "#f9f9f9"
+   ]
+  },
+  {
+   "id": "white",
+   "name": "White",
+   "colors": {
+    "fill": "#fcfcfc",
+    "edge": "#222222",
+    "shadow": "#000000"
+   },
+   "swatch": [
+    "#fcfcfc",
+    "#222222"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "default.svg",
+   "hot": [
+    0.0417,
+    0.0417
+   ]
+  },
+  "Help": {
+   "src": "help.svg",
+   "hot": [
+    0.0417,
+    0.0417
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "progress/00.svg",
+    "progress/01.svg",
+    "progress/02.svg",
+    "progress/03.svg",
+    "progress/04.svg",
+    "progress/05.svg",
+    "progress/06.svg",
+    "progress/07.svg",
+    "progress/08.svg",
+    "progress/09.svg",
+    "progress/10.svg",
+    "progress/11.svg",
+    "progress/12.svg",
+    "progress/13.svg",
+    "progress/14.svg",
+    "progress/15.svg",
+    "progress/16.svg",
+    "progress/17.svg",
+    "progress/18.svg",
+    "progress/19.svg",
+    "progress/20.svg",
+    "progress/21.svg",
+    "progress/22.svg",
+    "progress/23.svg",
+    "progress/24.svg",
+    "progress/25.svg",
+    "progress/26.svg",
+    "progress/27.svg",
+    "progress/28.svg",
+    "progress/29.svg",
+    "progress/30.svg",
+    "progress/31.svg",
+    "progress/32.svg",
+    "progress/33.svg",
+    "progress/34.svg",
+    "progress/35.svg",
+    "progress/36.svg",
+    "progress/37.svg",
+    "progress/38.svg",
+    "progress/39.svg"
+   ],
+   "delay": 25,
+   "hot": [
+    0.0417,
+    0.0417
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait/00.svg",
+    "wait/01.svg",
+    "wait/02.svg",
+    "wait/03.svg",
+    "wait/04.svg",
+    "wait/05.svg",
+    "wait/06.svg",
+    "wait/07.svg",
+    "wait/08.svg",
+    "wait/09.svg",
+    "wait/10.svg",
+    "wait/11.svg",
+    "wait/12.svg",
+    "wait/13.svg",
+    "wait/14.svg",
+    "wait/15.svg",
+    "wait/16.svg",
+    "wait/17.svg",
+    "wait/18.svg",
+    "wait/19.svg",
+    "wait/20.svg",
+    "wait/21.svg",
+    "wait/22.svg",
+    "wait/23.svg",
+    "wait/24.svg",
+    "wait/25.svg",
+    "wait/26.svg",
+    "wait/27.svg",
+    "wait/28.svg",
+    "wait/29.svg",
+    "wait/30.svg",
+    "wait/31.svg",
+    "wait/32.svg",
+    "wait/33.svg",
+    "wait/34.svg",
+    "wait/35.svg",
+    "wait/36.svg",
+    "wait/37.svg",
+    "wait/38.svg",
+    "wait/39.svg"
+   ],
+   "delay": 25,
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "Crosshair": {
+   "src": "crosshair.svg",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "IBeam": {
+   "src": "text.svg",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.1667,
+    0.8333
+   ]
+  },
+  "No": {
+   "src": "not-allowed.svg",
+   "hot": [
+    0.5,
+    0.5
+   ]
+  },
+  "SizeNS": {
+   "src": "ns-resize.svg",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "SizeWE": {
+   "src": "ew-resize.svg",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "SizeNWSE": {
+   "src": "nwse-resize.svg",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "SizeNESW": {
+   "src": "nesw-resize.svg",
+   "hot": [
+    0.4792,
+    0.4792
+   ]
+  },
+  "SizeAll": {
+   "src": "all-scroll.svg",
+   "hot": [
+    0.4583,
+    0.4583
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.5,
+    0.0417
+   ]
+  },
+  "Hand": {
+   "src": "pointer.svg",
+   "hot": [
+    0.2917,
+    0.0833
+   ]
+  },
+  "Pin": {
+   "compose": "Arrow",
+   "badge": "pin"
+  },
+  "Person": {
+   "compose": "Arrow",
+   "badge": "person"
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0,
+   0,
+   0.531,
+   0.805
+  ],
+  "Help": [
+   0,
+   0,
+   0.832,
+   0.957
+  ],
+  "AppStarting": [
+   0,
+   0,
+   0.918,
+   0.957
+  ],
+  "Wait": [
+   0.086,
+   0.086,
+   0.953,
+   0.953
+  ],
+  "Crosshair": [
+   0.082,
+   0.082,
+   0.918,
+   0.918
+  ],
+  "IBeam": [
+   0.332,
+   0.125,
+   0.668,
+   0.875
+  ],
+  "NWPen": [
+   0.164,
+   0.109,
+   0.934,
+   0.875
+  ],
+  "No": [
+   0.094,
+   0.094,
+   0.949,
+   0.949
+  ],
+  "SizeNS": [
+   0.207,
+   0.039,
+   0.793,
+   0.957
+  ],
+  "SizeWE": [
+   0.039,
+   0.207,
+   0.957,
+   0.793
+  ],
+  "SizeNWSE": [
+   0.164,
+   0.164,
+   0.832,
+   0.832
+  ],
+  "SizeNESW": [
+   0.164,
+   0.164,
+   0.832,
+   0.832
+  ],
+  "SizeAll": [
+   0,
+   0,
+   0.957,
+   0.957
+  ],
+  "UpArrow": [
+   0.23,
+   0,
+   0.809,
+   0.875
+  ],
+  "Hand": [
+   0.063,
+   0.039,
+   0.75,
+   0.793
+  ]
+ },
+ "fit": 0.77
+}

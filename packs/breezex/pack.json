@@ -1,0 +1,439 @@
+{
+ "id": "breezex",
+ "name": "BreezeX",
+ "author": "Abdulkaiz Khatri (ful1e5)",
+ "license": "GPL-3.0",
+ "url": "https://github.com/ful1e5/BreezeX_Cursor",
+ "tags": [
+  "dark",
+  "light",
+  "classic"
+ ],
+ "desc": {
+  "ar": "Breeze \u0645\u0646 KDE \u0628\u0646\u0633\u062e\u0629 \u0645\u0648\u0633\u0651\u0639\u0629 \u0648\u062d\u0648\u0627\u0641 \u0646\u0627\u0639\u0645\u0629",
+  "en": "Extended KDE Breeze"
+ },
+ "kind": "tokens",
+ "dir": "svg",
+ "tokens": {
+  "fill": "#00FF00",
+  "edge": "#0000FF"
+ },
+ "variants": [
+  {
+   "id": "black",
+   "name": "Black",
+   "colors": {
+    "fill": "#000000",
+    "edge": "#FFFFFF",
+    "accent": "#000000"
+   },
+   "swatch": [
+    "#000000",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "dark",
+   "name": "Dark",
+   "colors": {
+    "fill": "#4D4D4D",
+    "edge": "#FFFFFF",
+    "accent": "#4D4D4D"
+   },
+   "swatch": [
+    "#4D4D4D",
+    "#FFFFFF"
+   ]
+  },
+  {
+   "id": "light",
+   "name": "Light",
+   "colors": {
+    "fill": "#FFFFFF",
+    "edge": "#4D4D4D",
+    "accent": "#FFFFFF"
+   },
+   "swatch": [
+    "#FFFFFF",
+    "#4D4D4D"
+   ]
+  },
+  {
+   "id": "rose-pine",
+   "name": "Ros\u00e9 Pine",
+   "colors": {
+    "fill": "#191724",
+    "edge": "#e0def4",
+    "accent": "#191724"
+   },
+   "swatch": [
+    "#191724",
+    "#e0def4"
+   ]
+  },
+  {
+   "id": "rose-pine-dawn",
+   "name": "Ros\u00e9 Pine Dawn",
+   "colors": {
+    "fill": "#faf4ed",
+    "edge": "#575279",
+    "accent": "#faf4ed"
+   },
+   "swatch": [
+    "#faf4ed",
+    "#575279"
+   ]
+  }
+ ],
+ "roles": {
+  "Arrow": {
+   "src": "left_ptr.svg",
+   "hot": [
+    0.2685,
+    0.1167
+   ]
+  },
+  "Help": {
+   "src": "question_arrow.svg",
+   "hot": [
+    0.2685,
+    0.1167
+   ]
+  },
+  "AppStarting": {
+   "frames": [
+    "left_ptr_watch/left_ptr_watch-01.svg",
+    "left_ptr_watch/left_ptr_watch-02.svg",
+    "left_ptr_watch/left_ptr_watch-03.svg",
+    "left_ptr_watch/left_ptr_watch-04.svg",
+    "left_ptr_watch/left_ptr_watch-05.svg",
+    "left_ptr_watch/left_ptr_watch-06.svg",
+    "left_ptr_watch/left_ptr_watch-07.svg",
+    "left_ptr_watch/left_ptr_watch-08.svg",
+    "left_ptr_watch/left_ptr_watch-09.svg",
+    "left_ptr_watch/left_ptr_watch-10.svg",
+    "left_ptr_watch/left_ptr_watch-11.svg",
+    "left_ptr_watch/left_ptr_watch-12.svg",
+    "left_ptr_watch/left_ptr_watch-13.svg",
+    "left_ptr_watch/left_ptr_watch-14.svg",
+    "left_ptr_watch/left_ptr_watch-15.svg",
+    "left_ptr_watch/left_ptr_watch-16.svg",
+    "left_ptr_watch/left_ptr_watch-17.svg",
+    "left_ptr_watch/left_ptr_watch-18.svg",
+    "left_ptr_watch/left_ptr_watch-19.svg",
+    "left_ptr_watch/left_ptr_watch-20.svg",
+    "left_ptr_watch/left_ptr_watch-21.svg",
+    "left_ptr_watch/left_ptr_watch-22.svg",
+    "left_ptr_watch/left_ptr_watch-23.svg",
+    "left_ptr_watch/left_ptr_watch-24.svg",
+    "left_ptr_watch/left_ptr_watch-25.svg",
+    "left_ptr_watch/left_ptr_watch-26.svg",
+    "left_ptr_watch/left_ptr_watch-27.svg",
+    "left_ptr_watch/left_ptr_watch-28.svg",
+    "left_ptr_watch/left_ptr_watch-29.svg",
+    "left_ptr_watch/left_ptr_watch-30.svg",
+    "left_ptr_watch/left_ptr_watch-31.svg",
+    "left_ptr_watch/left_ptr_watch-32.svg",
+    "left_ptr_watch/left_ptr_watch-33.svg",
+    "left_ptr_watch/left_ptr_watch-34.svg",
+    "left_ptr_watch/left_ptr_watch-35.svg",
+    "left_ptr_watch/left_ptr_watch-36.svg",
+    "left_ptr_watch/left_ptr_watch-37.svg",
+    "left_ptr_watch/left_ptr_watch-38.svg",
+    "left_ptr_watch/left_ptr_watch-39.svg",
+    "left_ptr_watch/left_ptr_watch-40.svg",
+    "left_ptr_watch/left_ptr_watch-41.svg",
+    "left_ptr_watch/left_ptr_watch-42.svg",
+    "left_ptr_watch/left_ptr_watch-43.svg",
+    "left_ptr_watch/left_ptr_watch-44.svg",
+    "left_ptr_watch/left_ptr_watch-45.svg",
+    "left_ptr_watch/left_ptr_watch-46.svg",
+    "left_ptr_watch/left_ptr_watch-47.svg",
+    "left_ptr_watch/left_ptr_watch-48.svg",
+    "left_ptr_watch/left_ptr_watch-49.svg",
+    "left_ptr_watch/left_ptr_watch-50.svg",
+    "left_ptr_watch/left_ptr_watch-51.svg",
+    "left_ptr_watch/left_ptr_watch-52.svg",
+    "left_ptr_watch/left_ptr_watch-53.svg",
+    "left_ptr_watch/left_ptr_watch-54.svg",
+    "left_ptr_watch/left_ptr_watch-55.svg",
+    "left_ptr_watch/left_ptr_watch-56.svg",
+    "left_ptr_watch/left_ptr_watch-57.svg",
+    "left_ptr_watch/left_ptr_watch-58.svg",
+    "left_ptr_watch/left_ptr_watch-59.svg",
+    "left_ptr_watch/left_ptr_watch-60.svg"
+   ],
+   "delay": 10,
+   "hot": [
+    0.2685,
+    0.1167
+   ]
+  },
+  "Wait": {
+   "frames": [
+    "wait/wait-01.svg",
+    "wait/wait-02.svg",
+    "wait/wait-03.svg",
+    "wait/wait-04.svg",
+    "wait/wait-05.svg",
+    "wait/wait-06.svg",
+    "wait/wait-07.svg",
+    "wait/wait-08.svg",
+    "wait/wait-09.svg",
+    "wait/wait-10.svg",
+    "wait/wait-11.svg",
+    "wait/wait-12.svg",
+    "wait/wait-13.svg",
+    "wait/wait-14.svg",
+    "wait/wait-15.svg",
+    "wait/wait-16.svg",
+    "wait/wait-17.svg",
+    "wait/wait-18.svg",
+    "wait/wait-19.svg",
+    "wait/wait-20.svg",
+    "wait/wait-21.svg",
+    "wait/wait-22.svg",
+    "wait/wait-23.svg",
+    "wait/wait-24.svg",
+    "wait/wait-25.svg",
+    "wait/wait-26.svg",
+    "wait/wait-27.svg",
+    "wait/wait-28.svg",
+    "wait/wait-29.svg",
+    "wait/wait-30.svg",
+    "wait/wait-31.svg",
+    "wait/wait-32.svg",
+    "wait/wait-33.svg",
+    "wait/wait-34.svg",
+    "wait/wait-35.svg",
+    "wait/wait-36.svg",
+    "wait/wait-37.svg",
+    "wait/wait-38.svg",
+    "wait/wait-39.svg",
+    "wait/wait-40.svg",
+    "wait/wait-41.svg",
+    "wait/wait-42.svg",
+    "wait/wait-43.svg",
+    "wait/wait-44.svg",
+    "wait/wait-45.svg",
+    "wait/wait-46.svg",
+    "wait/wait-47.svg",
+    "wait/wait-48.svg",
+    "wait/wait-49.svg",
+    "wait/wait-50.svg",
+    "wait/wait-51.svg",
+    "wait/wait-52.svg",
+    "wait/wait-53.svg",
+    "wait/wait-54.svg",
+    "wait/wait-55.svg",
+    "wait/wait-56.svg",
+    "wait/wait-57.svg",
+    "wait/wait-58.svg",
+    "wait/wait-59.svg",
+    "wait/wait-60.svg"
+   ],
+   "delay": 10,
+   "hot": [
+    0.4981,
+    0.4981
+   ]
+  },
+  "Crosshair": {
+   "src": "cross.svg",
+   "hot": [
+    0.4981,
+    0.4981
+   ]
+  },
+  "IBeam": {
+   "src": "xterm.svg",
+   "hot": [
+    0.4981,
+    0.4981
+   ]
+  },
+  "NWPen": {
+   "src": "pencil.svg",
+   "hot": [
+    0.1556,
+    0.8171
+   ]
+  },
+  "No": {
+   "src": "dnd_no_drop.svg",
+   "hot": [
+    0.4981,
+    0.4981
+   ]
+  },
+  "SizeNS": {
+   "src": "sb_v_double_arrow.svg",
+   "hot": [
+    0.4903,
+    0.4864
+   ]
+  },
+  "SizeWE": {
+   "src": "sb_h_double_arrow.svg",
+   "hot": [
+    0.4942,
+    0.4864
+   ]
+  },
+  "SizeNWSE": {
+   "src": "bd_double_arrow.svg",
+   "hot": [
+    0.4942,
+    0.4825
+   ]
+  },
+  "SizeNESW": {
+   "src": "fd_double_arrow.svg",
+   "hot": [
+    0.4903,
+    0.4864
+   ]
+  },
+  "SizeAll": {
+   "src": "all-scroll.svg",
+   "hot": [
+    0.4981,
+    0.4981
+   ]
+  },
+  "UpArrow": {
+   "src": "center_ptr.svg",
+   "hot": [
+    0.4981,
+    0.1167
+   ]
+  },
+  "Hand": {
+   "src": "hand2.svg",
+   "hot": [
+    0.4553,
+    0.1401
+   ]
+  },
+  "Pin": {
+   "src": "pin.svg",
+   "hot": [
+    0.4981,
+    0.4981
+   ]
+  },
+  "Person": {
+   "src": "person.svg",
+   "hot": [
+    0.4981,
+    0.4981
+   ]
+  }
+ },
+ "bbox": {
+  "Arrow": [
+   0.234,
+   0.109,
+   0.75,
+   0.871
+  ],
+  "Help": [
+   0.234,
+   0.109,
+   0.875,
+   0.871
+  ],
+  "AppStarting": [
+   0.234,
+   0.109,
+   0.879,
+   0.875
+  ],
+  "Wait": [
+   0.039,
+   0.047,
+   0.961,
+   0.984
+  ],
+  "Crosshair": [
+   0.125,
+   0.125,
+   0.875,
+   0.875
+  ],
+  "IBeam": [
+   0.391,
+   0.203,
+   0.605,
+   0.797
+  ],
+  "NWPen": [
+   0.133,
+   0.125,
+   0.863,
+   0.875
+  ],
+  "No": [
+   0.09,
+   0.098,
+   0.914,
+   0.941
+  ],
+  "SizeNS": [
+   0.332,
+   0.02,
+   0.652,
+   0.992
+  ],
+  "SizeWE": [
+   0.016,
+   0.332,
+   0.973,
+   0.672
+  ],
+  "SizeNWSE": [
+   0.145,
+   0.145,
+   0.848,
+   0.867
+  ],
+  "SizeNESW": [
+   0.141,
+   0.145,
+   0.844,
+   0.867
+  ],
+  "SizeAll": [
+   0.082,
+   0.094,
+   0.914,
+   0.945
+  ],
+  "UpArrow": [
+   0.223,
+   0.109,
+   0.773,
+   0.926
+  ],
+  "Hand": [
+   0.145,
+   0.137,
+   0.863,
+   0.906
+  ],
+  "Pin": [
+   0.234,
+   0.109,
+   0.879,
+   0.875
+  ],
+  "Person": [
+   0.234,
+   0.109,
+   0.879,
+   0.875
+  ]
+ },
+ "fit": 0.814
+}

@@ -1,6 +1,6 @@
 <!doctype html><meta charset="utf-8"><style>body{margin:0;background:#151517;color:#ddd;font:12px sans-serif}canvas{display:block}</style><body><script src="../ui/engine.js"></script><script>
-window.sheet = async (roles, S, onlyFirst) => {
-  const E = CursoraEngine; const packs = await E.loadIndex('../packs/');
+window.sheet = async (roles, S, onlyFirst, only) => {
+  const E = CursoraEngine; let packs = await E.loadIndex('../packs/'); if (only) packs = packs.filter(p => only.includes(p.id));
   const rows = []; for (const p of packs) for (const v of (onlyFirst ? [p.variants[0]] : p.variants)) rows.push([p, v]);
   const W = 150 + roles.length * (S + 16), H = rows.length * (S + 16);
   const c = document.createElement('canvas'); c.width = W; c.height = H; document.body.appendChild(c); const x = c.getContext('2d');

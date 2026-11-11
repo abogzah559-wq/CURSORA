@@ -83,23 +83,26 @@ module.exports = function create(dataDir) {
     await ensureBackup();
     const schemeName = 'CURSORA - ' + safe(name);
     const dir = path.join(ROOT, safe(name));
-    const tmp = dir + '.tmp-' + Date.now();
-    fs.mkdirSync(tmp, { recursive: true });
+    fs.mkdirSync(dir, { recursive: true });
+    // every apply gets new file names: Windows keeps cursors cached by path, so re-applying an edited design
+    // under the same name would otherwise keep showing the old shapes
+    const stamp = Date.now().toString(36);
     const values = {};
     for (const f of files) {
-      const fn = `${f.role}.${f.ext}`;
-      fs.writeFileSync(path.join(tmp, fn), Buffer.from(f.bytes));
+      const fn = `${f.role}-${stamp}.${f.ext}`;
+      fs.writeFileSync(path.join(dir, fn), Buffer.from(f.bytes));
       values[f.role] = path.join(dir, fn);
     }
-    // swap the folder in place (a stale copy may still be in use by Windows — rename it away first)
-    if (fs.existsSync(dir)) { const old = dir + '.old-' + Date.now(); try { fs.renameSync(dir, old); fs.rm(old, { recursive: true, force: true }, () => {}); } catch { fs.rmSync(dir, { recursive: true, force: true }); } }
-    fs.renameSync(tmp, dir);
-    for (const n of fs.readdirSync(ROOT)) if (/\.(old|tmp)-\d+$/.test(n)) fs.rm(path.join(ROOT, n), { recursive: true, force: true }, () => {});
     fs.writeFileSync(path.join(dir, 'scheme.txt'), ROLES.map(r => values[r] || '').join(','));
+    size = Math.max(32, Math.min(256, Math.round(size || 32)));
     // register as a named scheme so it also shows in Windows' own Mouse settings
     await runPS(`$s='HKCU:\\Control Panel\\Cursors\\Schemes'; if (!(Test-Path $s)) { New-Item -Path $s -Force | Out-Null }
 Set-ItemProperty -Path $s -Name ${psq(schemeName)} -Value ${psq(ROLES.map(r => values[r] || '').join(','))} -Type ExpandString`);
     await runPS(regScript(values, schemeName, size));
+    // files of the previous apply of this design are no longer referenced (best effort: skip anything still locked)
+    const keep = new Set(Object.values(values).map(v => path.basename(v)).concat('scheme.txt'));
+    for (const n of fs.readdirSync(dir)) if (!keep.has(n)) fs.rm(path.join(dir, n), { recursive: true, force: true }, () => {});
+    for (const n of fs.readdirSync(ROOT)) if (/\.(old|tmp)-\d+$/.test(n)) fs.rm(path.join(ROOT, n), { recursive: true, force: true }, () => {});
     return { dir, scheme: schemeName };
   }
 

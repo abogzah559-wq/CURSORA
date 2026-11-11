@@ -78,8 +78,9 @@ function importFul1e5({ id, name, repo, svgDir = 'svg', toml, tokens, variants, 
   const base = path.join(SRC, repo);
   const conf = parseToml(path.join(base, toml));
   const dir = path.join(base, svgDir);
-  const canvas = 256;
   const roles = {};
+  let canvas = 256;
+  for (const f of ['left_ptr.svg', 'default.svg']) if (exists(path.join(dir, f))) { canvas = svgSize(path.join(dir, f)); break; }
   for (const role of ROLES) {
     for (const cand of CANDIDATES[role]) {
       const h = conf.byName[cand];
@@ -260,6 +261,86 @@ function importGoogle() {
     kind: 'files', variants: vs.map(([, vid, nm, pol, sw]) => ({ id: vid, name: nm, dir: vid, polarity: pol, swatch: sw })), roles };
 }
 
+/* ---------- KDE "scalable" SVG cursors (metadata.json per cursor) ---------- */
+function importScalable({ id, name, repo, variants, tags, author, license, desc }) {
+  const roles = {}; const v0 = path.join(SRC, repo, variants[0].dir);
+  for (const role of ROLES) for (const cand of CANDIDATES[role]) {
+    const mf = path.join(v0, cand, 'metadata.json'); if (!exists(mf)) continue;
+    const meta = JSON.parse(fs.readFileSync(mf, 'utf8'));
+    // some themes name files wait_01.svg while metadata says wait-01.svg
+    for (const m of meta) if (!exists(path.join(v0, cand, m.filename))) { const alt = m.filename.replace(/-(\d+)\.svg$/, '_$1.svg'); if (exists(path.join(v0, cand, alt))) m.filename = alt; }
+    if (meta.some(m => !exists(path.join(v0, cand, m.filename)))) continue;
+    const m0 = meta[0];
+    const w = svgSize(path.join(v0, cand, m0.filename));
+    const hot = [r4(m0.hotspot_x / w), r4(m0.hotspot_y / w)];
+    if (meta.length > 1) roles[role] = { frames: meta.map(m => cand + '/' + m.filename), delay: m0.delay || 30, hot };
+    else if (ANIMATED.has(role) && meta.length < 2) continue;
+    else roles[role] = { src: cand + '/' + m0.filename, hot };
+    break;
+  }
+  const files = new Set(Object.values(roles).flatMap(r => r.frames || [r.src]));
+  for (const v of variants) for (const f of files) copy(path.join(SRC, repo, v.dir, f), path.join(OUT, id, v.id, f));
+  return { id, name, author, license, url: `https://github.com/${repo.replace('_', '/')}`, tags, desc, kind: 'files',
+    variants: variants.map(v => ({ id: v.id, name: v.name, dir: v.id, polarity: v.polarity, swatch: v.swatch })), roles };
+}
+
+/* ---------- Mocu (colour placeholders + hotspot circle + animated attribute lists) ---------- */
+function importMocu() {
+  const id = 'mocu', dir = path.join(SRC, 'sevmeyer_mocu-xcursor', 'src', 'svg');
+  const roles = {};
+  const hotOf = s => { const m = s.match(/<circle id="hot"[^>]*cx="([\d.]+)"[^>]*cy="([\d.]+)"/); return m ? [r4(+m[1] / 24), r4(+m[2] / 24)] : [0, 0]; };
+  const clean = s => s.replace(/<circle id="hot"[^>]*\/>/, '');
+  for (const role of ROLES) for (const cand of CANDIDATES[role]) {
+    const f = path.join(dir, cand + '.svg'); if (!exists(f)) continue;
+    const s = fs.readFileSync(f, 'utf8'); const txt = path.join(dir, cand + '.txt');
+    if (exists(txt)) { // one line per frame: "<delay> <attr>=<value>" applied to the element with class="anim"
+      const lines = fs.readFileSync(txt, 'utf8').split(/\r?\n/).map(l => l.trim()).filter(l => /^\d/.test(l));
+      const frames = lines.map((l, i) => {
+        const [, delay, attr, val] = l.match(/^(\d+)\s+([\w-]+)="([^"]*)"/);
+        const out = clean(s).replace(/(<[^>]*class="anim"[^>]*?)(\s*\/?>)/, (m, a, end) => a.replace(new RegExp('\\s' + attr + '="[^"]*"'), '') + ` ${attr}="${val}"` + end);
+        const fn = `${cand}/${String(i).padStart(2, '0')}.svg`; fs.mkdirSync(path.join(OUT, id, 'svg', cand), { recursive: true });
+        fs.writeFileSync(path.join(OUT, id, 'svg', fn), out); return { fn, delay: +delay };
+      });
+      roles[role] = { frames: frames.map(x => x.fn), delay: frames[0].delay, hot: hotOf(s) };
+    } else {
+      if (ANIMATED.has(role)) continue;
+      fs.mkdirSync(path.join(OUT, id, 'svg'), { recursive: true }); fs.writeFileSync(path.join(OUT, id, 'svg', cand + '.svg'), clean(s));
+      roles[role] = { src: cand + '.svg', hot: hotOf(s) };
+    }
+    break;
+  }
+  const mk = (vid, nm, fill, edge) => ({ id: vid, name: nm, colors: { fill, edge, shadow: '#000000' }, swatch: [fill, edge] });
+  return { id, name: 'Mocu', author: 'Severin Meyer', license: 'CC0-1.0', url: 'https://github.com/sevmeyer/mocu-xcursor', tags: ['dark', 'light', 'minimal', 'classic'],
+    desc: { ar: 'صغير وحاد ونظيف جدًا، للي يحب البساطة', en: 'Tiny, crisp and very clean' }, kind: 'tokens', dir: 'svg',
+    tokens: { fill: '#fafbfc', edge: '#1a1b1c', shadow: '#0a0b0c' },
+    variants: [mk('black', 'Black', '#111111', '#f9f9f9'), mk('white', 'White', '#fcfcfc', '#222222')], roles };
+}
+
+/* ---------- prebuilt PNG cursors described by xcursorgen .in files ---------- */
+function pngWidth(file) { const b = fs.readFileSync(file); return b.readUInt32BE(16); }
+function importPngIn({ id, name, repo, inDir, variants, tags, author, license, desc, url }) {
+  const base = path.join(SRC, repo, inDir); const roles = {};
+  const parse = n => {
+    const f = path.join(base, n + '.in'); if (!exists(f)) return null;
+    const ls = fs.readFileSync(f, 'utf8').split(/\r?\n/).map(l => l.trim().split(/\s+/)).filter(a => a.length >= 4);
+    const max = Math.max(...ls.map(a => +a[0])); return ls.filter(a => +a[0] === max);
+  };
+  const fileFor = (v, rel) => path.normalize(path.join(base, v.map ? v.map(rel) : rel));
+  for (const role of ROLES) for (const cand of CANDIDATES[role]) {
+    const ls = parse(cand); if (!ls) continue;
+    if (!variants.every(v => ls.every(l => exists(fileFor(v, l[3]))))) continue;
+    const w = pngWidth(fileFor(variants[0], ls[0][3]));
+    const hot = [r4(+ls[0][1] / w), r4(+ls[0][2] / w)];
+    const rel = l => `${cand}/${path.basename(l[3])}`;
+    if (ls.length > 1) roles[role] = { frames: ls.map(rel), delay: +ls[0][4] || 50, hot };
+    else if (ANIMATED.has(role)) continue;
+    else roles[role] = { src: rel(ls[0]), hot };
+    for (const v of variants) for (const l of ls) copy(fileFor(v, l[3]), path.join(OUT, id, v.id, rel(l)));
+    break;
+  }
+  return { id, name, author, license, url, tags, desc, kind: 'files', variants: variants.map(v => ({ id: v.id, name: v.name, dir: v.id, polarity: v.polarity, swatch: v.swatch })), roles };
+}
+
 /* ---------- pack list ---------- */
 const BIB_TOK = { fill: '#00FF00', edge: '#0000FF', accent: '#FF0000' };
 const tv = (id, name, fill, edge, accent) => ({ id, name, colors: { fill, edge, accent: accent || fill }, swatch: [fill, edge] });
@@ -314,6 +395,48 @@ const packs = [
   importCfg({ id: 'future', name: 'Future', repo: 'yeyushengfan258_Future-cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
     tags: ['dark', 'light', 'color', 'futuristic'], desc: { ar: 'مستقبلي بخطوط حادة وتفاصيل جريئة', en: 'Futuristic with bold detail' },
     variants: [fv('default', 'Cream', 'svg', 'light', ['#ffffff', '#3a3a3a']), fv('black', 'Black', 'svg-black', 'dark', ['#111111', '#ffffff']), fv('dark', 'White', 'svg-dark', 'dark', ['#2b2b2b', '#ffffff']), fv('cyan', 'Ice', 'svg-cyan', 'color', ['#00bcd4', '#ffffff'])] }),
+  importFul1e5({ id: 'breezex', name: 'BreezeX', repo: 'ful1e5_BreezeX_Cursor', toml: 'configs/x.build.toml', author: 'Abdulkaiz Khatri (ful1e5)', license: 'GPL-3.0',
+    tags: ['dark', 'light', 'classic'], tokens: { fill: '#00FF00', edge: '#0000FF' }, desc: { ar: 'Breeze من KDE بنسخة موسّعة وحواف ناعمة', en: 'Extended KDE Breeze' },
+    variants: [tv('black', 'Black', '#000000', '#FFFFFF'), tv('dark', 'Dark', '#4D4D4D', '#FFFFFF'), tv('light', 'Light', '#FFFFFF', '#4D4D4D'),
+      tv('rose-pine', 'Rosé Pine', '#191724', '#e0def4'), tv('rose-pine-dawn', 'Rosé Pine Dawn', '#faf4ed', '#575279')] }),
+  importFul1e5({ id: 'notwaita', name: 'Notwaita', repo: 'ful1e5_notwaita-cursor', toml: 'configs/x.build.toml', author: 'Abdulkaiz Khatri (ful1e5)', license: 'LGPL-3.0 / CC-BY-SA-3.0',
+    tags: ['dark', 'light', 'classic'], tokens: { fill: '#00FF00', edge: '#0000FF', accent: '#FF0000', edge2: '#FFFF00' }, desc: { ar: 'بروح GNOME الكلاسيكية بلمسة أنظف', en: 'Classic GNOME Adwaita spirit, cleaner' },
+    variants: [{ ...tv('black', 'Black', '#000000', '#FFFFFF'), colors: { fill: '#000000', edge: '#FFFFFF', accent: '#000000', edge2: '#FFFFFF' } },
+      { ...tv('gray', 'Gray', '#404040', '#FFFFFF'), colors: { fill: '#404040', edge: '#FFFFFF', accent: '#404040', edge2: '#FFFFFF' } },
+      { ...tv('white', 'White', '#FFFFFF', '#000000'), colors: { fill: '#FFFFFF', edge: '#000000', accent: '#FFFFFF', edge2: '#000000' } }] }),
+  importMocu(),
+  importScalable({ id: 'breeze', name: 'Breeze', repo: 'KDE_breeze', author: 'KDE', license: 'GPL-2.0+', tags: ['dark', 'light', 'classic'],
+    desc: { ar: 'ماوس KDE الرسمي، متوازن وواضح', en: 'The official KDE cursor' },
+    variants: [fv('dark', 'Dark', 'cursors/Breeze/Breeze/cursors_scalable', 'dark', ['#232627', '#fcfcfc']), fv('light', 'Light', 'cursors/Breeze_Light/Breeze_Light/cursors_scalable', 'light', ['#fcfcfc', '#232627'])] }),
+  importScalable({ id: 'elementary', name: 'elementary', repo: 'elementary_icons', author: 'elementary', license: 'GPL-3.0', tags: ['dark', 'classic'],
+    desc: { ar: 'ماوس نظام elementary OS، ناعم وأنيق', en: 'The elementary OS cursor' },
+    variants: [fv('default', 'Default', 'cursors/cursors_scalable', 'dark', ['#1a1a1a', '#ffffff'])] }),
+  importCfg({ id: 'numix', name: 'Numix', repo: 'numixproject_numix-cursor-theme', root: 'src', rule: 'scale', author: 'Numix Project', license: 'GPL-3.0',
+    tags: ['dark', 'light', 'flat'], desc: { ar: 'مسطّح وحاد بستايل Numix', en: 'Flat and sharp Numix style' },
+    variants: [fv('dark', 'Dark', 'dark/svgs', 'dark', ['#2d2d2d', '#ffffff']), fv('light', 'Light', 'light/svgs', 'light', ['#ffffff', '#2d2d2d'])] }),
+  importCfg({ id: 'arc-starry', name: 'ArcStarry', repo: 'yeyushengfan258_ArcStarry-Cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
+    tags: ['color', 'futuristic'], desc: { ar: 'ألوان ليلية مع لمعة نجوم', en: 'Starry night colours' }, variants: [fv('default', 'Default', 'svg', 'color', ['#3d4cff', '#ffffff'])] }),
+  importCfg({ id: 'arc-midnight', name: 'ArcMidnight', repo: 'yeyushengfan258_ArcMidnight-Cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
+    tags: ['dark', 'futuristic'], desc: { ar: 'غامق بلون منتصف الليل', en: 'Midnight dark' }, variants: [fv('default', 'Default', 'svg', 'dark', ['#1b1e2b', '#ffffff'])] }),
+  importCfg({ id: 'arc-aurora', name: 'ArcAurora', repo: 'yeyushengfan258_ArcAurora-cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
+    tags: ['color', 'futuristic'], desc: { ar: 'تدرّجات الشفق القطبي', en: 'Aurora gradients' }, variants: [fv('default', 'Default', 'svg', 'color', ['#2dd4bf', '#ffffff'])] }),
+  importCfg({ id: 'polarnight', name: 'Polarnight', repo: 'yeyushengfan258_Polarnight-Cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
+    tags: ['dark'], desc: { ar: 'ليل قطبي بألوان Nord', en: 'Polar night, Nord colours' }, variants: [fv('default', 'Default', 'svg', 'dark', ['#2e3440', '#eceff4'])] }),
+  importCfg({ id: 'lyra', name: 'Lyra', repo: 'yeyushengfan258_Lyra-Cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
+    tags: ['color', 'futuristic'], desc: { ar: 'تسع ألوان جريئة بتصميم واحد مميز', en: 'Nine bold colours, one distinctive design' },
+    variants: ['B', 'F', 'G', 'P', 'Q', 'R', 'S', 'X', 'Y'].map(k => fv(k.toLowerCase(), 'Lyra ' + k, `Lyra${k}-svg`, 'color', ['#888', '#fff'])) }),
+  importCfg({ id: 'deepin-v20', name: 'Deepin V20', repo: 'yeyushengfan258_DeepinV20-white-cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
+    tags: ['light'], desc: { ar: 'بستايل نظام Deepin الأبيض', en: 'Deepin-style white' }, variants: [fv('default', 'White', 'svg', 'light', ['#ffffff', '#333333'])] }),
+  importCfg({ id: 'we10x', name: 'We10X', repo: 'yeyushengfan258_We10XOS-cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
+    tags: ['light', 'windows'], desc: { ar: 'مستوحى من ويندوز 10X الملغي', en: 'Inspired by Windows 10X' }, variants: [fv('default', 'Default', 'svg', 'light', ['#ffffff', '#1e1e1e'])] }),
+  importCfg({ id: 'winsur', name: 'WinSur', repo: 'yeyushengfan258_WinSur-white-cursors', root: 'src', rule: 'scale', author: 'yeyushengfan258', license: 'GPL-3.0',
+    tags: ['light', 'mac', 'windows'], desc: { ar: 'خليط بين ويندوز وماك Big Sur', en: 'Windows meets Big Sur' }, variants: [fv('default', 'White', 'svg', 'light', ['#ffffff', '#1e1e1e'])] }),
+  importPngIn({ id: 'adwaita', name: 'Adwaita', repo: '_adwaita', inDir: 'default', author: 'GNOME, Manu Mannattil', license: 'LGPL-3.0 / CC-BY-SA-3.0', url: 'https://github.com/manu-mannattil/adwaita-cursors',
+    tags: ['dark', 'classic'], desc: { ar: 'ماوس GNOME الكلاسيكي اللي يعرفه الكل', en: 'The classic GNOME cursor' },
+    variants: [{ id: 'default', name: 'Black', polarity: 'dark', swatch: ['#000', '#fff'] }, { id: 'red', name: 'Red', polarity: 'color', swatch: ['#c01c28', '#fff'], map: r => '../red/' + r }] }),
+  importPngIn({ id: 'cz-hickson', name: 'Hickson', repo: 'charakterziffer_cursor-toolbox', inDir: 'more-themes/cz-Hickson/hotspots', author: 'charakterziffer', license: 'GPL-3.0', url: 'https://github.com/charakterziffer/cursor-toolbox',
+    tags: ['dark', 'light', 'minimal', 'classic'], desc: { ar: 'حاد ورسمي بخطوط دقيقة', en: 'Sharp, formal, precise lines' },
+    variants: [{ id: 'black', name: 'Black', polarity: 'dark', swatch: ['#000', '#fff'], map: r => r.replace('../pngs/', '../pngs-black/') }, { id: 'white', name: 'White', polarity: 'light', swatch: ['#fff', '#000'], map: r => r.replace('../pngs/', '../pngs-white/') }] }),
 ].filter(p => Object.keys(p.roles).length >= 8);
 
 // Same shapes, different colours → one pack with several variants (no duplicates in the library).
@@ -330,6 +453,15 @@ function mergeInto(targetId, fromId, rename) {
   packs.splice(packs.indexOf(f), 1);
   fs.rmSync(path.join(OUT, fromId), { recursive: true, force: true });
 }
+mergeInto('arc-starry', 'arc-midnight'); mergeInto('arc-starry', 'arc-aurora'); mergeInto('arc-starry', 'polarnight');
+{ const a = packs.find(p => p.id === 'arc-starry'); if (a) Object.assign(a, { name: 'Arc', desc: { ar: 'نفس التصميم بأربع أجواء: نجوم، منتصف الليل، شفق، وليل قطبي', en: 'One design, four moods: starry, midnight, aurora, polar night' }, tags: ['dark', 'light', 'color', 'futuristic'] });
+  if (a) a.variants.forEach(v => { v.name = { default: 'Starry', 'arc-midnight-default': 'Midnight', 'arc-aurora-default': 'Aurora', 'polarnight-default': 'Polar Night' }[v.id] || v.name; }); }
+// Capitaine is a near-copy of Breeze (it says so itself): keep the original only.
+{ const i = packs.findIndex(p => p.id === 'capitaine'); if (i >= 0) { packs.splice(i, 1); fs.rmSync(path.join(OUT, 'capitaine'), { recursive: true, force: true }); } }
+mergeInto('we10x', 'winsur');
+{ const w = packs.find(p => p.id === 'we10x'); if (w) w.variants.forEach(v => { if (v.id.startsWith('winsur-')) v.name = 'WinSur'; }); }
+// near-copies of packs we already have (checked side by side): keep one of each
+for (const [gone] of [['breeze'], ['whitesur'], ['mcmojave'], ['adwaita']]) { const i = packs.findIndex(p => p.id === gone); if (i >= 0) { packs.splice(i, 1); fs.rmSync(path.join(OUT, gone), { recursive: true, force: true }); } }
 mergeInto('whitesur', 'mcmojave', { name: 'WhiteSur', desc: { ar: 'ستايل الماك الحديث بنسختين: أبيض Big Sur وغامق Mojave', en: 'Modern macOS look: Big Sur white and Mojave dark' }, tags: ['dark', 'light', 'mac'] });
 
 
@@ -337,7 +469,7 @@ mergeInto('whitesur', 'mcmojave', { name: 'WhiteSur', desc: { ar: 'ستايل ا
 for (const p of packs) {
   for (const role of ROLES) if (!p.roles[role]) {
     if (role === 'Pin' || role === 'Person' || role === 'Help') p.roles[role] = { compose: 'Arrow', badge: role.toLowerCase() };
-    else if (role === 'AppStarting' && p.roles.Wait) p.roles[role] = { compose: 'Arrow', badge: 'busy' };
+    else if (role === 'AppStarting' || role === 'Wait') p.roles[role] = { compose: 'Arrow', badge: 'busy' };
     else if (role === 'UpArrow') p.roles[role] = { ref: 'Arrow' };
     else if (p.roles.Arrow) p.roles[role] = { ref: 'Arrow' };
   }
@@ -345,7 +477,8 @@ for (const p of packs) {
 
 fs.mkdirSync(OUT, { recursive: true });
 for (const p of packs) fs.writeFileSync(path.join(OUT, p.id, 'pack.json'), JSON.stringify(p, null, 1));
-fs.writeFileSync(path.join(OUT, 'index.json'), JSON.stringify(packs.map(p => p.id)));
+// removed/merged packs keep working in saved designs through aliases
+fs.writeFileSync(path.join(OUT, 'index.json'), JSON.stringify({ packs: packs.map(p => p.id), aliases: { capitaine: 'breezex', breeze: 'breezex', whitesur: 'apple', mcmojave: 'apple', adwaita: 'notwaita', 'arc-midnight': 'arc-starry', 'arc-aurora': 'arc-starry', polarnight: 'arc-starry', winsur: 'we10x' } }));
 for (const p of packs) {
   const real = ROLES.filter(r => p.roles[r].src || p.roles[r].frames);
   console.log(p.id.padEnd(16), String(real.length).padStart(2), '/17 native', ROLES.filter(r => !(p.roles[r].src || p.roles[r].frames)).join(','));

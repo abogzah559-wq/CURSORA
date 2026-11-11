@@ -27,7 +27,7 @@
     undo: '<path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>', redo: '<path d="M15 14l5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/>',
     reset: '<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>', save: '<path d="M5 4h11l3 3v13H5z"/><path d="M8 4v5h7V4M8 20v-6h8v6"/>',
     chev: '<path d="M6 9l6 6 6-6"/>', trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>', copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
-    up: '<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 17v3h16v-3"/>', play: '<path d="M7 4l12 8-12 8z"/>', split: '<path d="M12 3v18"/><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
+    up: '<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 17v3h16v-3"/>', swap: '<path d="M7 4L3 8l4 4"/><path d="M3 8h13a4 4 0 0 1 4 4"/><path d="M17 20l4-4-4-4"/><path d="M21 16H8a4 4 0 0 1-4-4"/>', play: '<path d="M7 4l12 8-12 8z"/>', split: '<path d="M12 3v18"/><path d="M8 8l-4 4 4 4M16 8l4 4-4 4"/>',
     link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
   };
 
@@ -51,6 +51,8 @@
     requestAnimationFrame(loop);
   })(performance.now());
 
+  // shape size so that the rendered canvas (which grows when a glow is on) fills `px` device pixels
+  const fitPx = (design, px) => { const l = E.layout(design); return Math.max(8, Math.round(px * l.shape / l.canvas)); };
   async function preview(cv, design, role, size) {
     const tok = (cv._tok = (cv._tok || 0) + 1);
     try { const r = await E.renderRole(design, role, size); if (cv._tok === tok) show(cv, r); } catch (e) { console.warn(role, e); }
@@ -102,7 +104,7 @@
     });
   }
   function confetti(x, y) {
-    if (!S.settings.motion) return;
+    if (S.settings.motion === false) return;
     const cols = ['#a5b4fc', '#f0abfc', '#67e8f9', '#fde68a', '#86efac', '#ffffff'];
     for (let i = 0; i < 46; i++) {
       const c = h('i', { class: 'confetti', style: { left: x + 'px', top: y + 'px', background: cols[i % cols.length] } });
@@ -182,10 +184,11 @@
       e.stopPropagation(); const f = new Set(S.settings.favorites || []); f.has(p.id) ? f.delete(p.id) : (f.add(p.id), toast(t('fav_add')));
       await saveSettings({ favorites: [...f] }); fav.classList.toggle('on', f.has(p.id)); fav.classList.remove('pop'); void fav.offsetWidth; fav.classList.add('pop');
     } }, svgI(IC.heart));
-    const sws = h('div', { class: 'swatches' }, p.variants.map(v => sw(v, v.id === vid, e => {
+    const MAXSW = 7; // more colours than fit: show the first few and a "+N" that opens the pack
+    const sws = h('div', { class: 'swatches' }, p.variants.slice(0, MAXSW).map(v => sw(v, v.id === vid, e => {
       e.stopPropagation(); S.variant[p.id] = v.id; $$('.sw', sws).forEach((x, k) => x.classList.toggle('on', p.variants[k].id === v.id)); draw();
       cursorHandle.refresh(); badge.classList.toggle('hidden', appliedKey() !== p.id + '/' + v.id);
-    })));
+    })), p.variants.length > MAXSW ? h('button', { class: 'sw-more', dir: 'ltr', title: t('variants'), onclick: e => { e.stopPropagation(); openPack(p.id); } }, '+' + (p.variants.length - MAXSW)) : null);
     const badge = h('span', { class: 'badge-applied' + (appliedKey() === p.id + '/' + vid ? '' : ' hidden') }, '✓ ' + t('applied_now'));
     const card = h('div', { class: 'card', style: { animationDelay: Math.min(i, 12) * 35 + 'ms' }, onclick: () => openPack(p.id) },
       badge,
@@ -236,7 +239,7 @@
       h('div', { class: 'pack-grid' },
         h('div', { class: 'panel' }, h('div', { class: 'panel-h' }, h('h2', {}, t('roles_title', { n: 17 }))), h('div', { class: 'roles' }, roleTiles)),
         playground(design)));
-    $$('button', root).forEach(b => bindCursor(b, design, 'Hand'));
+    $$('button:not([data-r])', root).forEach(b => bindCursor(b, design, 'Hand'));
     bindCursor(root, design, 'Arrow');
   }
 
@@ -299,7 +302,7 @@
         bar.style.strokeDashoffset = 327 * (1 - pct * 0.9); $('#applyS').textContent = t('building', { r: roleName(role) });
         try { show(cv, await E.renderRole(d, role, 96)); } catch {}
       });
-      const size = { ...E.DEFAULTS, ...(d.global || {}) }.size;
+      const size = E.canvasSize(d);
       if (B.mock) await B.apply({ name: d.name, files: [], size, design: d });
       else await B.apply({ name: d.name, files, size, design: d });
       bar.style.strokeDashoffset = 0; card.classList.add('done');
@@ -350,6 +353,14 @@
     refreshStudio();
   }
 
+  function setRoleParam(k, v) {
+    const r = (S.design.roles[S.role] = S.design.roles[S.role] || {});
+    r.params = { ...(r.params || {}), [k]: v };
+    if (v == null) delete r.params[k];
+    if (!Object.keys(r.params).length) delete r.params;
+    if (!Object.keys(r).length) delete S.design.roles[S.role];
+    refreshStudio();
+  }
   const PRESETS = [['#000000', '#ffffff'], ['#ffffff', '#000000'], ['#0b0b0f', '#a5b4fc'], ['#111827', '#67e8f9'], ['#1a1a1a', '#fbbf24'], ['#fafafa', '#ec4899'], ['#7c3aed', '#ffffff'], ['#0ea5e9', '#ffffff'], ['#22c55e', '#052e16'], ['#ef4444', '#ffffff'], ['#f59e0b', '#1c1917'], ['#f472b6', '#ffffff']];
 
   let refreshTok = 0;
@@ -372,11 +383,11 @@
     const d = S.design;
     const designFn = () => S.design;
     // ---- controls
-    const rng = (key, min, max, step, fmt) => {
-      const out = h('output'); const inp = h('input', { type: 'range', min, max, step, 'data-k': key });
+    const rng = (key, min, max, step, fmt, roleOnly) => {
+      const out = h('output'); const inp = h('input', { type: 'range', min, max, step, 'data-k': key, 'data-role': roleOnly ? '1' : null });
       let before = null;
       inp.addEventListener('pointerdown', () => { before = snapshot(); });
-      inp.addEventListener('input', () => { if (before == null) before = snapshot(); setParam(key, parseFloat(inp.value)); });
+      inp.addEventListener('input', () => { if (before == null) before = snapshot(); (roleOnly ? setRoleParam : setParam)(key, parseFloat(inp.value)); });
       inp.addEventListener('change', () => { if (before != null) commit(before); before = null; });
       inp._fmt = fmt || (v => v); inp._out = out;
       return h('div', { class: 'field' }, h('div', { class: 'field-h' }, h('span', {}, t(key === 'shadowOpacity' ? 'sop' : key === 'shadowBlur' ? 'blur' : key === 'shadowX' ? 'sx' : key === 'shadowY' ? 'sy' : key === 'glowBlur' ? 'gblur' : key === 'glowStrength' ? 'gstr' : key)), out), inp);
@@ -403,40 +414,44 @@
       Object.assign(tgt, { recolor: true, fill: f, edge: e, accent: f }); refreshStudio(); commit(b);
     } }, h('i', { style: { background: f } }), h('i', { style: { background: e } }))));
 
-    const sourceSec = h('div', { class: 'sec-b', style: { padding: 0 } });
+    // ---- the selected shape: its own size + swap it for the same shape from another pack
+    const ro = d.roles[S.role] || {};
+    const srcPack = S.packs.find(x => x.id === (ro.pack || d.pack));
+    const srcName = srcPack ? srcPack.name + ' · ' + E.variantOf(srcPack, ro.pack ? ro.variant : d.variant).name : '';
+    const shapeCv = h('canvas', { class: 'shape-cv' });
+    const shapeSec = h('div', { class: 'sec shape-sec' },
+      h('div', { class: 'shape-head' }, h('div', { class: 'shape-thumb' }, shapeCv),
+        h('div', { style: { minWidth: 0 } }, h('div', { class: 'shape-t' }, t('sec_shape') + ': ' + roleName(S.role)), h('div', { class: 'hint' }, t('from_pack', { p: srcName })))),
+      h('div', { class: 'sec-b' },
+        rng('own', 0.4, 1.6, 0.02, v => Math.round(v * 100) + '%', true),
+        h('div', { class: 'row2' },
+          h('button', { class: 'btn sm', onclick: () => openPicker() }, svgI(IC.swap), t('pick_shape')),
+          h('button', { class: 'btn sm ghost', disabled: !(ro.pack || (ro.params && ro.params.own != null)), onclick: () => {
+            const b = snapshot(); const r = S.design.roles[S.role] || {}; delete r.pack; delete r.variant; if (r.params) delete r.params.own;
+            if (r.params && !Object.keys(r.params).length) delete r.params; if (!Object.keys(r).length) delete S.design.roles[S.role]; renderStudio(); commit(b);
+          } }, svgI(IC.reset), t('reset_shape')))));
     const side = h('div', { class: 'studio-side' },
       h('div', { class: 'seg', id: 'scopeSeg' },
         h('button', { 'data-s': 'all', onclick: () => { S.scope = 'all'; renderStudio(); } }, t('scope_all')),
         h('button', { 'data-s': 'role', onclick: () => { S.scope = 'role'; renderStudio(); } }, t('scope_role'))),
+      shapeSec,
       S.scope === 'role' ? h('div', { class: 'hint' }, t('editing', { r: roleName(S.role) })) : null,
-      sec(t('sec_size'), [rng('size', 24, 128, 4, v => v + 'px'), rng('scale', 0.6, 1.4, 0.02, v => Math.round(v * 100) + '%')]),
+      sec(t('sec_size'), [rng('size', 32, 128, 4, v => v + 'px'), rng('scale', 0.6, 1.4, 0.02, v => Math.round(v * 100) + '%')]),
       sec(t('sec_color'), [tog('recolor'), h('div', { class: 'field' }, h('div', { class: 'field-h' }, h('span', {}, t('presets'))), presets),
         h('div', { class: 'row2' }, col('fill'), col('edge')), (p0 && p0.kind === 'tokens' && p0.tokens.accent) ? col('accent') : null,
         tog('gradient'), col('fill2'), rng('angle', 0, 360, 5, v => v + '°')]),
       sec(t('sec_outline'), [rng('outline', 0, 4, 0.25, v => v + 'px'), col('outlineColor', 'outline_color')], false),
       sec(t('sec_shadow'), [tog('shadow'), rng('shadowBlur', 0, 8, 0.25), h('div', { class: 'row2' }, rng('shadowX', -4, 4, 0.2), rng('shadowY', -4, 6, 0.2)), rng('shadowOpacity', 0, 1, 0.05, v => Math.round(v * 100) + '%'), col('shadowColor', 'scolor')], false),
-      sec(t('sec_glow'), [tog('glow'), col('glowColor', 'gcolor'), rng('glowBlur', 1, 12, 0.5), rng('glowStrength', 0.2, 1, 0.05, v => Math.round(v * 100) + '%')], false),
+      sec(t('sec_glow'), [tog('glow'), col('glowColor', 'gcolor'), rng('glowStrength', 0.2, 3, 0.05, v => Math.round(v * 100) + '%'), rng('glowBlur', 1, 16, 0.5), rng('glowSoft', 0, 1, 0.05, v => Math.round(v * 100) + '%')], !!curParams().glow),
       sec(t('sec_more'), [rng('opacity', 0.3, 1, 0.05, v => Math.round(v * 100) + '%'), rng('speed', 0.25, 3, 0.05, v => v.toFixed(2) + '×'), tog('mirror')], false),
-      S.scope === 'role' ? sec(t('sec_source'), [h('div', { class: 'hint' }, t('source_hint')), sourceSec]) : null);
-
-    // per-role source mixing
-    if (S.scope === 'role') {
-      const ro = d.roles[S.role] || {};
-      const ps = h('select', {}, h('option', { value: '' }, t('same_pack')), S.packs.map(p => h('option', { value: p.id, selected: ro.pack === p.id }, p.name)));
-      const vs = h('select');
-      const fillV = () => { const p = S.packs.find(x => x.id === ps.value); vs.replaceChildren(...(p ? p.variants.map(v => h('option', { value: v.id, selected: ro.variant === v.id }, v.name)) : [])); vs.disabled = !p; };
-      fillV();
-      const upd = () => { const b = snapshot(); const r = (S.design.roles[S.role] = S.design.roles[S.role] || {}); if (ps.value) { r.pack = ps.value; r.variant = vs.value; } else { delete r.pack; delete r.variant; } refreshStudio(); commit(b); };
-      ps.addEventListener('change', () => { fillV(); upd(); }); vs.addEventListener('change', upd);
-      sourceSec.append(h('div', { class: 'row2' }, h('div', { class: 'field' }, h('div', { class: 'field-h' }, t('pack')), ps), h('div', { class: 'field' }, h('div', { class: 'field-h' }, t('variant')), vs)));
-    }
+    );
 
     // ---- main
     const nameIn = h('input', { class: 'st-name', value: d.name || '', placeholder: t('name_ph'), oninput: e => { S.design.name = e.target.value; } });
     const top = h('div', { class: 'st-top' }, nameIn,
       h('button', { class: 'btn icon', id: 'stUndo', title: t('undo') + ' (Ctrl+Z)', onclick: undo }, svgI(IC.undo)),
       h('button', { class: 'btn icon', id: 'stRedo', title: t('redo') + ' (Ctrl+Y)', onclick: redo }, svgI(IC.redo)),
-      h('button', { class: 'btn icon', title: t('reset'), onclick: () => { const b = snapshot(); S.design = { ...E.newDesign(S.base.pack, S.base.variant), name: S.design.name }; renderStudio(); commit(b); } }, svgI(IC.reset)),
+      h('button', { class: 'btn icon', title: t('reset'), onclick: () => { const b = snapshot(); const keep = S.design.global && S.design.global.size; S.design = { ...E.newDesign(S.base.pack, S.base.variant), name: S.design.name }; if (keep) S.design.global.size = keep; renderStudio(); commit(b); } }, svgI(IC.reset)),
       h('button', { class: 'btn', onclick: saveMine }, svgI(IC.save), t('save')),
       h('button', { class: 'btn primary shine', onclick: e => applyDesign(S.design, S.design.name, e) }, svgI(IC.check), t('apply')));
     const seg = (id, items, cur, fn) => h('div', { class: 'seg', id }, items.map(([v, l]) => h('button', { class: v === cur ? 'on' : '', onclick: e => { $$('button', e.currentTarget.parentNode).forEach(b => b.classList.remove('on')); e.currentTarget.classList.add('on'); fn(v); } }, l)));
@@ -465,12 +480,18 @@
     bindCursor(nameIn, designFn, 'IBeam');
     bindCursor(side, designFn, 'Arrow');
     root._before = before; root._after = after;
+    preview(shapeCv, d, S.role, fitPx(d, Math.round(56 * DPR())));
     syncUndo(); syncControls(); drawStage(); drawStrip();
+    // keep the strip where it was and the selected shape in view (re-rendering would jump back to the start)
+    if (S.stripScroll != null) strip.scrollLeft = S.stripScroll;
+    const selEl = $('.role.sel', strip); if (selEl) selEl.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    strip.addEventListener('scroll', () => { S.stripScroll = strip.scrollLeft; }, { passive: true });
   }
   function syncControls() {
     const root = $('#view-studio'); if (!root || !S.design) return;
     const p = curParams();
-    $$('input[type=range]', root).forEach(i => { const k = i.dataset.k; i.value = p[k]; i._out.textContent = i._fmt(+p[k]); i.style.setProperty('--p', ((p[k] - i.min) / (i.max - i.min)) * 100 + '%'); });
+    const pr = E.paramsFor(S.design, S.role);
+    $$('input[type=range]', root).forEach(i => { const src = i.dataset.role ? pr : p; const v = src[i.dataset.k]; i.value = v; i._out.textContent = i._fmt(+v); i.style.setProperty('--p', ((v - i.min) / (i.max - i.min)) * 100 + '%'); });
     $$('.sw-t', root).forEach(s => s.classList.toggle('on', !!p[s.dataset.k]));
     $$('input[type=color]', root).forEach(i => { const v = p[i.dataset.k] || '#000000'; i.value = v; i._i.style.background = v; i._code.textContent = v.toUpperCase(); });
     $$('.role', $('#strip')).forEach(el => { const r = el.dataset.role; const has = S.design.roles[r] && (S.design.roles[r].params || S.design.roles[r].pack); let dot = $('.dot', el); if (has && !dot) el.append(h('i', { class: 'dot' })); if (!has && dot) dot.remove(); });
@@ -479,12 +500,86 @@
     const root = $('#view-studio'); if (!root._after) return;
     const sz = E.paramsFor(S.design, S.role).size;
     const zoom = S.zoom === 'real' ? 1 / DPR() : +S.zoom.slice(1);
-    const css = Math.round(sz * zoom);
-    for (const cv of [root._after, root._before]) { cv.style.width = css + 'px'; cv.style.height = css + 'px'; }
+    const base = E.newDesign(S.base.pack, S.base.variant); base.global = { size: sz };
+    const css = d => Math.round(E.layout(d, sz).canvas * zoom) + 'px';
+    root._after.style.width = root._after.style.height = css(S.design);
+    root._before.style.width = root._before.style.height = css(base);
     preview(root._after, S.design, S.role, sz);
-    if (S.compare) { const base = E.newDesign(S.base.pack, S.base.variant); base.global = { size: sz }; preview(root._before, base, S.role, sz); }
+    if (S.compare) preview(root._before, base, S.role, sz);
+    const sc = $('.shape-cv', root); if (sc) preview(sc, S.design, S.role, fitPx(S.design, Math.round(56 * DPR())));
   }
-  function drawStrip() { $$('#strip .role').forEach(el => preview($('canvas', el), S.design, el.dataset.role, Math.round(36 * DPR()))); }
+  function drawStrip() { const px = fitPx(S.design, Math.round(36 * DPR())); $$('#strip .role').forEach(el => preview($('canvas', el), S.design, el.dataset.role, px)); }
+
+  /* ---------------- shape picker: the same shape from every pack, as pictures ---------------- */
+  function openPicker() {
+    const role = S.role, cur = S.design.roles[role] || {};
+    const curKey = cur.pack ? cur.pack + '/' + cur.variant : '';
+    let filter = 'all', q = '';
+    const big = h('canvas', { class: 'pk-big' }); const bigName = h('div', { class: 'pk-name' });
+    const mixOf = (pack, variant) => {
+      const dd = E.clone(S.design); const r = (dd.roles[role] = dd.roles[role] || {});
+      if (pack) { r.pack = pack; r.variant = variant; } else { delete r.pack; delete r.variant; }
+      if (!Object.keys(r).length) delete dd.roles[role];
+      return dd;
+    };
+    const showBig = (pack, variant, label) => { bigName.textContent = label; preview(big, mixOf(pack, variant), role, fitPx(S.design, Math.round(112 * DPR()))); };
+    const grid = h('div', { class: 'pk-grid' });
+    const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting && e.target._draw) { e.target._draw(); e.target._draw = null; io.unobserve(e.target); } }), { root: grid, rootMargin: '200px' });
+    const tile = (pack, variant, label, sub) => {
+      const cv = h('canvas'); const key = pack ? pack + '/' + variant : '';
+      const plain = pack ? E.newDesign(pack, variant) : E.newDesign(S.design.pack, S.design.variant);
+      const full = label + (sub ? ' · ' + sub : '');
+      const el = h('button', { class: 'pk-tile' + (key === curKey ? ' on' : ''), title: full, onclick: () => {
+        const b = snapshot(); S.design = mixOf(pack, variant);
+        close(); renderStudio(); commit(b); toast(t('picked', { r: roleName(role) }), full);
+      } }, h('div', { class: 'pk-cv' }, cv), h('b', {}, label), sub ? h('span', {}, sub) : null);
+      el._draw = () => preview(cv, plain, role, Math.round(48 * DPR()));
+      el.addEventListener('mouseenter', () => showBig(pack, variant, full));
+      bindCursor(el, () => plain, role);
+      const pk = pack && S.packs.find(p => p.id === pack);
+      el._meta = { pack: pk, variant: pk && E.variantOf(pk, variant) };
+      return el;
+    };
+    const tiles = [tile(null, null, t('original'), (S.packs.find(p => p.id === S.design.pack) || {}).name)];
+    for (const p of S.packs) for (const v of p.variants) if (!(p.id === S.design.pack && v.id === S.design.variant)) tiles.push(tile(p.id, v.id, p.name, v.name));
+    const tone = v => {
+      const f = (v.colors && v.colors.fill) || (v.swatch && v.swatch[0]) || '#000000';
+      const n = parseInt(String(f).replace('#', '').slice(0, 6), 16) || 0; const a = [n >> 16 & 255, n >> 8 & 255, n & 255];
+      return { lum: (a[0] * .299 + a[1] * .587 + a[2] * .114) / 255, sat: (Math.max(...a) - Math.min(...a)) / 255 };
+    };
+    const match = el => {
+      const m = el._meta; if (!m.pack) return !q && filter === 'all';
+      if (q && !(m.pack.name + ' ' + m.variant.name + ' ' + (m.pack.tags || []).join(' ')).toLowerCase().includes(q)) return false;
+      if (filter === 'all') return true;
+      const { lum, sat } = tone(m.variant);
+      if (filter === 'color') return sat > 0.25 || m.variant.polarity === 'color';
+      if (filter === 'dark') return sat <= 0.25 && lum < 0.5;
+      if (filter === 'light') return sat <= 0.25 && lum >= 0.5;
+      return true;
+    };
+    const refilter = () => { for (const el of tiles) el.classList.toggle('hidden', !match(el)); };
+    grid.append(...tiles); tiles.forEach(el => io.observe(el));
+    const chips = h('div', { class: 'chips' }, ['all', 'dark', 'light', 'color'].map(f => h('button', { class: 'chip' + (f === filter ? ' on' : ''), onclick: e => { filter = f; $$('.chip', chips).forEach(c => c.classList.remove('on')); e.currentTarget.classList.add('on'); refilter(); } }, t('f_' + f))));
+    const search = h('input', { placeholder: t('search'), oninput: e => { q = e.target.value.trim().toLowerCase(); refilter(); } });
+    const ov = h('div', { class: 'overlay picker' },
+      h('div', { class: 'pk-card' },
+        h('div', { class: 'pk-side' }, h('div', { class: 'pk-stage' }, big), bigName, h('div', { class: 'hint' }, t('preview_mix'))),
+        h('div', { class: 'pk-main' },
+          h('div', { class: 'pk-head' }, h('div', {}, h('h2', {}, t('pick_title', { r: roleName(role) })), h('div', { class: 'hint' }, t('pick_sub'))),
+            h('button', { class: 'btn icon', onclick: () => close(), title: 'Esc' }, svgI('<path d="M6 6l12 12M18 6L6 18"/>'))),
+          h('div', { class: 'pk-tools' }, h('label', { class: 'search' }, svgI('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'), search), chips),
+          grid)));
+    const onKey = e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } };
+    const close = () => { io.disconnect(); document.removeEventListener('keydown', onKey, true); ov.remove(); };
+    ov.addEventListener('click', e => { if (e.target === ov) close(); });
+    document.addEventListener('keydown', onKey, true);
+    document.body.append(ov);
+    const curT = tiles.find(el => el.classList.contains('on')) || tiles[0];
+    showBig(cur.pack || null, cur.variant || null, curT.title);
+    curT.scrollIntoView({ block: 'center' }); search.focus();
+    $$('.pk-head button, .chip', ov).forEach(b => bindCursor(b, () => S.design, 'Hand'));
+    bindCursor(search, () => S.design, 'IBeam'); bindCursor(ov, () => S.design, 'Arrow');
+  }
 
   async function saveMine() {
     const d = E.clone(S.design); d.name = d.name || 'CURSORA';
@@ -502,7 +597,7 @@
     grid.replaceChildren(...S.mine.map((m, i) => {
       if (m.design.userPack) E.registerPack(m.design.userPack);
       const d = () => m.design;
-      const cvs = ['Arrow', 'Hand', 'IBeam', 'Wait'].map((r, k) => { const c = h('canvas', { class: k ? '' : 'big' }); preview(c, m.design, r, Math.round((k ? 48 : 72) * DPR())); return c; });
+      const cvs = ['Arrow', 'Hand', 'IBeam', 'Wait'].map((r, k) => { const c = h('canvas', { class: k ? '' : 'big' }); preview(c, m.design, r, fitPx(m.design, Math.round((k ? 48 : 72) * DPR()))); return c; });
       const act = (ic, label, fn, cls) => h('button', { class: 'btn sm ' + (cls || ''), title: label, onclick: e => { e.stopPropagation(); fn(e); } }, svgI(ic), label);
       const card = h('div', { class: 'card', style: { animationDelay: i * 40 + 'ms' }, onclick: () => startStudio(m.design, m.id) },
         h('div', { class: 'card-stage' }, h('div', { class: 'row' }, cvs)),
@@ -581,15 +676,25 @@
   async function selftest() {
     const rep = { ok: true, checks: [] };
     try {
-      const d = E.newDesign('bibata-modern', 'classic'); d.name = 'SelfTest'; d.global = { size: 48, outline: 1, glow: true };
+      // glow (canvas padding), a smaller Hand taken from another pack, and a resized IBeam
+      const d = E.newDesign('bibata-modern', 'classic'); d.name = 'SelfTest'; d.global = { size: 48, outline: 1, glow: true, glowColor: '#a5b4fc' };
+      d.roles = { Hand: { pack: 'apple', variant: 'black', params: { own: 0.7 } }, IBeam: { params: { own: 1.3 } } };
+      const C = E.canvasSize(d); rep.canvas = C; rep.size = C;
       const files = await E.buildFiles(d);
       for (const f of files) {
         const dec = await E.decodeAny(f.bytes);
         const r = await E.renderRole(d, f.role, 48);
-        const ok = dec.frames.length === r.frames.length && dec.frames[0].width >= 48 && Math.abs(dec.hot[0] * dec.frames[0].width - r.hot[0] * dec.frames[0].width / 48) <= 2;
-        rep.checks.push({ role: f.role, ext: f.ext, bytes: f.bytes.length, frames: dec.frames.length, w: dec.frames[0].width, ok });
+        // the decoder returns the largest image of each file (a multiple of the base size C); compare proportionally
+        const w = dec.frames[0].width, k = w / C;
+        const ok = dec.frames.length === r.frames.length && dec.frames[0].height === w && Number.isInteger(k) && k >= 1 &&
+          Math.abs(dec.hot[0] * w - r.hot[0] * k) <= 1.5 * k && Math.abs(dec.hot[1] * w - r.hot[1] * k) <= 1.5 * k;
+        rep.checks.push({ role: f.role, ext: f.ext, bytes: f.bytes.length, frames: dec.frames.length, w, ok });
         if (!ok) rep.ok = false;
       }
+      // the glow must stay inside the canvas: no opaque pixels on the outer border
+      const g = await E.renderRole(d, 'Arrow', 48); const gx = g.frames[0].getContext('2d').getImageData(0, 0, C, C).data;
+      let edge = 0; for (let i = 0; i < C; i++) for (const [x, y] of [[i, 0], [i, C - 1], [0, i], [C - 1, i]]) edge = Math.max(edge, gx[(y * C + x) * 4 + 3]);
+      rep.glowEdgeAlpha = edge; if (edge > 8) rep.ok = false;
       let packsOk = 0;
       for (const p of S.packs) for (const v of p.variants) { const dd = E.newDesign(p.id, v.id); for (const r of E.ROLES) await E.renderRole(dd, r, 32); packsOk++; }
       rep.variantsRendered = packsOk;
@@ -602,7 +707,9 @@
   async function boot() {
     [S.settings, S.mine, S.info] = await Promise.all([B.settings.get(), B.mine.get(), B.info()]);
     S.lang = S.settings.lang || 'ar';
-    B.current().then(c => { const n = +(c && c.CursorBaseSize); if (n >= 32 && n <= 256) S.sysSize = n; }).catch(() => {});
+    const ap = S.settings.applied && S.settings.applied.design;
+    if (ap && ap.global && ap.global.size) S.sysSize = ap.global.size; // registry size may include glow padding
+    else B.current().then(c => { const n = +(c && c.CursorBaseSize); if (n >= 32 && n <= 256) S.sysSize = n; }).catch(() => {});
     applyTheme();
     S.packs = await E.loadIndex('../packs/');
     $$('[data-win]').forEach(b => b.addEventListener('click', () => B.win(b.dataset.win)));
@@ -616,7 +723,7 @@
     $('#impDesign').addEventListener('click', importDesign); $('#impFolder').addEventListener('click', importFolder);
     document.addEventListener('keydown', e => {
       if (e.ctrlKey && e.key.toLowerCase() === 'k') { e.preventDefault(); go('library'); $('#search').focus(); }
-      else if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'r') { e.preventDefault(); B.restore('windows').then(async () => { S.settings = await B.settings.get(); renderNow(); renderLibrary(); toast(t('restored_ok')); }); }
+      else if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'r') { e.preventDefault(); B.restore('windows').then(async () => { S.settings = await B.settings.get(); renderNow(); renderLibrary(); toast(t('restored_ok')); }).catch(err => toast(t('err', { e: err.message || err }), null, true)); }
       else if (S.view === 'studio' && e.ctrlKey && e.key.toLowerCase() === 'z' && !(document.activeElement.tagName === 'INPUT' && /^(text|search|)$/.test(document.activeElement.type))) { e.preventDefault(); e.shiftKey ? redo() : undo(); }
       else if (S.view === 'studio' && e.ctrlKey && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); }
       else if (S.view === 'studio' && e.ctrlKey && e.key.toLowerCase() === 's') { e.preventDefault(); saveMine(); }

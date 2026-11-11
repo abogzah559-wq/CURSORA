@@ -40,20 +40,20 @@
    "id": "blue",
    "name": "Blue",
    "dir": "blue",
-   "polarity": "light",
+   "polarity": "color",
    "swatch": [
     "#f2f6fe",
-    "#4285f4"
+    "#4688f4"
    ]
   },
   {
    "id": "red",
    "name": "Red",
    "dir": "red",
-   "polarity": "light",
+   "polarity": "color",
    "swatch": [
     "#fff9f9",
-    "#ff0303"
+    "#ff0707"
    ]
   }
  ],

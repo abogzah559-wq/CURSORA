@@ -19,20 +19,20 @@
    "id": "default",
    "name": "Default",
    "dir": "default",
-   "polarity": "dark",
+   "polarity": "color",
    "swatch": [
     "#5959fb",
-    "#ffffff"
+    "#5959fb"
    ]
   },
   {
    "id": "border",
    "name": "Border",
    "dir": "border",
-   "polarity": "dark",
+   "polarity": "color",
    "swatch": [
     "#5a5afb",
-    "#e8e8fd"
+    "#5d5dfb"
    ]
   },
   {
@@ -42,7 +42,7 @@
    "polarity": "light",
    "swatch": [
     "#e5f0f8",
-    "#a553c9"
+    "#7682cf"
    ]
   }
  ],
