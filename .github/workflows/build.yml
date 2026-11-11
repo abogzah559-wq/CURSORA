@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [main, diag]
+    branches: [main]
     tags: ["v*"]
   workflow_dispatch:
 
@@ -86,7 +86,8 @@ jobs:
         shell: bash
         run: |
           f=$(ls dist/*.exe | head -1)
-          gh release create "${GITHUB_REF_NAME}" "$f" --title "CURSORA ${GITHUB_REF_NAME}" --notes "CURSORA ${GITHUB_REF_NAME}"
+          # latest.yml + .blockmap let installed copies update themselves (and download only what changed)
+          gh release create "${GITHUB_REF_NAME}" "$f" "$f.blockmap" dist/latest.yml --title "CURSORA ${GITHUB_REF_NAME}" --notes-file RELEASE_NOTES.md
 
       - name: Save logs to the ci-logs branch
         if: always()

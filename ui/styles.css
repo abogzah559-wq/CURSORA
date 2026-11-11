@@ -385,3 +385,11 @@ select option { background: #18181b; }
 .spin { animation: spin 1.2s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .modal-card:has(.d-detail) { max-width: none; }
+.update-pill { position: relative; display: flex; align-items: center; gap: 7px; height: 28px; padding: 0 12px; border-radius: 99px; font-size: 12px; font-weight: 600; color: var(--on-accent); background: rgb(var(--accent-rgb)); overflow: hidden; animation: tin .5s var(--spring); box-shadow: 0 6px 20px -8px rgba(var(--accent-rgb), .9); }
+.update-pill i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 1.6s ease-in-out infinite; }
+.update-pill.progress { background: var(--surface3); color: var(--text); }
+.update-pill.progress::before { content: ""; position: absolute; inset: 0; width: var(--p, 0%); background: rgba(var(--accent-rgb), .35); transition: width .3s; }
+.update-pill.progress span, .update-pill.progress i { position: relative; }
+.update-pill.error { background: var(--surface3); color: var(--muted); }
+@keyframes pulse { 50% { opacity: .35; transform: scale(.7); } }
+.st-name { flex: 1 1 220px; min-width: 160px; }

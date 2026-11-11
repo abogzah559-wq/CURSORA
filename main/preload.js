@@ -5,6 +5,9 @@ const inv = (c, ...a) => ipcRenderer.invoke(c, ...a);
 contextBridge.exposeInMainWorld('cursora', {
   win: a => inv('win', a),
   onWinState: cb => ipcRenderer.on('win:state', (e, s) => cb(s)),
+  onUpdate: cb => ipcRenderer.on('update', (e, s) => cb(s)),
+  updateDownload: () => inv('update:download'),
+  updateInstall: () => inv('update:install'),
   info: () => inv('info'),
   settings: { get: () => inv('settings:get'), set: p => inv('settings:set', p) },
   mine: { get: () => inv('mine:get'), set: l => inv('mine:set', l) },

@@ -1,0 +1,6 @@
+<!doctype html><meta charset="utf-8"><body><script src="../ui/engine.js"></script><script>
+window.fp = async () => { const E = CursoraEngine; const packs = await E.loadIndex('../packs/'); const out = {};
+  for (const p of packs) for (const v of p.variants) { const d = E.newDesign(p.id, v.id); d.global = { size: 48 };
+    for (const r of ['Arrow','Hand','IBeam','Wait','SizeAll']) { const c = (await E.renderRole(d, r, 48)).frames[0]; out[p.id+'/'+v.id+'/'+r] = Array.from(c.getContext('2d').getImageData(0,0,c.width,c.height).data.filter((_, i) => i % 4 === 3)); } }
+  return out; };
+</script>

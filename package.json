@@ -1,7 +1,7 @@
 {
   "name": "cursora",
   "productName": "CURSORA",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "CURSORA — a beautiful cursor studio for Windows: browse, customise and apply cursor packs permanently.",
   "author": "7krh",
   "license": "GPL-3.0",
@@ -22,10 +22,28 @@
     "productName": "CURSORA",
     "copyright": "© 2026 7krh",
     "artifactName": "CURSORA-Setup-${version}.${ext}",
-    "directories": { "output": "dist", "buildResources": "build" },
-    "files": ["main/**", "ui/**", "packs/**", "package.json"],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main/**",
+      "ui/**",
+      "packs/**",
+      "package.json"
+    ],
     "asar": true,
-    "win": { "target": [{ "target": "nsis", "arch": ["x64"] }], "icon": "build/icon.ico" },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
     "nsis": {
       "oneClick": false,
       "perMachine": false,
@@ -38,6 +56,22 @@
       "uninstallDisplayName": "CURSORA",
       "deleteAppDataOnUninstall": false,
       "include": "build/installer.nsh"
-    }
+    },
+    "compression": "maximum",
+    "electronLanguages": [
+      "en-US",
+      "ar"
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "abogzah559-wq",
+        "repo": "CURSORA",
+        "releaseType": "release"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-updater": "^6.6.2"
   }
 }

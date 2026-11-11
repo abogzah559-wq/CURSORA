@@ -62,6 +62,7 @@ app.whenReady().then(async () => {
     return app.quit();
   }
   createWindow();
+  if (!SELFTEST) require('./updater')(() => win);
 });
 app.on('window-all-closed', () => app.quit());
 

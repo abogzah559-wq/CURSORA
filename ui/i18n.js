@@ -47,6 +47,8 @@ window.I18N = {
     d_more: 'عرض المزيد ({n})', d_best: 'الأفضل', d_popular: 'الأكثر تحميلًا', d_page: 'صفحة الحزمة', d_hover: 'مرّر على أي شكل عشان تجرّبه بماوسك.',
     d_credit: 'الحزم لأصحابها على rw-designer.com، وتنزل من الموقع مباشرة لاستخدامك. لكل حزمة رخصة صاحبها.',
     df_all: 'الكل', df_dark: 'غامق', df_light: 'فاتح', df_color: 'ملوّن', df_animated: 'متحرك',
+    up_available: 'توفر إصدار جديد {v} — اضغط للتحديث', up_progress: 'جاري التحديث… {p}%', up_ready: 'جاهز — اضغط لإعادة التشغيل', up_retry: 'تعذّر التحديث — اضغط للمحاولة',
+    bad_file: 'الملف هذا مو تصميم CURSORA صالح',
     yes: 'إيه', no: 'لا', cancel: 'إلغاء', ok: 'تمام', custom_badge: 'مخصص', user_pack: 'مستورد',
   },
   en: {
@@ -97,6 +99,8 @@ window.I18N = {
     d_more: 'Show more ({n})', d_best: 'Best', d_popular: 'Most downloaded', d_page: 'Set page', d_hover: 'Hover any shape to try it with your own pointer.',
     d_credit: 'Sets belong to their authors on rw-designer.com and download straight from the site for your own use. Each set keeps its author\'s licence.',
     df_all: 'All', df_dark: 'Dark', df_light: 'Light', df_color: 'Colour', df_animated: 'Animated',
+    up_available: 'New version {v} — click to update', up_progress: 'Updating… {p}%', up_ready: 'Ready — click to restart', up_retry: 'Update failed — click to retry',
+    bad_file: 'This file is not a valid CURSORA design',
     yes: 'Yes', no: 'No', cancel: 'Cancel', ok: 'OK', custom_badge: 'Custom', user_pack: 'Imported',
   },
 };

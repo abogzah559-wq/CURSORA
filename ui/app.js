@@ -158,9 +158,11 @@
     const job = (async () => {
       const files = await B.downloadSet(it.slug);
       const byName = new Map(files.map(f => [f.name.toLowerCase(), f]));
+      const loose = n => String(n).toLowerCase().normalize('NFKD').replace(/[^a-z0-9.]/g, '');
+      const byLoose = new Map(files.map(f => [loose(f.name), f]));
       const byRole = {};
       for (const [role, m] of Object.entries(it.roles || {})) {
-        const f = byName.get(String(m.file).toLowerCase()); if (!f) continue;
+        const f = byName.get(String(m.file).toLowerCase()) || byLoose.get(loose(m.file)); if (!f) continue;
         try { byRole[role] = await E.decodeAny(new Uint8Array(f.bytes)); } catch {}
       }
       if (!byRole.Arrow) throw new Error('no arrow');
@@ -222,7 +224,13 @@
     card.addEventListener('mousemove', e => { const r = card.getBoundingClientRect(); card.style.setProperty('--mx', (e.clientX - r.left) / r.width * 100 + '%'); card.style.setProperty('--my', (e.clientY - r.top) / r.height * 100 + '%'); });
     return card;
   }
-  const shortLicense = l => /public domain/i.test(l) ? 'Public Domain' : /creative commons/i.test(l) ? 'CC' + (/non-?commercial/i.test(l) ? ' NC' : '') : (l || '—').slice(0, 22);
+  const shortLicense = l => {
+    if (/public domain/i.test(l)) return 'Public Domain';
+    const cc = String(l).match(/\(cc\s*([^)]*)\)/i);
+    if (cc) return ('CC ' + cc[1]).toUpperCase().replace(/\s+/g, ' ').trim();
+    if (/creative commons/i.test(l)) return 'CC' + (/non-?commercial/i.test(l) ? ' NC' : '');
+    return String(l || '—').replace(/\s*\(.*$/, '').slice(0, 22);
+  };
   async function dDetail(it) {
     const body = h('div', { class: 'd-detail' },
       h('div', { class: 'd-head' }, h('div', {}, h('h2', {}, it.name), h('div', { class: 'hint' }, t('by') + ' ' + it.author + ' · ' + it.license)),
@@ -777,7 +785,12 @@
     S.mine = await B.mine.set(S.mine); updateMineCount(); renderMine(); toast(t('imported_ok'), r.name);
   }
   async function importDesign() {
-    const d = E.migrateDesign(await B.importDesign()); if (!d) return;
+    let d;
+    try { d = E.migrateDesign(await B.importDesign()); } catch (e) { return toast(t('bad_file'), null, true); }
+    if (!d) return;
+    // only designs we can actually draw: a known pack, or one that carries its own pixels
+    if (!d.pack || (!d.userPack && !S.packs.some(p => p.id === d.pack) && !(await E.getPack(d.pack).then(() => true, () => false)))) return toast(t('bad_file'), null, true);
+    if (d.userPack) E.registerPack(d.userPack);
     S.mine.unshift({ id: 'm' + Date.now().toString(36), design: d, created: Date.now() });
     S.mine = await B.mine.set(S.mine); updateMineCount(); renderMine(); toast(t('imported_ok'), d.name);
   }
@@ -856,6 +869,18 @@
     $$('[data-win]').forEach(b => b.addEventListener('click', () => B.win(b.dataset.win)));
     window.addEventListener('blur', () => document.body.classList.add('blurred')); window.addEventListener('focus', () => document.body.classList.remove('blurred'));
     $('#coffee').addEventListener('click', support);
+    // update pill: appears only when there is something to do, never as a popup
+    const pill = $('#updatePill'); let upState = null;
+    B.onUpdate(u => {
+      // a failed background check (offline, no release yet) is not the user's problem: stay hidden
+      if (u.state === 'error' && !pill.dataset.v) return;
+      upState = u.state;
+      if (u.version) pill.dataset.v = u.version;
+      pill.className = 'update-pill ' + u.state;
+      $('span', pill).textContent = u.state === 'available' ? t('up_available', { v: u.version }) : u.state === 'progress' ? t('up_progress', { p: u.percent }) : u.state === 'ready' ? t('up_ready') : t('up_retry');
+      pill.style.setProperty('--p', (u.percent || 0) + '%');
+    });
+    pill.addEventListener('click', () => { if (upState === 'available' || upState === 'error') B.updateDownload(); else if (upState === 'ready') B.updateInstall(); });
     $('#langBtn').addEventListener('click', () => setLang(S.lang === 'ar' ? 'en' : 'ar'));
     $$('#nav button').forEach(b => b.addEventListener('click', () => go(b.dataset.view)));
     $('#search').addEventListener('input', e => { S.q = e.target.value; renderLibrary(); });
