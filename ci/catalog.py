@@ -27,7 +27,7 @@ import time
 import zipfile
 
 import requests
-from PIL import Image
+from PIL import Image, ImageDraw
 
 BASE = 'https://www.rw-designer.com'
 UA = {'User-Agent': 'CURSORA-catalog/1.0'}
@@ -42,6 +42,7 @@ CORE = ['Arrow', 'Hand', 'IBeam']
 session = requests.Session()
 session.headers.update(UA)
 lock = threading.Lock()
+THUMBS = {}  # slug -> list of small RGBA images, only for the review sheets
 log_lines = []
 
 
@@ -291,6 +292,12 @@ def analyse(entry, page):
         'hash': {r: shape_hash(decoded[r][0]) for r in CORE},
         'hot': [round(v, 3) for v in arrow[3]],
     }
+    thumbs = []
+    for r in ['Arrow', 'Hand', 'IBeam', 'Wait' if 'Wait' in decoded else 'AppStarting', 'SizeAll', 'No']:
+        if r in decoded:
+            im = decoded[r][0].copy(); im.thumbnail((48, 48), Image.LANCZOS); thumbs.append(im)
+    with lock:
+        THUMBS[entry['slug']] = thumbs
     return item, 'ok'
 
 
@@ -375,6 +382,22 @@ def main():
         it.pop('hash', None)
     json.dump({'source': 'rw-designer.com', 'built': int(time.time()), 'items': kept}, open(os.path.join(out, 'catalog.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     json.dump(items and sorted([{k: v for k, v in i.items() if k != 'hash'} for i in items], key=lambda x: -x['score']), open(os.path.join(out, 'all-candidates.json'), 'w'), ensure_ascii=False)
+    # review sheets: every kept set, best first, numbered — for a human pass before publishing
+    os.makedirs(os.path.join(out, 'review'), exist_ok=True)
+    per = 60
+    for sheet in range(0, len(kept), per):
+        chunk = kept[sheet:sheet + per]
+        W, RH = 2 * (6 * 56 + 230), 60
+        img = Image.new('RGB', (W, (len(chunk) + 1) // 2 * RH), (24, 24, 28))
+        dr = ImageDraw.Draw(img)
+        for i, it in enumerate(chunk):
+            x0, y0 = (i % 2) * (W // 2), (i // 2) * RH
+            dr.text((x0 + 6, y0 + 22), f"{sheet + i:04d} {it['slug'][:26]}", fill=(220, 220, 225))
+            for k, th in enumerate(THUMBS.get(it['slug'], [])):
+                bg = Image.new('RGBA', (52, 52), (70, 72, 80, 255) if k % 2 else (150, 152, 160, 255))
+                bg.alpha_composite(th, ((52 - th.width) // 2, (52 - th.height) // 2))
+                img.paste(bg.convert('RGB'), (x0 + 220 + k * 56, y0 + 4))
+        img.save(os.path.join(out, 'review', f'sheet-{sheet // per:03d}.png'), optimize=True)
     open(os.path.join(out, 'log.txt'), 'w').write('\n'.join(log_lines))
 
 
