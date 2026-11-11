@@ -6,6 +6,9 @@ on:
       mode:
         description: explore | build
         default: build
+      limit:
+        description: only scan the first N sets (0 = all)
+        default: '0'
   push:
     branches: [catalog-dev]
 
@@ -26,7 +29,9 @@ jobs:
       - name: Install
         run: pip install pillow requests
       - name: Run
-        run: python ci/catalog.py ${{ github.event.inputs.mode || 'explore' }} out
+        env:
+          CATALOG_LIMIT: ${{ github.event.inputs.limit || '400' }}
+        run: python ci/catalog.py ${{ github.event.inputs.mode || 'build' }} out
       - name: Publish results to the catalog branch
         if: always()
         run: |
