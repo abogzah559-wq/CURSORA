@@ -1,0 +1,12 @@
+<!doctype html><meta charset="utf-8"><body><script src="../ui/engine.js"></script><script>
+window.sizes = async (S) => {
+  const E = CursoraEngine; const packs = await E.loadIndex('../packs/'); const out = {};
+  const h = c => { const C = c.width, px = c.getContext('2d').getImageData(0,0,C,C).data; let y0=C,y1=-1,x0=C,x1=-1;
+    for (let y=0;y<C;y++) for (let x=0;x<C;x++) if (px[(y*C+x)*4+3]>40) { if(y<y0)y0=y; if(y>y1)y1=y; if(x<x0)x0=x; if(x>x1)x1=x; }
+    return Math.max(y1-y0+1, x1-x0+1); };
+  for (const p of packs) { const d = E.newDesign(p.id, p.variants[0].id); d.global = { size: S, shadow: false }; const r = {};
+    for (const role of E.ROLES) { const res = await E.renderRole(d, role, S); r[role] = h(res.frames[0]); }
+    out[p.id] = r; }
+  return out;
+};
+</script>

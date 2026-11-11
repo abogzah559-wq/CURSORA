@@ -699,6 +699,12 @@
       for (const p of S.packs) for (const v of p.variants) { const dd = E.newDesign(p.id, v.id); for (const r of E.ROLES) await E.renderRole(dd, r, 32); packsOk++; }
       rep.variantsRendered = packsOk;
       rep.files = files;
+      // plain designs at common sizes, dumped for the Windows size measurement in CI
+      rep.extra = [];
+      for (const [name, pack, variant, size] of [['bibata32', 'bibata-modern', 'classic', 32], ['bibata48', 'bibata-modern', 'classic', 48], ['breezex32', 'breezex', 'black', 32], ['fluent32', 'fluent', 'dark', 32]]) {
+        const dd = E.newDesign(pack, variant); dd.global = { size }; dd.name = name;
+        rep.extra.push({ name, size: E.canvasSize(dd), files: await E.buildFiles(dd) });
+      }
     } catch (e) { rep.ok = false; rep.error = String(e && e.stack || e); }
     await B.selftestReport(rep);
   }

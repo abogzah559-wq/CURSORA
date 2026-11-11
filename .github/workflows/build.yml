@@ -2,7 +2,7 @@ name: build
 
 on:
   push:
-    branches: [main]
+    branches: [main, diag]
     tags: ["v*"]
   workflow_dispatch:
 
@@ -37,10 +37,16 @@ jobs:
         shell: pwsh
         run: |
           $env:CURSORA_SELFTEST_OUT = "$PWD\ci-logs\2-selftest.json"
+          $env:CURSORA_DUMP = "$PWD\ci-dump"
           $p = Start-Process -FilePath ".\node_modules\electron\dist\electron.exe" -ArgumentList ". --selftest" -PassThru -Wait
           "exit code: $($p.ExitCode)" | Tee-Object -FilePath ci-logs/2-selftest-exit.txt
           if (Test-Path ci-logs/2-selftest.json) { Get-Content ci-logs/2-selftest.json -TotalCount 60 }
           if ($p.ExitCode -ne 0) { exit 1 }
+
+      - name: Measure real cursor sizes drawn by Windows
+        shell: pwsh
+        run: |
+          ./ci/measure.ps1 -Root "$PWD\ci-dump" -Out "$PWD\ci-logs\5-measure.json" *>&1 | Tee-Object -FilePath ci-logs/5-measure.txt
 
       - name: Build installer
         shell: pwsh

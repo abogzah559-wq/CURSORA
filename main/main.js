@@ -123,6 +123,12 @@ ipcMain.handle('design:import', async () => {
 ipcMain.handle('selftest:report', async (e, report) => {
   const out = process.env.CURSORA_SELFTEST_OUT || path.join(dataDir(), 'selftest.json');
   try {
+    if (report.files && process.env.CURSORA_DUMP) {
+      const dump = (name, size, files) => { const d = path.join(process.env.CURSORA_DUMP, name); fs.mkdirSync(d, { recursive: true }); fs.writeFileSync(path.join(d, 'size.txt'), String(size)); for (const f of files) fs.writeFileSync(path.join(d, `${f.role}.${f.ext}`), Buffer.from(f.bytes)); };
+      dump('glow-selftest', report.size, report.files);
+      for (const x of report.extra || []) dump(x.name, x.size, x.files);
+    }
+    delete report.extra;
     if (report.files) {
       const api = winApi();
       report.before = await api.readCurrent();
