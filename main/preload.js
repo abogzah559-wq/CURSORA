@@ -14,6 +14,8 @@ contextBridge.exposeInMainWorld('cursora', {
   restore: k => inv('cursor:restore', k),
   current: () => inv('cursor:current'),
   measure: () => inv('cursor:measure'),
+  catalog: force => inv('store:catalog', force),
+  downloadSet: slug => inv('store:download', slug),
   log: e => inv('log', e),
   openLog: () => inv('openLog'),
   hasBackup: () => inv('cursor:hasBackup'),

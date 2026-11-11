@@ -143,7 +143,104 @@
     S.view = view;
     $$('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + view));
     movePill();
-    if (view === 'studio') renderStudio(); if (view === 'mine') renderMine(); if (view === 'settings') renderSettings();
+    if (view === 'studio') renderStudio(); if (view === 'mine') renderMine(); if (view === 'settings') renderSettings(); if (view === 'discover') renderDiscover();
+  }
+
+  /* ---------------- discover (curated sets from rw-designer.com) ---------------- */
+  const RW = 'https://www.rw-designer.com';
+  const D = { items: null, error: null, q: '', filter: 'all', sort: 'best', shown: 60, sets: new Map(), loading: new Map() };
+  const DFILTERS = ['all', 'dark', 'light', 'color', 'animated'];
+  const dKind = it => (it.sat > 0.3 && it.lum > 0.15 ? 'color' : it.lum < 0.45 ? 'dark' : 'light');
+  // download + decode a set once; the result is an ordinary design backed by an in-memory pack
+  function loadSet(it) {
+    if (D.sets.has(it.slug)) return Promise.resolve(D.sets.get(it.slug));
+    if (D.loading.has(it.slug)) return D.loading.get(it.slug);
+    const job = (async () => {
+      const files = await B.downloadSet(it.slug);
+      const byName = new Map(files.map(f => [f.name.toLowerCase(), f]));
+      const byRole = {};
+      for (const [role, m] of Object.entries(it.roles || {})) {
+        const f = byName.get(String(m.file).toLowerCase()); if (!f) continue;
+        try { byRole[role] = await E.decodeAny(new Uint8Array(f.bytes)); } catch {}
+      }
+      if (!byRole.Arrow) throw new Error('no arrow');
+      const pack = E.packFromDecoded('rw-' + it.slug, it.name, byRole);
+      pack.author = it.author; pack.license = it.license; pack.url = `${RW}/cursor-set/${it.slug}`;
+      const d = E.newDesign(pack.id, 'default'); d.name = it.name; d.global = { shadow: false }; d.userPack = pack; d.source = { site: 'rw-designer', slug: it.slug };
+      D.sets.set(it.slug, d); return d;
+    })();
+    D.loading.set(it.slug, job); job.finally(() => D.loading.delete(it.slug));
+    return job;
+  }
+  const rwView = id => `${RW}/cursor-view/${id}.png`;
+  function dList() {
+    const q = D.q.trim().toLowerCase();
+    let list = (D.items || []).filter(it => (!q || (it.name + ' ' + it.author).toLowerCase().includes(q)) &&
+      (D.filter === 'all' || (D.filter === 'animated' ? it.animated > 0 : dKind(it) === D.filter)));
+    if (D.sort === 'popular') list = [...list].sort((a, b) => b.downloads - a.downloads);
+    return list;
+  }
+  async function renderDiscover() {
+    const root = $('#view-discover');
+    if (!D.items && !D.error) {
+      root.replaceChildren(h('div', { class: 'empty' }, h('div', { class: 'empty-art spin' }, '◌'), t('d_loading')));
+      try { const c = await B.catalog(); D.items = c.items || []; D.offline = !!c.offline; } catch (e) { D.error = e.message || String(e); }
+      if (S.view !== 'discover') return;
+    }
+    if (D.error) {
+      root.replaceChildren(h('div', { class: 'empty' }, h('div', { class: 'empty-art' }, '☁'), t('d_error'),
+        h('button', { class: 'btn', onclick: () => { D.error = null; renderDiscover(); } }, t('retry'))));
+      return;
+    }
+    const list = dList();
+    const grid = h('div', { class: 'grid' }, list.slice(0, D.shown).map((it, i) => dCard(it, i)));
+    const more = list.length > D.shown ? h('div', { class: 'more-row' }, h('button', { class: 'btn', onclick: () => { D.shown += 60; renderDiscover(); } }, t('d_more', { n: list.length - D.shown }))) : null;
+    const search = h('input', { value: D.q, placeholder: t('search'), oninput: e => { D.q = e.target.value; D.shown = 60; clearTimeout(D.qt); D.qt = setTimeout(() => { renderDiscover().then(() => { const i = $('#view-discover .search input'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }); }, 200); } });
+    root.replaceChildren(
+      h('div', { class: 'hero' }, h('div', {}, h('h1', {}, t('d_title')), h('p', { class: 'sub' }, t('d_sub'))),
+        h('div', { class: 'hero-stats' }, t('d_count', { n: D.items.length }) + (D.offline ? ' · ' + t('d_offline') : ''))),
+      h('div', { class: 'toolbar' },
+        h('label', { class: 'search' }, svgI('<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>'), search),
+        h('div', { class: 'chips' }, DFILTERS.map(f => h('button', { class: 'chip' + (D.filter === f ? ' on' : ''), onclick: () => { D.filter = f; D.shown = 60; renderDiscover(); } }, t('df_' + f)))),
+        h('div', { class: 'seg' }, [['best', t('d_best')], ['popular', t('d_popular')]].map(([v, l]) => h('button', { class: D.sort === v ? 'on' : '', onclick: () => { D.sort = v; renderDiscover(); } }, l)))),
+      list.length ? grid : h('div', { class: 'empty' }, t('no_results')), more,
+      h('p', { class: 'hint credit-line' }, t('d_credit')));
+  }
+  function dCard(it, i) {
+    const imgs = ['Arrow', 'Hand', 'IBeam', 'Wait'].map((r, k) => it.roles[r] || (r === 'Wait' && it.roles.AppStarting) ? h('img', { class: k ? '' : 'big', loading: 'lazy', alt: '', src: rwView((it.roles[r] || it.roles.AppStarting).id) }) : null);
+    const card = h('div', { class: 'card', style: { animationDelay: Math.min(i % 60, 12) * 30 + 'ms' }, onclick: () => dDetail(it) },
+      it.animated ? h('span', { class: 'badge-anim' }, '▶ ' + t('df_animated')) : null,
+      h('div', { class: 'card-stage d-stage' }, h('div', { class: 'row' }, imgs)),
+      h('div', { class: 'card-body' },
+        h('div', { class: 'card-top' }, h('div', { class: 'card-name' }, it.name.replace(/ Cursors?$/i, ''))),
+        h('div', { class: 'card-desc' }, t('by') + ' ' + it.author),
+        h('div', { class: 'card-top' }, h('span', { class: 'tag' }, '⬇ ' + it.downloads.toLocaleString(S.lang === 'ar' ? 'ar-SA' : 'en')), h('span', { class: 'tag', title: it.license }, shortLicense(it.license)))));
+    // resting on a card for a moment downloads the set (a few KB) and turns your pointer into it
+    let timer = null;
+    card.addEventListener('mouseenter', () => { timer = setTimeout(() => loadSet(it).then(d => { bindCursor(card, () => d, 'Arrow'); $$('button', card).forEach(b => bindCursor(b, () => d, 'Hand')); if (card.matches(':hover')) card._cur.start(); }).catch(() => {}), 350); });
+    card.addEventListener('mouseleave', () => clearTimeout(timer));
+    card.addEventListener('mousemove', e => { const r = card.getBoundingClientRect(); card.style.setProperty('--mx', (e.clientX - r.left) / r.width * 100 + '%'); card.style.setProperty('--my', (e.clientY - r.top) / r.height * 100 + '%'); });
+    return card;
+  }
+  const shortLicense = l => /public domain/i.test(l) ? 'Public Domain' : /creative commons/i.test(l) ? 'CC' + (/non-?commercial/i.test(l) ? ' NC' : '') : (l || '—').slice(0, 22);
+  async function dDetail(it) {
+    const body = h('div', { class: 'd-detail' },
+      h('div', { class: 'd-head' }, h('div', {}, h('h2', {}, it.name), h('div', { class: 'hint' }, t('by') + ' ' + it.author + ' · ' + it.license)),
+        h('a', { href: '#', class: 'btn sm', onclick: e => { e.preventDefault(); B.url(`${RW}/cursor-set/${it.slug}`); } }, t('d_page'))),
+      h('div', { class: 'roles d-roles' }, E.ROLES.filter(r => it.roles[r]).map(r => {
+        const el = h('div', { class: 'role' }, h('img', { src: rwView(it.roles[r].id), alt: '' }), h('span', {}, roleName(r)));
+        el.addEventListener('mouseenter', () => loadSet(it).then(d => { bindCursor(el, () => d, r); el._cur.start(); }).catch(() => {}));
+        return el;
+      })),
+      h('div', { class: 'hint' }, t('d_hover')));
+    const v = await modal(body, [[t('cancel'), null, 'ghost'], [t('customize'), 'edit', ''], [t('save'), 'save', ''], [t('apply'), 'apply', 'primary']]);
+    if (!v) return;
+    let d; try { d = await loadSet(it); } catch (e) { return toast(t('err', { e: e.message || e }), null, true); }
+    if (v === 'edit') { startStudio(d); return; }
+    if (v === 'save' || v === 'apply') {
+      if (!S.mine.some(m => m.design.source && m.design.source.slug === it.slug)) { S.mine.unshift({ id: 'm' + Date.now().toString(36), design: E.clone(d), created: Date.now() }); S.mine = await B.mine.set(S.mine); updateMineCount(); }
+      if (v === 'save') toast(t('saved'), it.name); else applyDesign(d, it.name);
+    }
   }
 
   /* ---------------- library ---------------- */

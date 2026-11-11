@@ -92,6 +92,9 @@ ipcMain.handle('cursor:restore', async (e, kind) => {
   return r;
 });
 ipcMain.handle('cursor:current', () => winApi().readCurrent());
+let storeApi = null; const store2 = () => (storeApi = storeApi || require('./store')(dataDir()));
+ipcMain.handle('store:catalog', (e, force) => store2().catalog(!!force));
+ipcMain.handle('store:download', (e, slug) => store2().download(String(slug)));
 ipcMain.handle('cursor:measure', () => winApi().measure().catch(() => null));
 const logFile = () => path.join(dataDir(), 'cursora.log');
 ipcMain.handle('log', (e, entry) => {

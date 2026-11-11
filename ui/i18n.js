@@ -1,7 +1,7 @@
 window.I18N = {
   ar: {
     app_tag: 'استوديو أشكال الماوس',
-    nav_library: 'المكتبة', nav_studio: 'الاستوديو', nav_mine: 'حزمي', nav_settings: 'الإعدادات',
+    nav_library: 'المكتبة', nav_discover: 'اكتشف', nav_studio: 'الاستوديو', nav_mine: 'حزمي', nav_settings: 'الإعدادات',
     support: 'ادعمني', applied_now: 'المطبّق الآن', windows_default: 'ماوس ويندوز الأصلي', restore_quick: 'رجوع للأصلي',
     lib_title: 'اختر شكل ماوسك', lib_sub: 'مرّر على أي حزمة وماوسك نفسه يتحول لها. جرّب، خصّص، وطبّق بضغطة.',
     search: 'ابحث عن شكل…', surprise: 'فاجئني', packs_count: '{n} حزمة · {v} لون',
@@ -42,11 +42,16 @@ window.I18N = {
     role_pick: 'اختر الشكل اللي تبي تعدّله', preview_cursor: 'معاينة',
     size_odd: 'ويندوز عرض بعض الأشكال بحجم مختلف: {r}', size_odd_s: 'انحفظت القياسات في سجل البرنامج (الإعدادات ← افتح السجل).',
     size_small: 'ويندوز ما كبّر الماوس عشان التوهّج، فطلع الشكل أصغر', size_small_s: 'صغّر حجم التوهّج أو طفّه، أو كبّر حجم الماوس من إعدادات ويندوز.',
+    d_title: 'اكتشف', d_sub: 'مختارات من مكتبة rw-designer: الحديث والواضح والمكتمل فقط، بدون تكرار. وقّف على أي حزمة لحظة وماوسك يتحول لها.',
+    d_count: '{n} حزمة مختارة', d_offline: 'بدون اتصال (نسخة محفوظة)', d_loading: 'جاري تحميل القائمة…', d_error: 'ما قدرت أجيب القائمة. تأكد من الاتصال.', retry: 'حاول مرة ثانية',
+    d_more: 'عرض المزيد ({n})', d_best: 'الأفضل', d_popular: 'الأكثر تحميلًا', d_page: 'صفحة الحزمة', d_hover: 'مرّر على أي شكل عشان تجرّبه بماوسك.',
+    d_credit: 'الحزم لأصحابها على rw-designer.com، وتنزل من الموقع مباشرة لاستخدامك. لكل حزمة رخصة صاحبها.',
+    df_all: 'الكل', df_dark: 'غامق', df_light: 'فاتح', df_color: 'ملوّن', df_animated: 'متحرك',
     yes: 'إيه', no: 'لا', cancel: 'إلغاء', ok: 'تمام', custom_badge: 'مخصص', user_pack: 'مستورد',
   },
   en: {
     app_tag: 'Cursor design studio',
-    nav_library: 'Library', nav_studio: 'Studio', nav_mine: 'My packs', nav_settings: 'Settings',
+    nav_library: 'Library', nav_discover: 'Discover', nav_studio: 'Studio', nav_mine: 'My packs', nav_settings: 'Settings',
     support: 'Support me', applied_now: 'Applied now', windows_default: 'Windows default', restore_quick: 'Restore default',
     lib_title: 'Pick your cursor', lib_sub: 'Hover any pack and your own pointer turns into it. Try, customise, apply in one click.',
     search: 'Search cursors…', surprise: 'Surprise me', packs_count: '{n} packs · {v} colours',
@@ -87,6 +92,11 @@ window.I18N = {
     role_pick: 'Pick the shape to edit', preview_cursor: 'Preview',
     size_odd: 'Windows drew some shapes at a different size: {r}', size_odd_s: 'The measurements were saved to the app log (Settings → Open log).',
     size_small: "Windows didn't enlarge the cursor for the glow, so the shape came out smaller", size_small_s: 'Use a smaller glow or turn it off, or raise the pointer size in Windows settings.',
+    d_title: 'Discover', d_sub: 'Hand-picked from the rw-designer library: only modern, crisp, complete sets — no repeats. Rest on any set for a moment and your pointer turns into it.',
+    d_count: '{n} curated sets', d_offline: 'offline (saved copy)', d_loading: 'Loading the catalog…', d_error: "Couldn't load the catalog. Check your connection.", retry: 'Try again',
+    d_more: 'Show more ({n})', d_best: 'Best', d_popular: 'Most downloaded', d_page: 'Set page', d_hover: 'Hover any shape to try it with your own pointer.',
+    d_credit: 'Sets belong to their authors on rw-designer.com and download straight from the site for your own use. Each set keeps its author\'s licence.',
+    df_all: 'All', df_dark: 'Dark', df_light: 'Light', df_color: 'Colour', df_animated: 'Animated',
     yes: 'Yes', no: 'No', cancel: 'Cancel', ok: 'OK', custom_badge: 'Custom', user_pack: 'Imported',
   },
 };

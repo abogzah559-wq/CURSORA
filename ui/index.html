@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' cursora:; img-src 'self' cursora: data: blob:; style-src 'self' 'unsafe-inline'; script-src 'self' cursora:; connect-src 'self' cursora: data: blob:">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' cursora:; img-src 'self' cursora: data: blob: https://www.rw-designer.com; style-src 'self' 'unsafe-inline'; script-src 'self' cursora:; connect-src 'self' cursora: data: blob:">
 <title>CURSORA</title>
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -32,6 +32,7 @@
     <nav class="nav" id="nav">
       <span class="nav-pill"></span>
       <button data-view="library"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg><span data-t="nav_library"></span></button>
+      <button data-view="discover"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg><span data-t="nav_discover"></span></button>
       <button data-view="studio"><svg viewBox="0 0 24 24"><path d="M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M14 7l3 3"/></svg><span data-t="nav_studio"></span></button>
       <button data-view="mine"><svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.4-7.5-10A4.3 4.3 0 0 1 12 8a4.3 4.3 0 0 1 7.5 2.5c0 5.6-7.5 10-7.5 10z"/></svg><span data-t="nav_mine"></span><em class="count" id="mineCount"></em></button>
       <button data-view="settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg><span data-t="nav_settings"></span></button>
@@ -64,6 +65,9 @@
 
     <!-- PACK -->
     <section class="view" id="view-pack"></section>
+
+    <!-- DISCOVER -->
+    <section class="view" id="view-discover"></section>
 
     <!-- STUDIO -->
     <section class="view" id="view-studio"></section>

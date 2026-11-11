@@ -373,3 +373,15 @@ select option { background: #18181b; }
 .sw-more { height: 20px; padding: 0 7px; border-radius: 99px; font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface2); box-shadow: 0 0 0 1px var(--line2); transition: .2s; }
 .sw-more:hover { color: var(--text); background: var(--surface3); }
 .swatches { flex-wrap: nowrap; min-width: 0; }
+.d-stage img { width: 44px; height: 44px; object-fit: contain; image-rendering: auto; transition: transform .5s var(--spring); }
+.d-stage img.big { width: 64px; height: 64px; }
+.card:hover .d-stage img { transform: translateY(-4px) scale(1.06); }
+.badge-anim { position: absolute; top: 18px; inset-inline-end: 18px; z-index: 2; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 99px; color: var(--text); background: rgba(0,0,0,.55); backdrop-filter: blur(6px); }
+.more-row { display: flex; justify-content: center; padding: 24px 0 8px; }
+.credit-line { text-align: center; margin-top: 18px; }
+.d-detail { width: min(760px, 80vw); display: flex; flex-direction: column; gap: 14px; }
+.d-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.d-roles img { width: 48px; height: 48px; object-fit: contain; }
+.spin { animation: spin 1.2s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.modal-card:has(.d-detail) { max-width: none; }
