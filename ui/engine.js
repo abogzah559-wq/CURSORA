@@ -109,8 +109,15 @@
     return s;
   }
 
+  // Decoded images are reused: dragging a shadow/glow slider re-renders with the very same source image.
+  const imgCache = new Map();
   function loadImage(src) {
-    return new Promise((res, rej) => { const im = new Image(); im.decoding = 'async'; im.onload = () => res(im); im.onerror = () => rej(new Error('image ' + src.slice(0, 80))); im.src = src; });
+    const hit = imgCache.get(src);
+    if (hit) { imgCache.delete(src); imgCache.set(src, hit); return hit; }
+    const job = new Promise((res, rej) => { const im = new Image(); im.decoding = 'async'; im.onload = () => res(im); im.onerror = () => rej(new Error('image ' + src.slice(0, 80))); im.src = src; });
+    imgCache.set(src, job); job.catch(() => imgCache.delete(src));
+    if (imgCache.size > 600) imgCache.delete(imgCache.keys().next().value);
+    return job;
   }
   const svgUrl = s => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
 

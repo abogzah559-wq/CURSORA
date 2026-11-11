@@ -1,0 +1,36 @@
+name: catalog
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: explore | build
+        default: build
+  push:
+    branches: [catalog-dev]
+
+permissions:
+  contents: write
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install pillow requests
+      - name: Run
+        run: python ci/catalog.py ${{ github.event.inputs.mode || 'explore' }} out
+      - name: Publish results to the catalog branch
+        if: always()
+        run: |
+          mkdir -p out && cd out
+          git init -q -b catalog && git add -A
+          git -c user.name=ci -c user.email=ci@localhost commit -q -m "catalog ${GITHUB_RUN_ID}" || true
+          git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" catalog

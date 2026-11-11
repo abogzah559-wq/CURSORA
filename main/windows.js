@@ -49,6 +49,8 @@ function regScript(values, schemeName, size) {
   lines.push(`Set-ItemProperty -Path $k -Name 'Scheme Source' -Value ${schemeName === 'Windows Default' ? 2 : 1} -Type DWord`);
   if (size) {
     lines.push(`Set-ItemProperty -Path $k -Name 'CursorBaseSize' -Value ${size | 0} -Type DWord`);
+    // the "pointer size" step (1–15) Windows' own Settings app keeps in sync with CursorBaseSize
+    lines.push(`$a='HKCU:\\Software\\Microsoft\\Accessibility'; if (!(Test-Path $a)) { New-Item -Path $a -Force | Out-Null }; Set-ItemProperty -Path $a -Name 'CursorSize' -Value ${Math.max(1, Math.min(15, Math.round(((size | 0) - 32) / 16) + 1))} -Type DWord`);
     // undocumented SPI used by the Settings app to change the cursor size live (Win10 1903+)
     lines.push(`[void][Cursora.Native]::SystemParametersInfo(0x2029, 0, [IntPtr]${size | 0}, 0x01)`);
   }

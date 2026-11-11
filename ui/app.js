@@ -307,7 +307,7 @@
       const size = E.canvasSize(d);
       if (B.mock) await B.apply({ name: d.name, files: [], size, design: d });
       else await B.apply({ name: d.name, files, size, design: d });
-      if (!B.mock) checkLive(d).catch(() => {});
+      if (!B.mock) checkLive(d, dpr).catch(() => {});
       bar.style.strokeDashoffset = 0; card.classList.add('done');
       $('#applyT').textContent = t('applied_ok'); $('#applyS').textContent = B.mock ? t('only_windows') : t('applied_ok_s');
       S.settings = await B.settings.get(); renderNow(); renderLibrary();
@@ -319,16 +319,23 @@
   }
   // After applying, measure what Windows really draws. If one shape comes out much bigger or smaller than the arrow,
   // say so (and keep the numbers in the log) instead of leaving the user with a giant hand.
-  async function checkLive(d) {
+  async function checkLive(d, dpr, retried) {
     await new Promise(r => setTimeout(r, 400));
     const m = await B.measure(); if (!m || !m.Arrow) return;
+    const want = Math.round(E.canvasSize(d) * dpr);
+    B.log({ at: Date.now(), design: d.name, want, dpr, retried: !!retried, measure: m });
+    // Windows kept a smaller cursor size than we asked for (the glow needs a bigger frame): re-render every shape at
+    // the size Windows really uses, so nothing gets squeezed or picked at a different size
+    if (!retried && m.Arrow.img && Math.abs(m.Arrow.img - want) > 2) {
+      const k = m.Arrow.img / E.canvasSize(d);
+      const files = await E.buildFiles(d, null, [k]);
+      await B.apply({ name: d.name, files, size: E.canvasSize(d), design: d });
+      if (m.Arrow.img < want * 0.8) toast(t('size_small'), t('size_small_s'), true, 9000);
+      return checkLive(d, k, true);
+    }
     const ref = Math.max(m.Arrow.vis[0], m.Arrow.vis[1]) || 1;
     const odd = Object.entries(m).filter(([r, v]) => v && v.vis && !['Pin', 'Person', 'Help', 'AppStarting'].includes(r) && Math.max(v.vis[0], v.vis[1]) / ref > 1.7);
-    const want = E.canvasSize(d);
-    const tiny = m.Arrow.img && m.Arrow.img < want * 0.75;
-    B.log({ at: Date.now(), design: d.name, want, dpr: window.devicePixelRatio, measure: m });
     if (odd.length) toast(t('size_odd', { r: odd.map(([r]) => roleName(r)).join('، ') }), t('size_odd_s'), true, 9000);
-    else if (tiny) toast(t('size_small'), t('size_small_s'), true, 9000);
   }
   async function restoreFlow() {
     const has = await B.hasBackup();
@@ -380,11 +387,16 @@
   const PRESETS = [['#000000', '#ffffff'], ['#ffffff', '#000000'], ['#0b0b0f', '#a5b4fc'], ['#111827', '#67e8f9'], ['#1a1a1a', '#fbbf24'], ['#fafafa', '#ec4899'], ['#7c3aed', '#ffffff'], ['#0ea5e9', '#ffffff'], ['#22c55e', '#052e16'], ['#ef4444', '#ffffff'], ['#f59e0b', '#1c1917'], ['#f472b6', '#ffffff']];
 
   let refreshTok = 0;
+  // While a slider is dragged only the big preview follows every move; the 17 small ones and the live cursor
+  // catch up once the hand stops (redrawing everything on every move made heavy packs crawl).
+  let stripTimer = null;
   function refreshStudio() {
     const tok = ++refreshTok;
     requestAnimationFrame(async () => {
       if (tok !== refreshTok || S.view !== 'studio') return;
-      drawStage(); drawStrip(); syncControls(); stageCursor.refresh && stageCursor.refresh();
+      drawStage(); syncControls();
+      clearTimeout(stripTimer);
+      stripTimer = setTimeout(() => { if (S.view !== 'studio') return; drawStrip(); stageCursor.refresh && stageCursor.refresh(); }, 220);
     });
   }
 

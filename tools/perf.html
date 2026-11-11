@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><body><script src="../ui/engine.js"></script><script>
+window.perf = async () => {
+  const E = CursoraEngine; const packs = await E.loadIndex('../packs/'); const out = [];
+  for (const glow of [false, true]) for (const p of packs) {
+    const d = E.newDesign(p.id, p.variants[0].id); d.global = { size: 48, glow };
+    const t0 = performance.now(); for (const r of E.ROLES) await E.renderRole(d, r, 48); const t1 = performance.now();
+    out.push([p.id, glow, Math.round(t1 - t0)]); E.clearCache();
+  }
+  return out;
+};
+</script>
