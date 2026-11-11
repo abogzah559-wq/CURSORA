@@ -44,7 +44,7 @@ jobs:
           if ($p.ExitCode -ne 0) { exit 1 }
 
       - name: Measure real cursor sizes drawn by Windows
-        shell: pwsh
+        shell: powershell
         run: |
           ./ci/measure.ps1 -Root "$PWD\ci-dump" -Out "$PWD\ci-logs\5-measure.json" *>&1 | Tee-Object -FilePath ci-logs/5-measure.txt
 
