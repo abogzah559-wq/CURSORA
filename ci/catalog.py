@@ -2,8 +2,8 @@
 """Builds CURSORA's "Discover" catalog from the rw-designer.com cursor library.
 
 Every set is checked automatically before it can appear in the app:
-  * complete      – at least 10 Windows roles, including arrow, link, text and busy/working
-  * high quality  – arrow image of at least 48 px with smooth (anti-aliased) edges
+  * complete      – at least 8 Windows roles, including arrow, link, text and busy/working
+  * high quality  – 48 px or larger, or 32 px with smooth (anti-aliased) edges; old pixel-art sets are left out
   * not a repeat  – shapes are compared with every other set and with the bundled packs; only the best of a
                     group of look-alikes is kept
 Then the survivors are ranked (popularity, rating, size, smoothness, rich/dark colours).
@@ -244,7 +244,7 @@ def smoothness(im):
 def analyse(entry, page):
     roles = map_roles(page['members'])
     have = set(roles)
-    if len(have) < 10 or not all(r in have for r in CORE) or not ({'Wait', 'AppStarting'} & have):
+    if len(have) < 8 or not all(r in have for r in CORE) or not ({'Wait', 'AppStarting'} & have):
         return None, 'incomplete'
     raw = get(f'{BASE}/cursor-downloadset/{entry["slug"]}.zip', binary=True)
     time.sleep(0.3)
@@ -273,10 +273,11 @@ def analyse(entry, page):
     core_sizes = [decoded[r][1] for r in CORE]
     smooth = sum(smoothness(decoded[r][0]) for r in CORE) / 3
     col = colour_stats([decoded[r][0] for r in CORE])
-    if min(core_sizes) < 48:
+    # 48 px and up: crisp at any size. 32 px: only with smooth (anti-aliased) edges — old pixel-art sets stay out
+    if min(core_sizes) < 32:
         return None, 'small'
-    if smooth < 0.06:
-        return None, 'jaggy'
+    if smooth < (0.06 if min(core_sizes) >= 48 else 0.15):
+        return None, 'jaggy' if min(core_sizes) >= 48 else 'small'
     # every shape of the core must actually be visible and not a stretched blob
     for r in CORE:
         bb = decoded[r][0].getchannel('A').point(lambda v: 255 if v > 60 else 0).getbbox()
@@ -285,7 +286,7 @@ def analyse(entry, page):
     item = {
         **entry, 'license': page['license'], 'rating': page['rating'],
         'roles': {r: {'id': m['id'], 'file': m['file']} for r, m in roles.items()},
-        'size': min(core_sizes), 'smooth': round(smooth, 3), 'animated': animated,
+        'size': min(core_sizes), 'hd': min(core_sizes) >= 48, 'smooth': round(smooth, 3), 'animated': animated,
         'lum': round(col['lum'], 3), 'sat': round(col['sat'], 3), 'hue': None if col['hue'] is None else round(col['hue'], 3),
         'hash': {r: shape_hash(decoded[r][0]) for r in CORE},
         'hot': [round(v, 3) for v in arrow[3]],
@@ -297,7 +298,7 @@ def score(it):
     s = math.log10(1 + it['downloads']) * 2.0
     s += 2.5 if it['top'] else 0
     s += {'r5': 2, 'r4': 1.2, 'r3': 0.4}.get(it['rating'][:2], 0)
-    s += min(it['size'], 128) / 64
+    s += min(it['size'], 128) / 64 + (1.5 if it['size'] >= 48 else 0)
     s += it['smooth'] * 3
     s += it['animated'] * 0.4
     # rich, dark colours rank higher; washed-out mid greys lower
@@ -353,7 +354,7 @@ def main():
         page = set_page(e['slug'])
         if not page:
             return None, 'no-page'
-        if len(map_roles(page['members'])) < 10:
+        if len(map_roles(page['members'])) < 8:
             return None, 'incomplete'
         return analyse(e, page)
 
