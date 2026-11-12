@@ -1,0 +1,489 @@
+{
+ "ok": true,
+ "checks": [
+  {
+   "role": "Arrow",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "Help",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "AppStarting",
+   "ext": "ani",
+   "bytes": 1371194,
+   "frames": 36,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "Wait",
+   "ext": "ani",
+   "bytes": 1371194,
+   "frames": 36,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "Crosshair",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "IBeam",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "NWPen",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "No",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "SizeNS",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "SizeWE",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "SizeNWSE",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "SizeNESW",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "SizeAll",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "UpArrow",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "Hand",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "Pin",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  },
+  {
+   "role": "Person",
+   "ext": "cur",
+   "bytes": 38078,
+   "frames": 1,
+   "w": 96,
+   "ok": true
+  }
+ ],
+ "canvas": 96,
+ "size": 96,
+ "glowEdgeAlpha": 0,
+ "variantsRendered": 101,
+ "files": [
+  {
+   "role": "Arrow",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "Help",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "AppStarting",
+   "ext": "ani",
+   "size": 1371194
+  },
+  {
+   "role": "Wait",
+   "ext": "ani",
+   "size": 1371194
+  },
+  {
+   "role": "Crosshair",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "IBeam",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "NWPen",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "No",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "SizeNS",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "SizeWE",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "SizeNWSE",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "SizeNESW",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "SizeAll",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "UpArrow",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "Hand",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "Pin",
+   "ext": "cur",
+   "size": 38078
+  },
+  {
+   "role": "Person",
+   "ext": "cur",
+   "size": 38078
+  }
+ ],
+ "before": {
+  "Hand": "C:\\Windows\\cursors\\aero_link.cur",
+  "Crosshair": "",
+  "IBeam": "",
+  "Arrow": "C:\\Windows\\cursors\\aero_arrow.cur",
+  "UpArrow": "C:\\Windows\\cursors\\aero_up.cur",
+  "SizeWE": "C:\\Windows\\cursors\\aero_ew.cur",
+  "(default)": "Windows Default",
+  "No": "C:\\Windows\\cursors\\aero_unavail.cur",
+  "SizeAll": "C:\\Windows\\cursors\\aero_move.cur",
+  "SizeNESW": "C:\\Windows\\cursors\\aero_nesw.cur",
+  "SizeNWSE": "C:\\Windows\\cursors\\aero_nwse.cur",
+  "SizeNS": "C:\\Windows\\cursors\\aero_ns.cur",
+  "Wait": "C:\\Windows\\cursors\\aero_busy.ani",
+  "Scheme Source": 2,
+  "Pin": "",
+  "NWPen": "C:\\Windows\\cursors\\aero_pen.cur",
+  "AppStarting": "C:\\Windows\\cursors\\aero_working.ani",
+  "Person": "",
+  "Help": "C:\\Windows\\cursors\\aero_helpsel.cur",
+  "CursorBaseSize": 32
+ },
+ "apply": {
+  "dir": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest",
+  "scheme": "CURSORA - SelfTest"
+ },
+ "apply2": {
+  "dir": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest",
+  "scheme": "CURSORA - SelfTest"
+ },
+ "verify": {
+  "Hand": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\Hand-mwcv1vaw.cur",
+   "exists": true
+  },
+  "Crosshair": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\Crosshair-mwcv1vaw.cur",
+   "exists": true
+  },
+  "IBeam": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\IBeam-mwcv1vaw.cur",
+   "exists": true
+  },
+  "Arrow": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\Arrow-mwcv1vaw.cur",
+   "exists": true
+  },
+  "UpArrow": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\UpArrow-mwcv1vaw.cur",
+   "exists": true
+  },
+  "SizeWE": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\SizeWE-mwcv1vaw.cur",
+   "exists": true
+  },
+  "(default)": "",
+  "No": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\No-mwcv1vaw.cur",
+   "exists": true
+  },
+  "SizeAll": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\SizeAll-mwcv1vaw.cur",
+   "exists": true
+  },
+  "SizeNESW": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\SizeNESW-mwcv1vaw.cur",
+   "exists": true
+  },
+  "SizeNWSE": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\SizeNWSE-mwcv1vaw.cur",
+   "exists": true
+  },
+  "SizeNS": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\SizeNS-mwcv1vaw.cur",
+   "exists": true
+  },
+  "Wait": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\Wait-mwcv1vaw.ani",
+   "exists": true
+  },
+  "Pin": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\Pin-mwcv1vaw.cur",
+   "exists": true
+  },
+  "NWPen": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\NWPen-mwcv1vaw.cur",
+   "exists": true
+  },
+  "AppStarting": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\AppStarting-mwcv1vaw.ani",
+   "exists": true
+  },
+  "Person": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\Person-mwcv1vaw.cur",
+   "exists": true
+  },
+  "Help": {
+   "ok": true,
+   "path": "C:\\Users\\runneradmin\\AppData\\Local\\CursoraCursors\\SelfTest\\Help-mwcv1vaw.cur",
+   "exists": true
+  },
+  "CursorBaseSize": 96
+ },
+ "measure": {
+  "Arrow": {
+   "img": 32,
+   "vis": [
+    25,
+    25
+   ]
+  },
+  "IBeam": {
+   "img": 32,
+   "vis": [
+    26,
+    26
+   ]
+  },
+  "Wait": {
+   "img": 32,
+   "vis": [
+    26,
+    25
+   ]
+  },
+  "Crosshair": {
+   "img": 32,
+   "vis": [
+    26,
+    26
+   ]
+  },
+  "UpArrow": {
+   "img": 32,
+   "vis": [
+    26,
+    25
+   ]
+  },
+  "SizeNWSE": {
+   "img": 32,
+   "vis": [
+    26,
+    26
+   ]
+  },
+  "SizeNESW": {
+   "img": 32,
+   "vis": [
+    26,
+    26
+   ]
+  },
+  "SizeWE": {
+   "img": 32,
+   "vis": [
+    26,
+    26
+   ]
+  },
+  "SizeNS": {
+   "img": 32,
+   "vis": [
+    26,
+    26
+   ]
+  },
+  "SizeAll": {
+   "img": 32,
+   "vis": [
+    26,
+    26
+   ]
+  },
+  "No": {
+   "img": 32,
+   "vis": [
+    25,
+    25
+   ]
+  },
+  "Hand": {
+   "img": 32,
+   "vis": [
+    26,
+    26
+   ]
+  },
+  "AppStarting": {
+   "img": 32,
+   "vis": [
+    25,
+    25
+   ]
+  },
+  "Help": {
+   "img": 32,
+   "vis": [
+    25,
+    25
+   ]
+  },
+  "Pin": {
+   "img": 32,
+   "vis": [
+    25,
+    25
+   ]
+  },
+  "Person": {
+   "img": 32,
+   "vis": [
+    25,
+    25
+   ]
+  }
+ },
+ "leftovers": 18,
+ "restore": "backup",
+ "after": {
+  "Hand": "C:\\Windows\\cursors\\aero_link.cur",
+  "Crosshair": "",
+  "IBeam": "",
+  "Arrow": "C:\\Windows\\cursors\\aero_arrow.cur",
+  "UpArrow": "C:\\Windows\\cursors\\aero_up.cur",
+  "SizeWE": "C:\\Windows\\cursors\\aero_ew.cur",
+  "(default)": "Windows Default",
+  "No": "C:\\Windows\\cursors\\aero_unavail.cur",
+  "SizeAll": "C:\\Windows\\cursors\\aero_move.cur",
+  "SizeNESW": "C:\\Windows\\cursors\\aero_nesw.cur",
+  "SizeNWSE": "C:\\Windows\\cursors\\aero_nwse.cur",
+  "SizeNS": "C:\\Windows\\cursors\\aero_ns.cur",
+  "Wait": "C:\\Windows\\cursors\\aero_busy.ani",
+  "Scheme Source": 2,
+  "Pin": "",
+  "NWPen": "C:\\Windows\\cursors\\aero_pen.cur",
+  "AppStarting": "C:\\Windows\\cursors\\aero_working.ani",
+  "Person": "",
+  "Help": "C:\\Windows\\cursors\\aero_helpsel.cur",
+  "CursorBaseSize": 32
+ }
+}
