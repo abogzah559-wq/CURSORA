@@ -380,7 +380,15 @@ def main():
     log('after dedupe', len(kept), 'of', len(items))
     for it in kept:
         it.pop('hash', None)
-    json.dump({'source': 'rw-designer.com', 'built': int(time.time()), 'items': kept}, open(os.path.join(out, 'catalog.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
+    # the app only shows the hand-picked sets listed in curated.txt; everything else stays in the review sheets
+    cur_file = os.path.join(os.path.dirname(__file__), 'curated.txt')
+    published = kept
+    if os.path.exists(cur_file):
+        picked = [l.strip() for l in open(cur_file, encoding='utf-8') if l.strip() and not l.startswith('#')]
+        by_slug = {it['slug']: it for it in kept}
+        published = [by_slug[s] for s in picked if s in by_slug]
+        log('curated', len(published), 'of', len(picked), 'listed')
+    json.dump({'source': 'rw-designer.com', 'built': int(time.time()), 'items': published}, open(os.path.join(out, 'catalog.json'), 'w'), ensure_ascii=False, separators=(',', ':'))
     json.dump(items and sorted([{k: v for k, v in i.items() if k != 'hash'} for i in items], key=lambda x: -x['score']), open(os.path.join(out, 'all-candidates.json'), 'w'), ensure_ascii=False)
     # review sheets: every kept set, best first, numbered — for a human pass before publishing
     os.makedirs(os.path.join(out, 'review'), exist_ok=True)

@@ -167,18 +167,19 @@
       }
       if (!byRole.Arrow) throw new Error('no arrow');
       const pack = E.packFromDecoded('rw-' + it.slug, it.name, byRole);
-      pack.author = it.author; pack.license = it.license; pack.url = `${RW}/cursor-set/${it.slug}`;
+      pack.author = it.author || 'rw-designer.com'; pack.license = it.license; pack.url = `${RW}/cursor-set/${it.slug}`;
       const d = E.newDesign(pack.id, 'default'); d.name = it.name; d.global = { shadow: false }; d.userPack = pack; d.source = { site: 'rw-designer', slug: it.slug };
       D.sets.set(it.slug, d); return d;
     })();
     D.loading.set(it.slug, job); job.finally(() => D.loading.delete(it.slug));
     return job;
   }
+  const isAnim = it => it.animated >= 4; // most shapes move, not just the busy ones
   const rwView = id => `${RW}/cursor-view/${id}.png`;
   function dList() {
     const q = D.q.trim().toLowerCase();
     let list = (D.items || []).filter(it => (!q || (it.name + ' ' + it.author).toLowerCase().includes(q)) &&
-      (D.filter === 'all' || (D.filter === 'animated' ? it.animated > 0 : dKind(it) === D.filter)));
+      (D.filter === 'all' || (D.filter === 'animated' ? isAnim(it) : dKind(it) === D.filter)));
     if (D.sort === 'popular') list = [...list].sort((a, b) => b.downloads - a.downloads);
     return list;
   }
@@ -211,11 +212,11 @@
   function dCard(it, i) {
     const imgs = ['Arrow', 'Hand', 'IBeam', 'Wait'].map((r, k) => it.roles[r] || (r === 'Wait' && it.roles.AppStarting) ? h('img', { class: k ? '' : 'big', loading: 'lazy', alt: '', src: rwView((it.roles[r] || it.roles.AppStarting).id) }) : null);
     const card = h('div', { class: 'card', style: { animationDelay: Math.min(i % 60, 12) * 30 + 'ms' }, onclick: () => dDetail(it) },
-      it.animated ? h('span', { class: 'badge-anim' }, '▶ ' + t('df_animated')) : null,
+      isAnim(it) ? h('span', { class: 'badge-anim' }, '▶ ' + t('df_animated')) : null,
       h('div', { class: 'card-stage d-stage' }, h('div', { class: 'row' }, imgs)),
       h('div', { class: 'card-body' },
         h('div', { class: 'card-top' }, h('div', { class: 'card-name' }, it.name.replace(/ Cursors?$/i, ''))),
-        h('div', { class: 'card-desc' }, t('by') + ' ' + it.author),
+        h('div', { class: 'card-desc' }, it.author ? t('by') + ' ' + it.author : 'rw-designer.com'),
         h('div', { class: 'card-top' }, h('span', { class: 'tag' }, '⬇ ' + it.downloads.toLocaleString(S.lang === 'ar' ? 'ar-SA' : 'en')), h('span', { class: 'tag', title: it.license }, shortLicense(it.license)))));
     // resting on a card for a moment downloads the set (a few KB) and turns your pointer into it
     let timer = null;
@@ -233,7 +234,7 @@
   };
   async function dDetail(it) {
     const body = h('div', { class: 'd-detail' },
-      h('div', { class: 'd-head' }, h('div', {}, h('h2', {}, it.name), h('div', { class: 'hint' }, t('by') + ' ' + it.author + ' · ' + it.license)),
+      h('div', { class: 'd-head' }, h('div', {}, h('h2', {}, it.name), h('div', { class: 'hint' }, (it.author ? t('by') + ' ' + it.author + ' · ' : '') + it.license)),
         h('a', { href: '#', class: 'btn sm', onclick: e => { e.preventDefault(); B.url(`${RW}/cursor-set/${it.slug}`); } }, t('d_page'))),
       h('div', { class: 'roles d-roles' }, E.ROLES.filter(r => it.roles[r]).map(r => {
         const el = h('div', { class: 'role' }, h('img', { src: rwView(it.roles[r].id), alt: '' }), h('span', {}, roleName(r)));

@@ -9,8 +9,6 @@ on:
       limit:
         description: only scan the first N sets (0 = all)
         default: '0'
-  push:
-    branches: [catalog-dev]
 
 permissions:
   contents: write
@@ -30,12 +28,19 @@ jobs:
         run: pip install pillow requests
       - name: Run
         env:
-          CATALOG_LIMIT: ${{ github.event.inputs.limit || '400' }}
+          CATALOG_LIMIT: ${{ github.event.inputs.limit || '0' }}
         run: python ci/catalog.py ${{ github.event.inputs.mode || 'build' }} out
-      - name: Publish results to the catalog branch
-        if: always()
+      - name: Upload review sheets
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: catalog-review
+          path: out
+          retention-days: 7
+      - name: Publish catalog.json to the catalog branch
+        if: github.event.inputs.mode != 'explore'
         run: |
-          mkdir -p out && cd out
+          mkdir -p pub && cp out/catalog.json pub/ && cd pub
           git init -q -b catalog && git add -A
           git -c user.name=ci -c user.email=ci@localhost commit -q -m "catalog ${GITHUB_RUN_ID}" || true
           git push -q -f "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}" catalog
