@@ -81,7 +81,7 @@ npm run dist         # build the installer into dist/
 
 Every push is built and tested on a Windows runner (see `.github/workflows/build.yml`): the self-test renders all
 packs, encodes the `.cur`/`.ani` files, applies them through the registry, loads them back with
-`LoadCursorFromFile`, measures the drawn sizes and restores the original scheme. Tags `v*` publish a release.
+`LoadCursorFromFile`, measures the drawn sizes and restores the original scheme. Bumping the version in `package.json` publishes a new release (with `latest.yml` for in-app updates).
 
 ### Project layout
 
