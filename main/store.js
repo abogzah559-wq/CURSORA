@@ -71,13 +71,11 @@ module.exports = function create(dataDir) {
   async function download(slug) {
     if (!/^[a-z0-9][a-z0-9_-]{0,80}$/i.test(slug)) throw new Error('bad id');
     const f = path.join(zipDir, slug + '.zip');
-    let buf = null;
-    try { buf = fs.readFileSync(f); } catch {}
-    if (!buf) {
-      buf = await fetchBuffer(`${SITE}/cursor-downloadset/${slug}.zip`, MAX_ZIP);
-      fs.mkdirSync(zipDir, { recursive: true }); fs.writeFileSync(f, buf);
-    }
-    return readZip(buf);
+    try { return readZip(fs.readFileSync(f)); } catch {} // cached copy (a broken one is simply fetched again)
+    const buf = await fetchBuffer(`${SITE}/cursor-downloadset/${slug}.zip`, MAX_ZIP);
+    const files = readZip(buf);
+    try { fs.mkdirSync(zipDir, { recursive: true }); fs.writeFileSync(f + '.tmp', buf); fs.renameSync(f + '.tmp', f); } catch {}
+    return files;
   }
 
   return { catalog, download };

@@ -8,7 +8,7 @@
   ${GetOptions} $R0 "--updated" $R1
   ${If} ${Errors}
     IfSilent cursora_skip
-    MessageBox MB_YESNO|MB_ICONQUESTION "تبي ترجع الماوس السابق قبل الحذف؟$\r$\n(لو اخترت لا، يبقى ماوس CURSORA شغّال بعد الحذف)$\r$\n$\r$\nRestore your previous cursor before uninstalling?$\r$\n(No = keep the CURSORA cursor after uninstall)" /SD IDNO IDNO cursora_skip
+    MessageBox MB_YESNO|MB_ICONQUESTION "هل تريد استعادة المؤشر السابق قبل الحذف؟$\r$\n(عند اختيار لا، يبقى مؤشر CURSORA مفعّلاً بعد الحذف)$\r$\n$\r$\nRestore your previous cursor before uninstalling?$\r$\n(No = keep the CURSORA cursor after uninstall)" /SD IDNO IDNO cursora_skip
     ExecWait '"$INSTDIR\${APP_EXECUTABLE_FILENAME}" --restore=backup'
     cursora_skip:
   ${EndIf}
