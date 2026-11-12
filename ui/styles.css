@@ -350,7 +350,8 @@ select option { background: #18181b; }
 .shape-thumb { width: 64px; height: 64px; flex: none; border-radius: 14px; display: grid; place-items: center; background: radial-gradient(circle at 50% 35%, rgba(255,255,255,.08), transparent 70%), rgba(0,0,0,.35); border: 1px solid var(--line); }
 .shape-thumb canvas { width: 56px; height: 56px; }
 .shape-t { font: 700 14px var(--font-d); }
-.shape-sec .row2 .btn { width: 100%; padding: 0 8px; }
+.shape-sec .row2 { display: flex; flex-wrap: wrap; }
+.shape-sec .row2 .btn { flex: 1 1 auto; padding: 0 10px; white-space: nowrap; }
 .btn:disabled { opacity: .4; pointer-events: none; }
 .overlay.picker { place-items: stretch; padding: 40px 48px; }
 .pk-card { display: grid; grid-template-columns: 260px minmax(0, 1fr); border-radius: 26px; overflow: hidden; background: rgba(18,18,22,.97); border: 1px solid var(--line2); box-shadow: 0 50px 120px -30px #000; animation: tin .45s var(--spring); min-height: 0; }
